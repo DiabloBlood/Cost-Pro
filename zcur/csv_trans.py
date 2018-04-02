@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from util.file_io import get_rows_from_csv
+from util.file_io import write_json_file, read_json_file, get_rows_from_csv
+from util.general import get_month_tag
 
 from pprint import pprint
 import traceback
@@ -27,7 +28,7 @@ class ChaseCSVTrans(object):
     Parse chase debit csv file to json file
     """
     OUTPUT_FILENAME = 'all_chase_debit_csv_init.json'
-    INIT_BALANCE = 3052.37
+    INIT_BALANCE = 3096.78
     PRECISION = 0.000001
 
 
@@ -39,6 +40,7 @@ class ChaseCSVTrans(object):
         self.input_filename = input_filename
         self.begin_balance = self.INIT_BALANCE
 
+
     def process(self):
         result = True
         try:
@@ -49,28 +51,57 @@ class ChaseCSVTrans(object):
             result = False
         return result
 
+
+    def _read_json_file(self, json_file_path):
+        return read_json_file(json_file_path)
+
+
+    def _get_rows_from_csv(self, csv_file_path):
+        return get_rows_from_csv(csv_file_path)
+
+
+    def _write_json_file(self, rows, output_file_path):
+        write_json_file(rows, output_file_path)
+
+
     def _get_rows(self):
         result = []
-        raw_rows = get_rows_from_csv(self.input_filename).reverse()
-        for row in raw_rows:
+        rows = self._get_rows_from_csv(self.input_filename)
+        rows.reverse()
+        for row in rows:
             temp = OrderedDict()
             temp['TRANSACTION_ID'] = ''
             temp['begin_balance'] = self.begin_balance
             temp['amount'] = float(row['Amount'])
-            temp['this_balance'] = row['Balance']
+            temp['this_balance'] = float(row['Balance'])
 
             self._check_exception(temp['amount'], temp['this_balance'], row, self.input_filename)
             self.begin_balance = temp['this_balance']
 
-            temp['description'] = ' '.join(row['Description'].split())
+            temp['description'] = self._flat_str(row['Description'])
             temp['date'] = row['Posting Date']
+            temp['month_tag'] = self._get_month_tag(temp['date'])
             temp['card_type'] = 'Chase Debit'
             temp['tag'] = 'income' if temp['amount'] > 0.0 else 'expense'
             result.append(temp)
         return result
 
+
+    def _flat_str(self, des_str):
+        arr = des_str.split(' ')
+        result = []
+        for item in arr:
+            if item:
+                result.append(item)
+        return ' '.join(result)
+
+
+    def _get_month_tag(self, date_str):
+        return get_month_tag(date_str)
+
+
     def _check_exception(self, amount, balance, row, input_filename):
-        if self.begin_balance + amount - balance >= self.PRECISION:
+        if abs(self.begin_balance + amount - balance) >= self.PRECISION:
             print self.begin_balance, row, input_filename
             raise Exception('Missing Record!')
 

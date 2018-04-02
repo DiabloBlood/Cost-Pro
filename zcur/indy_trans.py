@@ -86,12 +86,16 @@ class IndyTrans(object):
         return arr[0] + '.json'
 
 
-    def _write_json_file(self, rows, output_file_path):
-        write_json_file(rows, output_file_path)
-
-
     def _read_json_file(self, json_file_path):
         return read_json_file(json_file_path)
+
+
+    def _get_rows_from_csv(self, csv_file_path):
+        return get_rows_from_csv(csv_file_path)
+
+
+    def _write_json_file(self, rows, output_file_path):
+        write_json_file(rows, output_file_path)
 
 
     def _merge_json_file(self):
@@ -124,8 +128,8 @@ class IndyTrans(object):
 
     def _get_rows(self, input_file_path, input_filename):
         result = []
-        raw_rows = get_rows_from_csv(input_file_path)
-        for row in raw_rows:
+        rows = self.get_rows_from_csv(input_file_path)
+        for row in rows:
             temp = OrderedDict()
             temp['TRANSACTION_ID'] = ''
             temp['begin_balance'] = self.begin_balance
@@ -151,7 +155,7 @@ class IndyTrans(object):
 
 
     def _check_exception(self, amount, balance, row, input_filename):
-        if self.begin_balance + amount - balance >= self.PRECISION:
+        if abs(self.begin_balance + amount - balance) >= self.PRECISION:
             print self.begin_balance, row, input_filename
             raise Exception('Missing Record!')
 
