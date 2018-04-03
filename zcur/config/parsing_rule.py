@@ -10,10 +10,16 @@ PARSING_RULE = {
     },
 
     'travel': {
-        'flight': [],
-        'hotel': [],
+        'flight': {
+            'cheap_tickets': [r'\bCHEAPTICKETS\b'],
+        },
+        'hotel': {
+            'priceline': [r'^PLN\*PRICELINE HOTELS\b']
+        },
         'car_rental': [],
-        'entrance_fee': []
+        'entrance_fee': {
+            'state_park': [r'^CA PARK\b']
+        }
     },
 
     'auto': {
@@ -27,19 +33,34 @@ PARSING_RULE = {
         'auto_service': {
             'parking': [r'^MAXXUM LEASING\b', r'^ABM PARKING\b'],
             'car_wash': [r'^SHELL Service Station\b']
+        },
+        'other': {
+            'auto_parts': [r'^CARQUEST\b']
         }
     },
 
     'transfer': {
         'chase_quickpay': {
             'phone_fees': [r'^(Chase QuickPay).*(Phone fees)$'],
+            'yi_cui': [r'^(Chase QuickPay).*(Yi Cui)$'],
+            'jun_yang': [r'^(Chase QuickPay).*(Jun Yang)$'],
+            'cheng_song': [r'^(Chase QuickPay).*(Cheng Song)$'],
+            'ying_liang': [r'^(Chase QuickPay).*(Ying Liang|YING LIANG)$'],
+            'den_zheng': [r'^(Chase QuickPay).*(Zheng\. den)$'],
             'other': []
         },
-        'square_cash' :{
-            'chao_guo': [r'(^SQC\*CHAO GUO\b)|(^SQC*C G\b)']
+        'square_cash': {
+            'chao_guo': [r'^SQC\*(CHAO GUO|C G)\b'],
+            'hairong': [r'^SQC\*(HAIRONG|Hairong|H|XUEYAN LU)\b'],
+            'juanhong_cheng': [r'^SQC\*(JUANHONG|Juanhong)\b'],
+            'chunwen_xiong': [r'^SQC\*(Chunwen Xiong|C X)\b'],
+            'joe_zhang': [r'^SQC\*(JOE ZHANG|J Z)\b'],
+            'jun_yang': [r'^SQC\*J Y\b'],
+            'ran_song': [r'^SQC\*(\s|RAN SONG)'],
+            'yue_liu': [r'^SQC\*YUE LIU']
         },
         'paypal': {
-
+            'other': [r'\bPAYPAL\b']
         },
         'ATM': {
             'withdraw': [r'^ATM WITHDRAWAL\b'],
@@ -59,17 +80,18 @@ PARSING_RULE = {
                 r'^OLD NAVY\b', 
                 r'^GAP OUTLET\b', 
                 r'.*Milpitas Factory\b',
-                r'^EXPRESS LLC MILPITAS\b'
+                r'^EXPRESS LLC MILPITAS\b',
+                r'\bGUESS\b'
             ],
-            'personal_tailor': []
+            'personal_tailor': [r'\bSPOON TAILOR\b']
         },
         'super_market': {
             'safeway': [r'^SAFEWAY\b'],
             'costco': [r'^COSTCO WHSE\b'],
             'whole_foods': [r'^WHOLEFDS\b'],
-            'wal_mart': [r'^WAL\b'],
+            'walmart': [r'^WAL\b'],
             'ocean': [r'^OCEAN SUPERMARKET\b'],
-            'trader_joe': [r'^TRADER JOE\'S\b'],
+            'trader_joes': [r'^TRADER JOE\'S\b'],
             'target': [r'^TARGET\b'],
             '99ranch': [r'^99 RANCH\b'],
             'mecico': [
@@ -77,7 +99,8 @@ PARSING_RULE = {
                 r'^EL SUPER\b', 
                 r'^ISLAND PACIFIC SUPERMA\b', 
                 r'^Hankook Superma\b'
-            ]
+            ],
+            'other': [r'^LUCKY\b']
         }
     },
 
@@ -104,8 +127,9 @@ PARSING_RULE = {
                 r'^CHINA MAX LIVERMORE\b',
                 r'^EL AMIGO RESTAURAN\b',
                 r'^SHAO MOUNTAIN RESTAURAN\b',
-                r'^MILPITAS BUFFET\b'
-                r'^PURPLEKOW BERKELEY\b'
+                r'^MILPITAS BUFFET\b',
+                r'^PURPLEKOW BERKELEY\b',
+                r'^PALACE BBQ BUFFET\b'
             ],
             'daily_food': [
                 r'^TONKOTSU\b', 
@@ -125,11 +149,12 @@ PARSING_RULE = {
                 r'^BURGER KING\b',
                 r'^FORTUNE COOKIE\b',
                 r'^JOHNNY ROCKETS\b',
-                r'^RUNWAY GRILL\b'
+                r'^RUNWAY GRILL\b',
+                r'^PANDA EXRPESS\b'
             ]
         },
         'drink': {
-            'milk_tea': [r'^85C BAKERY CAFE\b'],
+            'milk_tea': [r'^85C BAKERY CAFE\b', r'^PURPLEKOW BERKELEY\b'],
             'vending_machine': [r'^COCA COLA\b'],
             'starbucks': [r'^STARBUCKS\b', r'^SCU DINING\b']
         },
@@ -138,6 +163,9 @@ PARSING_RULE = {
         },
         'service': {
             'hair_cut': [r'^SCHROEDERS HAIRCUTS\b']
+        },
+        'entertainment': {
+            'movie': [r'^AMC MERCADO\b']
         }
     }
 }

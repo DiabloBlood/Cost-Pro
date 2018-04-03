@@ -1,5 +1,8 @@
+import re
+from collections import OrderedDict
 from config.parsing_rule import PARSING_RULE
 from util.file_io import write_json_file, read_json_file
+from pprint import pprint
 
 
 
@@ -16,11 +19,14 @@ class ParseChaseJson(object):
     def __init__(self, input_filename):
         self.input_filename = input_filename
         self.parsing_rule = PARSING_RULE
-        self.pattern_index = self._get_invert_index()
+        self.patterns = self._get_patterns_info()
+        self.rows = self._read_json_file(self.input_filename)
 
 
     def process(self):
-        self._write_json_file([self.pattern_index], 'temp.json')
+        # self._write_json_file(self.patterns, 'temp.json')
+        self._seperate()
+        self._current_des_match()
 
 
     def _read_json_file(self, json_file_path):
@@ -31,8 +37,8 @@ class ParseChaseJson(object):
         write_json_file(rows, output_file_path)
 
 
-    def _get_invert_index(self):
-        result = {}
+    def _get_patterns_info(self):
+        result = []
         for master_key in self.parsing_rule:
             master_dict = self.parsing_rule[master_key]
             for general_key in master_dict:
@@ -40,13 +46,59 @@ class ParseChaseJson(object):
                 for children_key in general_dict:
                     children_list = general_dict[children_key]
                     for pattern in children_list:
-                        temp = {}
+                        temp = OrderedDict()
                         temp['master_cat'] = master_key
-                        temp['general_cat'] = general_key
-                        temp['children_key'] = children_key
-                        result[pattern] = temp
+                        temp['second_cat'] = general_key
+                        temp['children_cat'] = children_key
+                        temp['pattern'] = pattern
+                        result.append(temp)
         return result
 
+
+    def _check_row_match(self, row):
+        result = False
+        for pattern in self.patterns:
+            if re.match(pattern['pattern'], row['description']):
+                for key in pattern:
+                    row[key] = pattern[key]
+                result = True
+        return result
+
+
+    def _seperate(self):
+        remain = []
+        out = []
+        for row in self.rows:
+            # True to outs
+            if self._check_row_match(row):
+                out.append(row)
+            else: 
+                remain.append(row)
+
+        self._write_json_file(remain, 'remain.json')
+        self._write_json_file(out, 'out.json')
+
+        print '\n'
+        print 'remain: {}'.format(len(remain))
+        print 'out: {}'.format(len(out))
+        print 'total: {}'.format(len(remain) + len(out))
+        print '*****************************************************************'
+        print '\n'
+
+
+    def _current_des_match(self):
+        result = []
+        count_amount = 0
+        pattern = r'^SQC\*J\s\.'
+        for row in self.rows:
+            if re.match(pattern, row['description']):
+                count_amount += row['amount']
+                result.append(row)
+        self._write_json_file(result, 'temp.json')
+
+        print 'temp: {} rows, amount: {}'.format(len(result), count_amount)
+        print '*****************************************************************'
+        print '\n'
 
 
 if __name__ == '__main__':
