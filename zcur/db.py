@@ -11,7 +11,13 @@ def connect():
     except Exception, e:
         print e
     print conn
-    print conn.get_backend_pid()
+    cur = conn.cursor()
+    print cur
+    sql = """
+        SELECT * FROM weather
+    """
+    cur.execute(sql)
+    print cur.fetchone()
     # print type(conn)
 
 if __name__ == '__main__':
