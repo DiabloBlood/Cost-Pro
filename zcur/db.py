@@ -1,24 +1,33 @@
 import psycopg2
+from configs.config import db_config
+from configs.sql import create_table_template
+import traceback
+from pprint import pprint
 
-def connect():
-    host = 'testdb.chp7pefph6ne.us-west-1.rds.amazonaws.com'
-    database = "COST_BOOK"
-    user = 'haosichao111'
-    password = 'huang433'
-    port = 5432
+
+
+def exec_sql(sql):
+    result = True
     try:
-        conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
+        conn = psycopg2.connect(**db_config)
     except Exception, e:
-        print e
-    print conn
-    cur = conn.cursor()
-    print cur
-    sql = """
-        SELECT * FROM weather
-    """
-    cur.execute(sql)
-    print cur.fetchone()
-    # print type(conn)
+        raise
+
+    try:
+        cur = conn.cursor()
+        cur.execute(sql)
+        conn.commit()
+    except Exception, e:
+        conn.rollback()
+        result = False
+        pprint(e)
+
+    return result
+
+def create_table(table_name):
+    sql = create_table_template.format(table_name=table_name)
+    result = exec_sql(sql)
+    return result
 
 if __name__ == '__main__':
-    connect()
+    create_table('test2')

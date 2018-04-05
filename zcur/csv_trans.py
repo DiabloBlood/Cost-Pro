@@ -70,7 +70,7 @@ class ChaseCSVTrans(object):
         rows.reverse()
         for row in rows:
             temp = OrderedDict()
-            temp['TRANSACTION_ID'] = ''
+            temp['trans_id'] = ''
             temp['begin_balance'] = self.begin_balance
             temp['amount'] = float(row['Amount'])
             temp['this_balance'] = float(row['Balance'])
@@ -81,10 +81,34 @@ class ChaseCSVTrans(object):
             temp['description'] = self._flat_str(row['Description'])
             temp['date'] = row['Posting Date']
             temp['month_tag'] = self._get_month_tag(temp['date'])
-            temp['card_type'] = 'Chase Debit'
+            temp['card_type'] = 'chase_debit'
+            temp['year'] = int(temp['month_tag'][0:4])
+            temp['month'] = int(temp['month_tag'][5:7])
             temp['tag'] = 'income' if temp['amount'] > 0.0 else 'expense'
             result.append(temp)
+
+        result = self._add_trans_id(result)
         return result
+
+
+    def _add_trans_id(self, rows):
+        month_tag_map = {}
+
+        for row in rows:
+            month_tag = row['month_tag']
+            if month_tag not in month_tag_map:
+                month_tag_map[month_tag] = []
+            month_tag_map[month_tag].append(row)
+
+        for month_tag in month_tag_map:
+            month_tag_rows = month_tag_map[month_tag]
+            for i in range(len(month_tag_rows)):
+                row = month_tag_rows[i]
+                row['num'] = i + 1
+                row['trans_id'] = '{}-{}-{}'.format(row['card_type'], row['month_tag'], i + 1)
+
+        return rows
+
 
 
     def _flat_str(self, des_str):
