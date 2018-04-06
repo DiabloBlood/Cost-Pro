@@ -1,6 +1,6 @@
 import re
 from collections import OrderedDict
-from config.parsing_rule import PARSING_RULE
+from configs.parsing_rule import PARSING_RULE
 from util.file_io import write_json_file, read_json_file
 from pprint import pprint
 

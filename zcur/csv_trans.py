@@ -71,9 +71,11 @@ class ChaseCSVTrans(object):
         for row in rows:
             temp = OrderedDict()
             temp['trans_id'] = ''
-            temp['begin_balance'] = self.begin_balance
             temp['amount'] = float(row['Amount'])
+            temp['begin_balance'] = self.begin_balance
             temp['this_balance'] = float(row['Balance'])
+            temp['tag'] = 'income' if temp['amount'] > 0.0 else 'expense'
+            temp['card_type'] = 'chase_debit'
 
             self._check_exception(temp['amount'], temp['this_balance'], row, self.input_filename)
             self.begin_balance = temp['this_balance']
@@ -81,10 +83,8 @@ class ChaseCSVTrans(object):
             temp['description'] = self._flat_str(row['Description'])
             temp['date'] = row['Posting Date']
             temp['month_tag'] = self._get_month_tag(temp['date'])
-            temp['card_type'] = 'chase_debit'
             temp['year'] = int(temp['month_tag'][0:4])
             temp['month'] = int(temp['month_tag'][5:7])
-            temp['tag'] = 'income' if temp['amount'] > 0.0 else 'expense'
             result.append(temp)
 
         result = self._add_trans_id(result)
