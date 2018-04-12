@@ -69,17 +69,50 @@ for port in [80, 443, 21, 70, 25, 143, 993, 110, 995]:
 
 def get_constants(prefix):
     """Create a dictionary mapping socket module constants to their names."""
-    attr_map = [(getattr(socket, n), n) for n in dir(socket) if n.startswith('IPPROTO_')]
+    attr_map = [(getattr(socket, n), n) for n in dir(socket) if n.startswith(prefix)]
     return dict(attr_map)
-protocols = get_constants('IPPROTO_')
 
+
+'''
+protocols = get_constants('IPPROTO_')
 for name in ['icmp', 'udp', 'tcp']:
     proto_num = socket.getprotobyname(name)
     const_name = protocols[proto_num]
     print '%4s -> %2d (socket.%-12s = %2d)' % \
         (name, proto_num, const_name, getattr(socket, const_name))
+'''
+
+'''
+families = get_constants('AF_')
+types = get_constants('SOCK_')
+protocols = get_constants('IPPROTO_')
+
+print socket.getaddrinfo('www.python.org', 'http')
+for response in socket.getaddrinfo('www.python.org', 'http'):
+
+    # Unpack the response tuple
+    family, socktype, proto, canonname, sockaddr = response
+
+    print 'Family        :', families[family]
+    print 'Type          :', types[socktype]
+    print 'Protocol      :', protocols[proto]
+    print 'Canonical name:', canonname
+    print 'Socket address:', sockaddr
+    print
+'''
 
 
+import binascii
+import struct
+import sys
+
+string_address = sys.argv[1]
+
+packed = socket.inet_aton(string_address)
+
+print 'Original:', string_address
+print 'Packed  :', binascii.hexlify(packed)
+print 'Unpacked:', socket.inet_ntoa(packed)
 
 
 
