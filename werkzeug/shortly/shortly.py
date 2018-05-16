@@ -26,7 +26,12 @@ class Shortly(object):
         return Response(t.render(context), mimetype='text/html')
 
     def dispatch_request(self, request):
-        return Response('Hello World!')
+        adapter = self.url_map.bind_to_environ(request.environ)
+        try:
+            endpoint, values = adapter.match()
+            return getattr(self, 'on_' + endpoint)(request, **values)
+        except HTTPException, e:
+            return e
 
     def wsgi_app(self, environ, start_response):
         request = Request(environ)
