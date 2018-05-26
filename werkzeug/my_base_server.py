@@ -8,6 +8,7 @@ class MyBaseServer(object):
         self.server_address = server_address
         self.RequestHandlerClass = RequestHandlerClass
         self.__is_shut_down = threading.Event()
+        self.__shutdown_request = False
         print dir(self.__is_shut_down)
 
 
