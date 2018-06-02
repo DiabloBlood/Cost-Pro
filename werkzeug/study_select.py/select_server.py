@@ -52,12 +52,12 @@ while inputs:
             inputs.append(conn)
 
             # Give the connection a queue for data we want to send
-            message_queues[connection] = Queue.Queue()
+            message_queues[conn] = Queue.Queue()
         else:
             data = s.recv(1024)
             if data:
                 # A readable client socket has data
-                print sys.stderr, 'received "%s" from %s' % (data, client_addr)
+                print sys.stderr, 'received "%s" from %s' % (data, s.getpeername())
                 message_queues[s].put(data)
                 # Add output channel for response
                 if s not in outputs:

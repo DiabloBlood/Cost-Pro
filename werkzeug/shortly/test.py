@@ -18,16 +18,16 @@ def application(environ, start_response):
 
 
 row = {
-    'PG': 99,
-    'PG2': 93,
-    'SG': 96,
-    'SG2': 99,
-    'SF': 99,
-    'SF2': 98,
-    'PF': 97,
-    'PF2': 98,
+    'PG': 96,
+    'PG2': 98,
+    'SG': 100,
+    'SG2': 100,
+    'SF': 100,
+    'SF2': 97,
+    'PF': 93,
+    'PF2': 97,
     'C': 97,
-    'C2': 98
+    'C2': 100
 }
 
 def get_avg():
