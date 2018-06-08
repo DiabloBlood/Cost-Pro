@@ -11,7 +11,18 @@ print 'start server on HOST: {} PORT: {}'.format(HOST, PORT)
 server_addr = (HOST, PORT)
 server.bind(server_addr)
 
-server.listen(5)
+server.listen(1)
 
 while True:
-    conn, client_addr = socket.accept()
+    conn, client_addr = server.accept()
+    try:
+        print 'connection from {}'.format(client_addr)
+        while True:
+            msg = conn.recv(3)
+            if msg:
+                print 'server received: {}'.format(msg)
+            else:
+                a = ''
+    finally:
+        print 'close connection from {}'.format(client_addr)
+        conn.close()
