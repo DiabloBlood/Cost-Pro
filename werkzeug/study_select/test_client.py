@@ -18,16 +18,6 @@ def create_client(count):
     finally:
         client.close()
 
-    '''
-    try:
-        msg = 'ABCDEFGHI{}'.format(count)
-        print 'sending message [{}]'.format(msg)
-        client.sendall(msg)
-    finally:
-        print 'closing client socket......'
-        client.close()
-    '''
-
 count = 1
 while True:
     create_client(count)
