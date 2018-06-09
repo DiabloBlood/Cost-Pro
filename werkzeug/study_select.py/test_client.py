@@ -12,7 +12,13 @@ def create_client(count):
 
     print 'connecting to HOST: {} PORT: {}'.format(HOST, PORT)
     client.connect(server_addr)
+    print '*****CONNECTED*****{}'.format(count)
+    try:
+        client.sendall(str(count))
+    finally:
+        client.close()
 
+    '''
     try:
         msg = 'ABCDEFGHI{}'.format(count)
         print 'sending message [{}]'.format(msg)
@@ -20,10 +26,11 @@ def create_client(count):
     finally:
         print 'closing client socket......'
         client.close()
+    '''
 
 count = 1
 while True:
     create_client(count)
     count += 1
-    if count > 100:
+    if count > 5:
         break
