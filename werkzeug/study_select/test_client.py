@@ -1,8 +1,9 @@
 import socket
+import time
 
 
 
-HOST = '10.0.2.15'
+HOST = '127.0.0.1'
 PORT = 8001
 
 def create_client(count):
@@ -13,10 +14,17 @@ def create_client(count):
     print 'connecting to HOST: {} PORT: {}'.format(HOST, PORT)
     client.connect(server_addr)
     print '*****CONNECTED*****{}'.format(count)
+    while True:
+        time.sleep(100)
+
+    '''
     try:
         client.sendall(str(count))
-    finally:
-        client.close()
+    except:
+        raise
+    '''
+    # finally:
+        # client.close()
 
 count = 1
 while True:

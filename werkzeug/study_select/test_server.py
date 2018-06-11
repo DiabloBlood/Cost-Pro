@@ -1,7 +1,7 @@
 import socket
 import time
 
-HOST = '10.0.2.15'
+HOST = '127.0.0.1'
 PORT = 8001
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,7 +26,7 @@ while True:
                 print 'recv: {} TOTAL: {}'.format(msg, recv_cnt)
             else:
                 break;
-        time.sleep(100)
+        time.sleep(60)
 
     finally:
         print 'close connection from {}'.format(client_addr)
