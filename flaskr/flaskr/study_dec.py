@@ -44,7 +44,7 @@ bar_2 = add_log_2(bar_2)
 # print bar_2('bar_2')
 
 
-'''
+
 def add_log_3(func):
 
     def wrapper(*args, **kwargs):
@@ -66,10 +66,9 @@ def bar_3(name):
 
 # print foo_3('foo_3')
 # print bar_3('bar_3')
-'''
 
 
-'''
+
 def add_log_4(level='debug'):
 
     def decorator(func):
@@ -84,25 +83,60 @@ def add_log_4(level='debug'):
 
     return decorator
 
-
-
 @add_log_4(level='warning')
 def foo_4(name):
     print 'I am %s' % name
     return 1
 
+@add_log_4()
 def bar_4(name):
     print 'I am %s' % name
     return 2
 
-print foo_4('foo_4')
-print bar_4('bar_4')
-'''
+# print foo_4('foo_4')
+# print bar_4('bar_4')
 
-import sys
 
-def add_log_3(func):
 
+# learn class decorator
+class AddLog5(object):
+
+    def __init__(self, func):
+        self._func = func
+
+    def __call__(self):
+        print 'class decorator running!'
+        self._func()
+        print 'class decorator ending!'
+
+@AddLog5
+def bar_5():
+    print 'bar_5'
+
+# bar_5()
+
+
+
+from functools import wraps
+
+def my_wraps(func):
+
+    def decorator(wrapper_func):
+
+        def wrapper2(*args, **kwargs):
+            return wrapper_func(*args, **kwargs)
+
+        wrapper2.__doc__ = func.__doc__
+        wrapper2.__name__ = func.__name__
+
+        return wrapper2
+
+    return decorator
+
+def add_log_6(func):
+
+    # @wraps(func)
+    @my_wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
         logging.warning('%s is running' % func.__name__)
@@ -110,28 +144,12 @@ def add_log_3(func):
 
     return wrapper
 
+@add_log_6
+def foo_6(x):
+    """do some math"""
+    return x * x
 
-def foo_3(name):
-    frame = sys._getframe()
-    print frame.f_code.co_name
-    print frame.f_back.f_code.co_name
-    print 'I am %s' % name
-    return 1
+print foo_6.__name__
+print foo_6.__doc__
 
-'''
-@add_log_3(foo_3)
-def bar_3(name):
-    print 'I am %s' % name
-    return 2
-'''
-
-def bar_3(name):
-    print 'I am %s' % name
-    return 2
-temp = add_log_3(foo_3)
-print temp(bar_3)
-# bar_3 = temp(bar_3)
-
-# print foo_3('foo_3')
-# print bar_3('bar_3')
-print bar_3
+# task: learn partial
