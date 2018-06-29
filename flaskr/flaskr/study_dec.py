@@ -151,5 +151,3 @@ def foo_6(x):
 
 print foo_6.__name__
 print foo_6.__doc__
-
-# task: learn partial
