@@ -24,6 +24,28 @@ except AttributeError as e:
 # print foo_7.func_dict
 
 
+msg = "Function: [{}], Attr: [{}], Value: [{}]"
+
+def print_all(func, *args):
+    print '**************************************'
+
+    for attr in args:
+        print msg.format(func.__name__, attr, getattr(func.__code__, attr))
+
+    print '**************************************\n'
+
+
+
+
+a = 5
+def foo():
+    global a
+    a = 4
+
+# if use global statement, a will go to co_names as a external module
+# print_all(foo, 'co_varnames', 'co_nlocals', 'co_names', 'co_name')
+# print_all(foo, 'co_cellvars', 'co_freevars', 'co_consts')
+
 
 # task: learn partial
 from functools import partial
@@ -32,3 +54,21 @@ def foo_7(a, b, c):
     return a + b + c
 
 foo_8 = partial(foo_7, a='haha')
+
+
+class Student(object):
+
+    def __init__(self, name, score):
+        self.__name = name
+        self.__score = score
+
+    def get_name(self):
+        return self.__name
+
+s = Student('sichao', 99)
+print dir(s)
+# instance s will has an extra variable __name
+s.__name = 'haha'
+print s.get_name()
+print s.__name
+print dir(s)

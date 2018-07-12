@@ -134,6 +134,7 @@ def foo_cell():
     sub_foo()
     return sub_foo
 
+# co_name is the name of code_block, generally is the function name or class name
 # print_all(foo_cell, 'co_varnames', 'co_nlocals', 'co_names', 'co_name')
 # co_cellvars is a tuple containing the names of local variables that are referenced by nested functions.
 # print_all(foo_cell, 'co_cellvars', 'co_freevars', 'co_consts')
@@ -169,6 +170,8 @@ def foo_4(name):
 # print_all(foo_4, 'co_cellvars', 'co_freevars', 'co_consts')
 # print foo_4.__closure__[0].cell_contents
 # print_all(foo_4.__closure__[0].cell_contents, 'co_varnames', 'co_cellvars', 'co_freevars', 'co_consts')
+
+
 
 def closure_pitfall():
     sub_f_list = []
