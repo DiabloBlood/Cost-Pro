@@ -54,21 +54,3 @@ def foo_7(a, b, c):
     return a + b + c
 
 foo_8 = partial(foo_7, a='haha')
-
-
-class Student(object):
-
-    def __init__(self, name, score):
-        self.__name = name
-        self.__score = score
-
-    def get_name(self):
-        return self.__name
-
-s = Student('sichao', 99)
-print dir(s)
-# instance s will has an extra variable __name
-s.__name = 'haha'
-print s.get_name()
-print s.__name
-print dir(s)

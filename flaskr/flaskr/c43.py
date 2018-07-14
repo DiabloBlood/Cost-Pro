@@ -124,3 +124,84 @@ Includes:
 Excludes:
 [00A] Illuminated Star
 '''
+
+
+'''
+[mbrace® Connect]
+5-year Complimentary service
+Available on every model year 2016 or newer Mercedes-Benz, mbrace Connect gives you remote access to
+your vehicle from your phone or desktop. Set alerts, use in-vehicle apps, save time when servicing,
+and get roadside assistance whenever you need it. Services include:
+Remote Start
+Remote Door Lock/Unlock
+Remote Horn & LightsRemote Diagnostics
+Roadside Assistance
+Connection
+Send2Benz™ via App
+Valet Protect
+Vehicle Finder
+Dealer Information
+Curfew Minder
+Speed Alert
+Driving Journal
+Travel Zones
+Point-of-Interest Download
+Internet Browser
+HERE™ Local Search
+mbrace in-vehicle
+Infotainment
+E-Navigator (EV/PHEV models)
+
+
+[Standard]
+[Premium Package]
+KEYLESS-GO
+Blind Spot Assist
+SiriusXM Radio with 6-month All Access trial
+
+
+[Optional]
+[Driver Assistance Package $2250]
+PRE-SAFE PLUS
+Active Blind Spot Assist
+Active Lane Keeping Assist
+BAS PLUS with Cross-Traffic Assist
+DISTRONIC PLUS with Steering Assist
+PRE-SAFE Brake with Pedestrian Recognition
+Speed Limit Assist
+
+
+[Optional]
+[Multimedia Package $2300]
+COMAND hard-drive navigation with 8.4-inch screen
+Touchpad controller
+3 years of navigation map updates
+Voice control
+5 years of SiriusXM Traffic and Weather service
+
+
+[Standard]
+[HANDS-FREE ACCESS Package]
+Electronic trunk closer
+HANDS-FREE ACCESS
+
+[Optional]
+[Air Balance Package $350]
+Air Balance cabin fragrance system
+Air Balance cabin-air purification system
+
+
+[Optional]
+[Parking Assist Package $1090]
+PARKTRONIC with Active Parking Assist
+Surround View System
+
+
+[Optional]
+[Advanced Lighting Package $1900]
+Active LED headlamps with Adaptive Highbeam Assist
+Multicolor LED ambient lighting
+Illuminated front door sills
+AMG illuminated front door sills
+'''
+
