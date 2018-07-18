@@ -51,3 +51,16 @@ o.func()
 new_class = types.TypeType('NewClass', (), d)
 o = new_class()
 o.func()
+
+print '********************************'
+
+print types.ClassType
+print type(types.ClassType)
+
+print types.TypeType
+print type(types.TypeType)
+
+print type(types.TypeType).__class__
+
+print types.MethodType
+print type(types.MethodType)`
