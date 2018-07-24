@@ -18,7 +18,7 @@ def foo():
     exec(expr, d1)
     exec(expr, d1, d2)
     
-# foo()
+foo()
 
 # print d1.keys()
 # print d2.keys()
@@ -52,6 +52,7 @@ new_class = types.TypeType('NewClass', (), d)
 o = new_class()
 o.func()
 
+
 print '********************************'
 
 print types.ClassType
@@ -63,4 +64,4 @@ print type(types.TypeType)
 print type(types.TypeType).__class__
 
 print types.MethodType
-print type(types.MethodType)`
+print type(types.MethodType)

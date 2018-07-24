@@ -40,6 +40,11 @@ cat = Cat()
 # Polymorphism, dog is Animal instance
 # print isinstance(dog, Animal)
 
+# print dog.__class__.__bases__
+# print dog.__class__.__bases__[0].__class__
+# print dog.__class__.__bases__[0].__bases__
+# print dog.__class__.__class__
+
 # print type(dog) == dog.__class__
 
 # print isinstance([1, 2, 3], (list, tuple))
@@ -84,11 +89,12 @@ def set_score(self, score):
 Student.set_score = set_score
 
 s.set_score(100)
-# print s.score
+print s.score
 
 s2.set_score(99)
 # print s2.score
 # print s.score
+# print s.__dict__
 
 class Student(object):
     __slots__ = ('name', 'age')

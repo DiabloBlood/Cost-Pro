@@ -79,7 +79,7 @@ print object.__bases__      # ()                    object没有任何父类
 print type.__class__        # <type 'type'>        type是类type的一个实例
 print type.__bases__        # (<type 'object'>,)    type的父类是object
 
-# type is the type of all types, whith definite all types. object is the base of all the other types, 所以object没有base
+# type is the type of all types, which definite all types. object is the base of all the other types, 所以object没有base
 # 
 print isinstance(object, object) # True
 print isinstance(type, object)   # True
