@@ -15,8 +15,7 @@ def test():
     c.y = 5
     print c.__dict__
     print C.__dict__.keys()
-    print c.__class__.__dict__['x']
-    print c.__class__.__dict__.keys()
+    print C.__dict__['x']
     print c.__dict__.__class__
 
 
