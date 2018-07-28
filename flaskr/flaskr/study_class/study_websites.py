@@ -19,4 +19,6 @@ http://zhaochj.github.io/2016/05/10/2016-05-10-property%E7%9A%84%E5%AE%9E%E7%8E%
 https://stackoverflow.com/questions/22108488/are-list-comprehensions-and-functional-functions-faster-than-for-loops
 https://stackoverflow.com/questions/8097408/why-python-is-so-slow-for-a-simple-for-loop
 http://leadsift.com/loop-map-list-comprehension/
+
+https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/
 '''
