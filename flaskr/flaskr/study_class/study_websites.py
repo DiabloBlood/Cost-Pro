@@ -21,6 +21,7 @@ https://stackoverflow.com/questions/8097408/why-python-is-so-slow-for-a-simple-f
 http://leadsift.com/loop-map-list-comprehension/
 
 https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/
+https://medium.com/stepping-through-the-cpython-interpreter/how-does-attribute-access-work-d19371898fee
 
 https://makina-corpus.com/blog/metier/2014/python-tutorial-understanding-python-mro-class-search-path
 https://www.python.org/download/releases/2.3/mro/
