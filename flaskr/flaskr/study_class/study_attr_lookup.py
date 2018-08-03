@@ -1,30 +1,21 @@
 
 
 
-class Foo(object):
+class A(object):
 
     x = 5
 
-    def __getattribute__(self, attr_name):
-        print attr_name
-        print '__getattribute__ first invoke!'
+    __slots__ = ('a', 'b')
 
-foo = Foo()
+    def __init__(self):
+        self.a = 1
+        self.b = 2
 
-
-class A(object):
-    def __getattribute__(self, attr_name):
-        print '{} called'.format(self.__class__.__name__)
-
-class B(A):
+class B(object):
     pass
 
-class C(B):
-    x = 5
-    def __getattribute__(self, attr_name):
-        # print '{} called'.format(self.__class__.__name__)
-        print 'haha'
-        return super(object).__getattribute__(self, attr_name)
-
-c = C()
-c.x
+t = A()
+t2 = B()
+print t.x
+print type(t.__slots__)
+print dir(A)
