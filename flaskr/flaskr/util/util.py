@@ -11,3 +11,6 @@ def get_mro(objclass, is_print=False, is_dfs=True):
 
 def show_descr(obj):
     return [attr for attr in dir(obj) if attr in ('__get__', '__set__', '__delete__')]
+
+def is_descr(obj):
+    return len(show_descr(obj)) > 0
