@@ -98,7 +98,7 @@ class C(B):
     pass
 
 t = B()
-# 7.(1). '__dict__' and '__weakref__ in subclass if superclass defined __slots__
+# 7.(1). '__dict__' and '__weakref__' in subclass if superclass defined __slots__
 assert '__dict__' in dir(B)
 assert '__weakref__' in dir(B)
 # 7.(2). if subclass not define __slots__, it will inherits from superclass
@@ -124,4 +124,30 @@ t2 = C()
 assert cmp(C.__slots__, ('c', 'd')) == 0
 assert cmp(t.__slots__, ('c', 'd')) == 0
 assert cmp(t2.__slots__, ('c', 'd')) == 0
+### Since subclass B defined __slots__, so the instance of B doesn't has '__dict__' and '__weakref__'
+assert '__dict__' not in dir(t) and '__weakref__' not in dir(t)
 
+# 8. Multiple inheritance with multiple slotted parent classes can be used, but only one parent is allowed
+#    to have attributes created by slots (the other bases must have empty slot layouts) - violations raise TypeError.
+class D(object):
+    __slots__ = ('a', 'b')
+
+class E(object):
+    pass
+
+class F(D, E):
+    pass
+### only one parent class could have __slot__
+assert cmp(F.__slots__, ('a', 'b')) == 0
+
+class D(object):
+    __slots__ = ('a', 'b')
+
+class E(object):
+    __slots__ = ('a', 'b')
+
+try:
+    class F(D, E):
+        pass
+except TypeError:
+    pass
