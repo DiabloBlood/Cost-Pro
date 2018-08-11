@@ -27,5 +27,7 @@ https://makina-corpus.com/blog/metier/2014/python-tutorial-understanding-python-
 https://www.python.org/download/releases/2.3/mro/
 
 
+https://docs.python.org/2/howto/descriptor.html#properties
+
 https://docs.python.org/3/reference/datamodel.html#descriptors
 '''

@@ -33,4 +33,3 @@ def test():
     print c.desc
 
 test()
-        
