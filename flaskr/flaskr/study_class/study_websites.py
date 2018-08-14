@@ -26,8 +26,12 @@ https://medium.com/stepping-through-the-cpython-interpreter/how-does-attribute-a
 https://makina-corpus.com/blog/metier/2014/python-tutorial-understanding-python-mro-class-search-path
 https://www.python.org/download/releases/2.3/mro/
 
-
+### Descriptor, property, function, staticmethod, classmethod, __getattribute__
 https://docs.python.org/2/howto/descriptor.html#properties
+https://docs.python.org/3/howto/descriptor.html
 
 https://docs.python.org/3/reference/datamodel.html#descriptors
+
+### How to use python3 start projects
+http://www.patricksoftwareblog.com/steps-for-starting-a-new-flask-project-using-python3/
 '''

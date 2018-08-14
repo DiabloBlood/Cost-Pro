@@ -89,7 +89,14 @@ assert p.fset is setter
 assert p.fdel is deleter
 
 
-class D(object)
+class D(object):
+    x = p
+
+d = D()
+
+assert D.x.fget is getter
+assert D.x.fset is setter
+assert D.x.fdel is deleter
 
         
 

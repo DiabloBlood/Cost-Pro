@@ -76,6 +76,11 @@ C.x.fset(c, 200)
 assert c.x == 200 and c._x == 200
 
 
+# print C.x.fget  # <function x at 0x7f64986830c8>
+# print C.x.fset  # <function x at 0x7f6498683140>
+# print C.x.fdel  # <function x at 0x7f64986831b8>
+
+
 ### p is <property object at 0x7f390f369aa0>
 ### property is <type 'property'>
 p = property()
