@@ -1,47 +1,26 @@
 # -*- coding: utf-8 -*-
 
 
+# If your class contain both getattr and getattribute magic methods then  __getattribute__ is called first.
+# But if  __getattribute__ raises  AttributeError exception then the exception will be ignored and __getattr__
+# method will be invoked. See the following example:
+
 class C(object):
 
-    a = 'abc'
+    def __init__(self):
+        self._x = 100
 
-    def __getattribute__(self, *args, **kwargs):
-        print '__getattribute__() is called'
-        return object.__getattribute__(self, *args, **kwargs)
-        # return 'haha'
+    def __getattribute__(self, key):
+        print '__getattribute__() of key[{}] is called'.format(key)
+        return object.__getattribute__(self, key)
 
-    def __getattr__(self, name):
-        print '__getattr__() is called'
-        return name, 'from getattr'
+    def __getattr__(self, key):
+        print '__getattr__() of key[{}] is called'.format(key)
 
-    def __get__(self, obj, objtype):
-        print '__get__() is called', obj, objtype
-        return self
-
-    def foo(self, x):
-        print x
+    @property
+    def x(self):
+        return self._x
 
 
-class C2(object):
-    d = C()
-
-
-def test():
-    c = C()
-    c2 = C2()
-    print '__delattr__' in object.__dict__.keys()
-    print C2.__dict__.keys()
-    print c.__dict__
-    # print C.a
-    # print C.d
-    # print c.a
-    # print c.zzzz
-    # print c2.d
-    # print c2.d.a
-
-test()
-
-# 小结: 
-# 1. 可以看出, 每次通过实例访问属性, 都会经过__getattribute__函数. 
-# 2. 而当属性不存在时, 仍然需要访问__getattribute__, 不过接着要访问__getattr__. 这就好像是一个异常处理函数. 
-# 3. 每次访问descriptor(即实现了__get__的类), 都会先经过__get__函数.
+c = C()
+print dir(c) # will call __dict__, __members__, __methods__
