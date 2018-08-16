@@ -34,4 +34,12 @@ https://docs.python.org/3/reference/datamodel.html#descriptors
 
 ### How to use python3 start projects
 http://www.patricksoftwareblog.com/steps-for-starting-a-new-flask-project-using-python3/
+
+
+
+### MetaClass
+https://www.python-course.eu/python3_road_to_metaclasses.php
+https://www.python-course.eu/python3_metaclasses.php
+https://www.pythoncentral.io/how-metaclasses-work-technically-in-python-2-and-3/
+https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Metaprogramming.html
 '''
