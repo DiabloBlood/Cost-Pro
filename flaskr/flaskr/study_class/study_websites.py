@@ -36,6 +36,8 @@ https://docs.python.org/3/reference/datamodel.html#descriptors
 http://www.patricksoftwareblog.com/steps-for-starting-a-new-flask-project-using-python3/
 
 
+### super, bound and unbound method
+https://blog.csdn.net/qq_17550379/article/details/79508630
 
 ### MetaClass
 https://www.python-course.eu/python3_road_to_metaclasses.php
