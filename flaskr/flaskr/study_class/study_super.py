@@ -11,6 +11,9 @@ c = C()
 c.func   # <bound method C.func of <__main__.C object at 0x7f610780b390>>
 C.func   # python2: <unbound method C.func>     ### python3 <function C.func at 0x7f1b92d9b6a8>
 
+C.__dict__['func']      # python2: <function func at 0x7f5592580c80>    ### python3 <function C.func at 0x7f5592580c80>
+C.func.__get__(c, C)     # <bound method C.func of <__main__.C object at 0x7ff7ae694390>>
+
 assert id(C.__dict__['func'].__get__(None, C)) == id(C.func)
 if v == 3:
     assert C.__dict__['func'].__get__(None, C) is C.func
@@ -77,6 +80,86 @@ try:
 except TypeError:
     pass
 
-t = B()
-print(super(B, t))
-print(super(A, t))
+# t = B()
+# super(B, t)     # <super: <class 'B'>, <B object>>
+# super(A, t)      # <super: <class 'A'>, <B object>>
+
+class A(object):
+    def m(self): print "save A's data"
+class B(A):
+    def m(self): print "save B's data"; super(B, self).m()
+class C(A):
+    def m(self): print "save C's data"; super(C, self).m()
+class D(B, C):
+    def m(self): print "save D's data"; super(D, self).m()
+
+d = D()
+# d.m()     # Order is mro: DBCA
+
+
+
+class Super(object):
+
+    def __init__(self, obj_type, obj=None):
+        self.__type__ = obj_type
+        self.__obj__ = obj
+
+    def __get__(self, obj, type=None):
+        if self.__obj__ is None and obj is not None:
+            return Super(self.__type__, obj)
+        else:
+            return self
+
+    # proxy use __getattr__ method, since proxy cannot find the corresponding attribute
+    def __getattr__(self, attr):
+        if isinstance(self.__obj__, self.__type__):
+            start_type = self.__obj__.__class__
+        else:
+            start_type = self.__obj__
+
+        mro = iter(start_type.__mro__)
+
+        for obj_type in mro:
+            if obj_type is self.__type__:
+                break
+
+        # Note: mro is an iterator, so the second loop
+        # picks up where the first one left off!
+
+        for obj_type in mro:
+            if attr in obj_type.__dict__:
+                x = obj_type.__dict__[attr]
+                if hasattr(x, '__get__'):
+                    x = x.__get__(self.__obj__)
+                return x
+
+        raise AttributeError, attr
+
+    def __repr__(self):
+        return '<{}, {}>'.format(self.__type__, self.__obj__)
+
+
+class A(object):
+    def m(self):
+        print self
+        return 'A'
+
+class B(A):
+    def m(self):
+        print self
+        return 'B' + Super(B, self).m()
+
+class C(A):
+    def m(self):
+        print self
+        return 'C' + Super(C, self).m()
+
+class D(C, B):
+    def m(self):
+        print self
+        return 'D' + Super(D, self).m()
+
+# print D().m() # 'DCBA'
+d = D()
+# t = Super(D, d)
+print d.m()

@@ -44,4 +44,18 @@ https://www.python-course.eu/python3_road_to_metaclasses.php
 https://www.python-course.eu/python3_metaclasses.php
 https://www.pythoncentral.io/how-metaclasses-work-technically-in-python-2-and-3/
 https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Metaprogramming.html
+
+### super method
+https://www.python.org/download/releases/2.2.3/descrintro/#cooperation
+
+https://zhuanlan.zhihu.com/p/27310028
+
+
+
+
+
+
+### study werkzeug
+https://www.zoulei.net/2016/07/25/werkzeug_note_requests_response_auto_realod/
+https://www.jianshu.com/p/d4097f7550e1
 '''
