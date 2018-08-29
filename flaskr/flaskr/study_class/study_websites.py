@@ -55,6 +55,8 @@ https://zhuanlan.zhihu.com/p/27310028
 ### study werkzeug
 https://www.zoulei.net/2016/07/25/werkzeug_note_requests_response_auto_realod/
 https://www.jianshu.com/p/d4097f7550e1
+https://github.com/python/cpython/blob/master/Lib/wsgiref/simple_server.py
+https://zhuanlan.zhihu.com/p/22536382
 
 https://gist.github.com/IamAdiSri/a379c36b70044725a85a1216e7ee9a46
 '''
