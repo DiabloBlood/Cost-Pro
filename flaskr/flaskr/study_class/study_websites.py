@@ -57,6 +57,10 @@ https://www.zoulei.net/2016/07/25/werkzeug_note_requests_response_auto_realod/
 https://www.jianshu.com/p/d4097f7550e1
 https://github.com/python/cpython/blob/master/Lib/wsgiref/simple_server.py
 https://zhuanlan.zhihu.com/p/22536382
+https://www.4async.com/2016/02/simple-implement-asyncio-to-understand-how-async-works/
+https://stackoverflow.com/questions/12625224/can-someone-give-me-an-example-of-how-select-is-alerted-to-an-fd-becoming-rea
+https://www.ibm.com/developerworks/aix/library/au-tcpsystemcalls/index.html
 
 https://gist.github.com/IamAdiSri/a379c36b70044725a85a1216e7ee9a46
+https://github.com/iamxpy/SimpleDB
 '''
