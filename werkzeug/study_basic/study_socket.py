@@ -2,7 +2,7 @@ import socket
 
 
 # host = '10.0.2.15'
-host = '127.0.0.1'
+host = '10.0.2.15'
 port = 8001
 
 addr = (host, port)
