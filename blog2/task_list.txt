@@ -1,0 +1,6 @@
+1. Connect to AWS SQL server through SSMS (Finished)
+2. Install SSMS at home (Pending)
+3. Find connect API of AWS SQL server. Learn from AWS website. Use flask_sqlalchemy connect.
+
+3. Build a table. Upload some data to test.
+4. Find UI datagrid framework.
