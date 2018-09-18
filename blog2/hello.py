@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from global_loader.loader import get_config
+
+
+conf = get_config()
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = ''
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SQLALCHEMY_ECHO=True'] = True
+app.config.update(conf)
 db = SQLAlchemy(app)
 
 
@@ -18,8 +22,8 @@ class User(db.Model):
 
 db.create_all()
 
-admin = User(username='admin', email='admin@example.com')
-guest = User(username='guest', email='guest@example.com')
+admin = User(username='admin_haha', email='admin@example.com')
+guest = User(username='guest_haha', email='guest@example.com')
 db.session.add(admin)
 db.session.add(guest)
 db.session.commit()

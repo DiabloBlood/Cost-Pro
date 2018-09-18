@@ -63,4 +63,12 @@ https://www.ibm.com/developerworks/aix/library/au-tcpsystemcalls/index.html
 
 https://gist.github.com/IamAdiSri/a379c36b70044725a85a1216e7ee9a46
 https://github.com/iamxpy/SimpleDB
+
+
+### jinja and react
+https://medium.com/@Pinterest_Engineering/how-we-switched-our-template-rendering-engine-to-react-a799a3d540b0
+
+### react
+https://reactjs.org/docs/getting-started.html
+https://reactjs.org/tutorial/tutorial.html
 '''
