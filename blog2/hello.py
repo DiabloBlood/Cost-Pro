@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 from global_loader.loader import get_config
@@ -20,8 +20,9 @@ class User(db.Model):
     def __repr__(self):
         return "<User (username='{}', email='{}')>".format(self.username, self.email)
 
-db.create_all()
+# db.create_all()
 
+'''
 admin = User(username='admin_haha', email='admin@example.com')
 guest = User(username='guest_haha', email='guest@example.com')
 db.session.add(admin)
@@ -30,3 +31,12 @@ db.session.commit()
 
 print(User.query.all())
 print(User.query.filter_by(username='admin').first())
+'''
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+if __name__ == '__main__':
+    app.run(host='10.0.2.15', port=8001)

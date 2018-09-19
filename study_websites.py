@@ -71,4 +71,9 @@ https://medium.com/@Pinterest_Engineering/how-we-switched-our-template-rendering
 ### react
 https://reactjs.org/docs/getting-started.html
 https://reactjs.org/tutorial/tutorial.html
+http://funhacks.net/2016/12/06/flask_react_news/
+
+
+### Restful API
+https://www.zhihu.com/question/28557115
 '''
