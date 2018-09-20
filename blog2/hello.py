@@ -35,8 +35,12 @@ print(User.query.filter_by(username='admin').first())
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_like.html')
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 
 if __name__ == '__main__':
-    app.run(host='10.0.2.15', port=8001)
+    app.run(host='10.0.2.15', port=8001, debug=True, use_reloader=True)
