@@ -72,8 +72,15 @@ https://medium.com/@Pinterest_Engineering/how-we-switched-our-template-rendering
 https://reactjs.org/docs/getting-started.html
 https://reactjs.org/tutorial/tutorial.html
 http://funhacks.net/2016/12/06/flask_react_news/
+https://reactjs.org/docs/state-and-lifecycle.html
 
 
 ### Restful API
 https://www.zhihu.com/question/28557115
+
+### Deploy front-end
+https://www.zhihu.com/question/20790576
+
+### Back end folders structure
+https://zhuanlan.zhihu.com/p/30825271
 '''

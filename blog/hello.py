@@ -1,14 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
 from global_loader.loader import get_config
 
 
-conf = get_config()
+# conf = get_config()
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_ECHO=True'] = True
-app.config.update(conf)
+# app.config.update(conf)
 db = SQLAlchemy(app)
 
 
@@ -35,11 +35,15 @@ print(User.query.filter_by(username='admin').first())
 
 @app.route('/')
 def index():
-    return render_template('index_like.html')
+    return render_template('index.html')
 
 @app.route('/test')
 def test():
-    return render_template('test.html')
+    return render_template('/test/index_like.html')
+
+@app.route('/src/<path:filename>', methods=['GET'])
+def get_client_src(filename):
+    return send_from_directory('client/src', filename)
 
 
 if __name__ == '__main__':
