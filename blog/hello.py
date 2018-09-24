@@ -37,13 +37,14 @@ print(User.query.filter_by(username='admin').first())
 def index():
     return render_template('index.html')
 
-@app.route('/test')
-def test():
-    return render_template('/test/index_like.html')
+### test folder templates
+@app.route('/test/<path:filename>', methods=['GET'])
+def test(filename):
+    return render_template('/test/{}'.format(filename))
 
 @app.route('/src/<path:filename>', methods=['GET'])
 def get_client_src(filename):
-    return send_from_directory('client/src', filename)
+    return send_from_directory('static/src', filename)
 
 
 if __name__ == '__main__':
