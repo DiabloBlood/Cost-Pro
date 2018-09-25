@@ -1,6 +1,7 @@
 var ReactTable = window.ReactTable.default;
 
 class App extends React.Component {
+
   constructor() {
     super();
     this.state = {

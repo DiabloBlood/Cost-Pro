@@ -46,6 +46,11 @@ def test(filename):
 def get_client_src(filename):
     return send_from_directory('static/src', filename)
 
+@app.route('/data', methods=['GET'])
+def data():
+    from utils.file_io import read_json_list
+    pass
+
 
 if __name__ == '__main__':
     app.run(host='10.0.2.15', port=8001, debug=True, use_reloader=True)
