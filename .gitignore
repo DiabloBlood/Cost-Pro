@@ -4,3 +4,4 @@ env/
 *.json
 *.csv
 *.CSV
+blog/client/node_modules

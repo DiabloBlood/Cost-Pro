@@ -84,4 +84,9 @@ https://www.zhihu.com/question/20790576
 
 ### Back end folders structure
 https://zhuanlan.zhihu.com/p/30825271
+
+
+### Webpack and babel
+https://zhuanlan.zhihu.com/p/24648188
+https://github.com/slashhuang/blog/issues/1
 '''
