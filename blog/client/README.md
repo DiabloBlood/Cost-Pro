@@ -10,4 +10,4 @@ npm install babel-loader @babel/core @babel/preset-env @babel/preset-react --sav
 npm install react react-dom --save
 
 ### install google materials UI
-npm install @material-ui/core
+npm install @material-ui/core --save

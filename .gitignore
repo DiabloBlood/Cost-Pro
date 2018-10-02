@@ -1,9 +1,9 @@
 __pycache__
 *.pyc
 env/
-*.json
 *.csv
 *.CSV
 blog/client/node_modules
+blog/client/package-lock.json
 blog/static/src
 blog/static/src_test
