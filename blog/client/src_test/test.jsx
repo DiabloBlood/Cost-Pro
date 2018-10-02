@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button'
 
 
 
@@ -18,7 +19,18 @@ class ShoppingList extends React.Component {
   }
 }
 
+const App = () => {
+    return (
+      <Button variant="contained" color="primary">Hello World</Button>
+    );
+};
+
 ReactDOM.render(
     <ShoppingList name="test" />,
+    document.getElementById('test_field')
+);
+
+ReactDOM.render(
+    <App name="test_button" />,
     document.getElementById('test_field')
 );
