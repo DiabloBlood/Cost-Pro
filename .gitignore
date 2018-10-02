@@ -5,4 +5,3 @@ env/
 *.csv
 *.CSV
 blog/client/node_modules
-blog/client/wd/node_modules

@@ -1,17 +1,20 @@
+const path = require('path');
+
 module.exports = {
-    entry: __dirname + '/src/app.js',
+    mode: 'development',
+    entry: __dirname + '/src_test/test.jsx',
     output: {
-        path: __dirname + '/bin',
-        filename: 'bundle.js'
+        path: path.resolve('../') + '/static/src_test',
+        filename: 'test.bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react']
                 }
             }
         ]

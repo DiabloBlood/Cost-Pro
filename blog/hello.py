@@ -46,6 +46,11 @@ def test(filename):
 def get_client_src(filename):
     return send_from_directory('static/src', filename)
 
+@app.route('/src_test/<path:filename>', methods=['GET'])
+def get_client_src_test(filename):
+    return send_from_directory('static/src_test', filename)
+
+
 @app.route('/data', methods=['GET'])
 def data():
     from utils.file_io import read_json_list
