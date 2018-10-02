@@ -1,6 +1,6 @@
 ### install webpack
 
-npm init
+npm init -y
 npm install webpack webpack-cli --save-dev
 
 ### install babel-core, babel-loader

@@ -5,3 +5,5 @@ env/
 *.csv
 *.CSV
 blog/client/node_modules
+blog/static/src
+blog/static/src_test
