@@ -11,3 +11,6 @@ npm install react react-dom --save
 
 ### install google materials UI
 npm install @material-ui/core --save
+
+### install react-table
+npm install react-table --save
