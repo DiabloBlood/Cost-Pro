@@ -14,3 +14,6 @@ npm install @material-ui/core --save
 
 ### install react-table
 npm install react-table --save
+
+### install css loader, style loader
+npm install css-loader style-loader --save-dev
