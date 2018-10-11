@@ -2,7 +2,7 @@ from app import db
 
 
 
-class TransHistory(db.Model)
+class TransHistory(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     trans_id = db.Column(db.String(63), unique=True, nullable=False)
     amount = db.Column(db.Float(), nullable=False)
