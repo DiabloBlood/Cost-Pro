@@ -7,8 +7,12 @@ test = Blueprint('test', __name__, url_prefix='/test')
 
 @test.route('/')
 def index():
-    return "<h1>Hello to Test Page!</h1>"
+    # return "<h1>Hello to Test Page!</h1>"
+    return render_template('test/test.html')
 
+@test.route('/src_test/<path:filename>', methods=['GET'])
+def get_client_src_test(filename):
+    return send_from_directory('static/src_test', filename)
 '''
 ### test folder templates
 @test.route('/test', methods=['GET'])
