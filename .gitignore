@@ -3,9 +3,9 @@ __pycache__
 env/
 *.csv
 *.CSV
-blog/client/node_modules
-blog/client/package-lock.json
-blog/static/src
-blog/static/src_test
-blog/migrations
-blog/configs
+costpro/client/node_modules
+costpro/client/package-lock.json
+costpro/static/src
+costpro/static/src_test
+costpro/migrations
+costpro/configs
