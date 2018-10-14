@@ -9,3 +9,5 @@ costpro/static/src
 costpro/static/src_test
 costpro/migrations
 costpro/configs
+migrations/
+pending/*.json
