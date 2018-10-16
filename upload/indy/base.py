@@ -1,31 +1,11 @@
 import os
 from collections import OrderedDict
-from pprint import pprint
 import traceback
 
-from util.file_io import write_json_file, read_json_file, get_rows_from_csv, get_all_filenames
-from util.general import get_month_tag
+import sys
+sys.path.append('..')
+import utils.file_io, utils.general
 
-
-"""
-All the directory or path variable names in this piece of code refer to relative paths.
-If a directory var name refer to an absolute paths, the var name will contains "abs" to specify.
-"""
-
-def process_indy_trans(input_dir):
-    """
-    :type input_dir: string
-    :param input_dir: relative path name of input folder
-    """
-    assert isinstance(input_dir, basestring), 'The input folder name must be a string!'
-    assert os.path.isdir(input_dir), 'The input folder must be a directory!'
-    indy_trans = IndyTrans(input_dir)
-    if indy_trans.process():
-        print 'Process all indy csv files successfully!'
-    else:
-        raise Exception('Process indy csv files failed!')
-
-    return True
 
 
 class IndyTrans(object):
@@ -33,9 +13,9 @@ class IndyTrans(object):
     Parse and calculte indy statements and transactions (Chase statement PDF before Aug 2015)
     """
     SIGNATURE = 'INDY-'
-    OUTPUT_DIR = 'all_indy_jsons'
-    BY_MONTH_OUTPUT_DIR = 'all_indy_by_month_jsons'
-    ALL_MERGED_FILENAME = 'all_indy_init.json'
+    OUTPUT_DIR = 'files/all_indy_jsons'
+    BY_MONTH_OUTPUT_DIR = 'files/all_indy_by_month_jsons'
+    ALL_MERGED_FILENAME = 'files/all_indy_init.json'
     INIT_BALANCE = 0.0
     PRECISION = 0.000001
 
@@ -63,14 +43,14 @@ class IndyTrans(object):
                 self._write_json_file(rows, output_file_path)
             self._merge_json_file()
             self._split_by_month()
-        except Exception, e:
-            traceback.print_exc()
+        except Exception as e:
             result = False
+            raise
         return result
 
 
     def _get_all_filenames(self, dirname):
-        return get_all_filenames(dirname)
+        return utils.file_io.get_all_filenames(dirname)
 
 
     def _make_all_output_dirs(self):
@@ -87,15 +67,15 @@ class IndyTrans(object):
 
 
     def _read_json_file(self, json_file_path):
-        return read_json_file(json_file_path)
+        return utils.file_io.read_json_file(json_file_path)
 
 
     def _get_rows_from_csv(self, csv_file_path):
-        return get_rows_from_csv(csv_file_path)
+        return utils.file_io.get_rows_from_csv(csv_file_path)
 
 
     def _write_json_file(self, rows, output_file_path):
-        write_json_file(rows, output_file_path)
+        utils.file_io.write_json_file(rows, output_file_path)
 
 
     def _merge_json_file(self):
@@ -106,7 +86,7 @@ class IndyTrans(object):
             json_file_path = os.path.join(self.output_dir, json_filename)
             result.extend(self._read_json_file(json_file_path))
         for i in range(len(result)):
-            result[i]['TRANSACTION_ID'] = self.SIGNATURE + str(i + 1)
+            result[i]['trans_id'] = self.SIGNATURE + str(i + 1)
         self._write_json_file(result, self.ALL_MERGED_FILENAME)
 
 
@@ -128,10 +108,10 @@ class IndyTrans(object):
 
     def _get_rows(self, input_file_path, input_filename):
         result = []
-        rows = self.get_rows_from_csv(input_file_path)
+        rows = self._get_rows_from_csv(input_file_path)
         for row in rows:
             temp = OrderedDict()
-            temp['TRANSACTION_ID'] = ''
+            temp['trans_id'] = ''
             temp['begin_balance'] = self.begin_balance
             temp['amount'] = float(self._num_remove_comma(row['Amount']))
             temp['this_balance'] = float(self._num_remove_comma(row['Balance']))
@@ -141,10 +121,10 @@ class IndyTrans(object):
 
             des_str = row['Description']
             temp['description'] = ' '.join(des_str[6:len(des_str) + 1].split())
-            temp['date'] = self._make_date(des_str, input_filename)
-            temp['month_tag'] = self._get_month_tag(temp['date'])
+            temp['trans_date'] = self._make_date(des_str, input_filename)
+            temp['month_tag'] = self._get_month_tag(temp['trans_date'])
             temp['card_type'] = 'chase_debit'
-            temp['tag'] = 'income' if temp['amount'] > 0.0 else 'expense'
+            temp['trans_type'] = 'income' if temp['amount'] > 0.0 else 'expense'
             result.append(temp)
         return result 
 
@@ -156,7 +136,7 @@ class IndyTrans(object):
 
     def _check_exception(self, amount, balance, row, input_filename):
         if abs(self.begin_balance + amount - balance) >= self.PRECISION:
-            print self.begin_balance, row, input_filename
+            print(self.begin_balance, row, input_filename)
             raise Exception('Missing Record!')
 
 
@@ -170,8 +150,4 @@ class IndyTrans(object):
 
 
     def _get_month_tag(self, date_str):
-        return get_month_tag(date_str)
-
-
-if __name__ == '__main__':
-    process_indy_trans('all_indy_csvs')
+        return utils.general.get_month_tag(date_str)

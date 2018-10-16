@@ -2,12 +2,11 @@ __pycache__
 *.pyc
 env/
 *.csv
-*.CSV
+*.json
+!costpro/client/package.json
 costpro/client/node_modules
-costpro/client/package-lock.json
 costpro/static/src
 costpro/static/src_test
 costpro/migrations
 costpro/configs
 migrations/
-upload/*.json

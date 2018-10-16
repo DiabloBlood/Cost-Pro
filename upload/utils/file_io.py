@@ -14,7 +14,8 @@ def write_json_file(rows, output_file_path):
     with open(output_file_path, 'w') as f:
         f.truncate()
         f.write(rows_json)
-    print 'File ' + output_file_path + ' finished! Counts: ' + str(len(rows))
+
+    print("File {} finished! Counts: {}".format(output_file_path, len(rows)))
 
 
 def read_json_file(json_file_path):
