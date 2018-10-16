@@ -19,7 +19,7 @@ class TransHistory(db.Model):
     trans_date = db.Column(db.Date(), nullable=False)
     month_tag = db.Column(db.String(63), nullable=False)
     year = db.Column(db.Integer(), nullable=False)
-    year = db.Column(db.Integer(), nullable=False)
+    month = db.Column(db.Integer(), nullable=False)
     category_1 = db.Column(db.String(63), nullable=False)
     category_2 = db.Column(db.String(63), nullable=False)
     category_3 = db.Column(db.String(63), nullable=False)

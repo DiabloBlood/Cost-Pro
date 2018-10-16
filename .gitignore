@@ -10,4 +10,4 @@ costpro/static/src_test
 costpro/migrations
 costpro/configs
 migrations/
-pending/*.json
+upload/*.json

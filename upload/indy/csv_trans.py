@@ -5,15 +5,6 @@ from util.general import get_month_tag
 from pprint import pprint
 import traceback
 
-'''
-86 Victor Oladipo defensive SG
-86 Al Horford shooting C
-86 Alonzo Mourning rng C
-87 Glen Rice power SG
-87 Oscar Robertson power SF
-87 Gordon Hayward balanced SF
-'''
-
 def process_chase_csv_trans(input_filename):
     """
     :type input_filename: string
