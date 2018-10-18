@@ -1,6 +1,9 @@
 import os
 from collections import OrderedDict
 import traceback
+import datetime
+
+from global_var import *
 
 import sys
 sys.path.append('..')
@@ -25,10 +28,12 @@ class IndyTrans(object):
         :type input_dir: string
         :param input_dir: relative path name of input folder
         """
+        self.signature = SIGNATURE
         self.input_dir = input_dir
-        self.output_dir = self.OUTPUT_DIR
-        self.by_month_output_dir = self.BY_MONTH_OUTPUT_DIR
-        self.begin_balance = self.INIT_BALANCE
+        self.output_dir = OUTPUT_DIR
+        self.by_month_output_dir = BY_MONTH_OUTPUT_DIR
+        self.begin_balance = INIT_BALANCE
+        self.precision = PRECISION
         self.csv_list = self._get_all_filenames(self.input_dir)
         self._make_all_output_dirs()
 
@@ -86,7 +91,7 @@ class IndyTrans(object):
             json_file_path = os.path.join(self.output_dir, json_filename)
             result.extend(self._read_json_file(json_file_path))
         for i in range(len(result)):
-            result[i]['trans_id'] = self.SIGNATURE + str(i + 1)
+            result[i]['trans_id'] = self.signature + str(i + 1)
         self._write_json_file(result, self.ALL_MERGED_FILENAME)
 
 
@@ -122,7 +127,11 @@ class IndyTrans(object):
             des_str = row['Description']
             temp['description'] = ' '.join(des_str[6:len(des_str) + 1].split())
             temp['trans_date'] = self._make_date(des_str, input_filename)
-            temp['month_tag'] = self._get_month_tag(temp['trans_date'])
+            obj_date = datetime.datetime.strptime(temp['trans_date'], '%m/%d/%Y')
+            temp['year'] = obj_date.year
+            temp['month'] = obj_date.month
+            month = obj_date.month if obj_date.month > 9 else '0{}'.format(obj_date.month)
+            temp['month_tag'] = '{}-{}'.format(obj_date.year, month)
             temp['card_type'] = 'chase_debit'
             temp['trans_type'] = 'income' if temp['amount'] > 0.0 else 'expense'
             result.append(temp)
@@ -135,7 +144,7 @@ class IndyTrans(object):
 
 
     def _check_exception(self, amount, balance, row, input_filename):
-        if abs(self.begin_balance + amount - balance) >= self.PRECISION:
+        if abs(self.begin_balance + amount - balance) >= self.precision:
             print(self.begin_balance, row, input_filename)
             raise Exception('Missing Record!')
 
@@ -147,7 +156,3 @@ class IndyTrans(object):
         if input_filename[4:6] == '01' and month_and_day[0:2] == '12':
             year = str(int(year) - 1)
         return month_and_day + '/' + year
-
-
-    def _get_month_tag(self, date_str):
-        return utils.general.get_month_tag(date_str)

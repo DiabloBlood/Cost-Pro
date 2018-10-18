@@ -10,7 +10,6 @@ def create_app():
 
     # setup configs
     conf = get_config()
-    app.config['SQLALCHEMY_ECHO=True'] = True
     app.config.update(conf)
 
     # setup database
