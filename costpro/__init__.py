@@ -1,6 +1,6 @@
 from flask import Flask
-from costpro.utils.loader import get_config
 from costpro.model import db, TransHistory
+from costpro.utils.loader import get_config
 
 
 
@@ -16,8 +16,10 @@ def create_app():
     db.init_app(app)
 
     # register views
+    from costpro.api.api import api
     from costpro.views.dashboard import dashboard
     from costpro.views.test import test
+    app.register_blueprint(api)
     app.register_blueprint(dashboard)
     app.register_blueprint(test)
 

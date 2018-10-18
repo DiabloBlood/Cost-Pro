@@ -1,5 +1,5 @@
 import os
-from costpro.utils.file_io import read_json_dict
+from costpro.utils.io import read_json_dict
 
 
 

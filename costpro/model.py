@@ -26,6 +26,6 @@ class TransHistory(db.Model):
     pattern = db.Column(db.String(255))
 
     def __repr__(self):
-        return '<Trans {}, {}, {}, {}>' \
-            .format(self.id, self.category_1, self.category_2, self.category_3)
+        return '<Trans {}, {}, {}, {}, {}>' \
+            .format(self.id, self.trans_id, self.category_1, self.category_2, self.category_3)
 
