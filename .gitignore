@@ -6,7 +6,6 @@ env/
 !costpro/client/package.json
 costpro/client/node_modules
 costpro/static/src
-costpro/static/src_test
 costpro/migrations
 configs/
 migrations/

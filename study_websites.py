@@ -76,6 +76,12 @@ https://reactjs.org/docs/state-and-lifecycle.html
 http://0x0886.com/posts/engineering/how-to-use-webpack.html
 https://github.com/dternyak/React-Redux-Flask
 
+### ES6 coding style
+http://es6.ruanyifeng.com/#docs/style
+### what is prototype
+https://segmentfault.com/a/1190000000602050
+https://www.zhihu.com/question/19728465
+
 ### Restful API
 https://www.zhihu.com/question/28557115
 
