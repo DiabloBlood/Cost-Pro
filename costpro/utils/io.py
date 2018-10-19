@@ -1,8 +1,10 @@
+import inspect
 import json
 from collections import OrderedDict
 import datetime
 
 from costpro import db
+from costpro import model
 
 
 """
@@ -33,6 +35,16 @@ def object_as_dict(obj):
 
 def orm_list_as_dict(obj_list):
     return [object_as_dict(obj) for obj in obj_list]
+
+
+def get_model_columns(table_name):
+    columns = None
+    for name, obj_class in inspect.getmembers(model, inspect.isclass):
+        if name == table_name and issubclass(obj_class, db.Model):
+            # columns = io.get_model_columns()
+            columns = [{'Header': col.key, 'accessor': col.key} for col in \
+                db.inspect(obj_class).mapper.column_attrs]
+    return columns
 
 
 ### convert args, form methods

@@ -7,7 +7,7 @@ dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 
 @dashboard.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('dashboard.html')
 
 ### test folder templates
 @dashboard.route('/test', methods=['GET'])

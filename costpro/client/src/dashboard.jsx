@@ -2,27 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ReactTable from 'react-table';
+import axios from 'axios'
+
 import 'react-table/react-table.css';
 
 
-
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: [],
-      pages: null,
-      loading: true
-    };
-    this.fetchData = this.fetchData.bind(this);
-  }
-}
 
 class DataGrid extends React.Component {
 
   constructor() {
     super();
     this.state = {
+      columns: [],
       data: [],
       pages: null,
       loading: true
@@ -31,24 +22,31 @@ class DataGrid extends React.Component {
   }
 
   fetchData(state, instance) {
+    console.log(state);
+    console.log(instance);
     // Whenever the table model changes, or the user sorts or changes pages,
     // this method gets called and passed the current table model.
     // You can set the `loading` prop of the table to true to use the built-in one
     // or show you're own loading bar if you want.
     this.setState({ loading: true });
+
+    // get columns from server-side
+
     // Request the data however you want.
-    requestData(
-      state.pageSize,
-      state.page,
-      state.sorted,
-      state.filtered
-    ).then(res => {
-      // Now just get the rows of data to your React Table (and update anything else like total pages or loading)
+    let dataUrl = '/api/v1/data';
+    let dataParams = {
+      page: 1,
+      pageSize: 10
+    }
+
+    axios.get(dataUrl, dataParams).then((response) => {
       this.setState({
-        data: res.rows,
-        pages: res.pages,
+        data: response.data.rows,
+        pages: response.data.total_size,
         loading: false
       });
+    }).then((error) => {
+      throw "Load server-side data failed!"
     });
   }
 
@@ -84,4 +82,4 @@ class DataGrid extends React.Component {
   }
 }
 
-ReactDOM.render(<DataGrid />, document.getElementById('test_field'))
+ReactDOM.render(<DataGrid />, document.getElementById('dashboard'))

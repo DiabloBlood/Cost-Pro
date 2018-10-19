@@ -1,4 +1,8 @@
-from flask import request, Blueprint, jsonify
+import inspect
+from costpro import model
+
+
+from flask import request, Blueprint, jsonify, abort
 from costpro import db, TransHistory
 import costpro.utils.io as io
 
@@ -19,6 +23,17 @@ def v1_data():
         .order_by(TransHistory.id.asc()) \
         .paginate(page=page, per_page=page_size)
 
-    data = io.orm_list_as_dict(result.items)
+    total_pages = result.total / page_size
 
-    return jsonify(total_size=result.total, data=data)
+    rows = io.orm_list_as_dict(result.items)
+
+    return jsonify(rows=rows, total_pages=total_pages, total_size=total_size)
+
+
+@api.route('/v1/columns/<table_name>', methods=['GET'])
+def v1_columns(table_name):
+    columns = io.get_model_columns(table_name)
+    if not columns:
+        abort(404, '404 NOT FOUND!!!')
+
+    return jsonify(columns=columns)
