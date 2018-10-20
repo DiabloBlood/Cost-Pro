@@ -14,7 +14,7 @@ api = Blueprint('api', __name__, url_prefix='/api')
 @api.route('/v1/data', methods=['GET'])
 def v1_data():
     page = request.args.get('page')
-    page_size = request.args.get('page_size')
+    page_size = request.args.get('pageSize')
 
     page = io.convert_int(page)
     page_size = io.convert_int(page_size)
@@ -27,7 +27,7 @@ def v1_data():
 
     rows = io.orm_list_as_dict(result.items)
 
-    return jsonify(rows=rows, total_pages=total_pages, total_size=total_size)
+    return jsonify(rows=rows, total_pages=total_pages, total_size=result.total)
 
 
 @api.route('/v1/columns/<table_name>', methods=['GET'])

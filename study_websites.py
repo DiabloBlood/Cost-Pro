@@ -75,6 +75,8 @@ http://funhacks.net/2016/12/06/flask_react_news/
 https://reactjs.org/docs/state-and-lifecycle.html
 http://0x0886.com/posts/engineering/how-to-use-webpack.html
 https://github.com/dternyak/React-Redux-Flask
+### shorthand object destructuring
+https://medium.com/walmartlabs/make-your-react-components-pretty-a1ae4ec0f56e
 
 ### ES6 coding style
 http://es6.ruanyifeng.com/#docs/style
