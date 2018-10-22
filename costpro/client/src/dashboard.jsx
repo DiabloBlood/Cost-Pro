@@ -50,20 +50,24 @@ class DataGrid extends React.Component {
     console.log(state.pageSize);
     console.log(state.sorted);
     console.log(state.filtered);
-    console.log(state.resized);
-    console.log(state.expanded);
 
     this.setState({
       loading: true
     });
+
+    let queryParams = {
+      page: state.page + 1,
+      pageSize: state.pageSize,
+      sorted: state.sorted,
+      filtered: state.filtered
+    }
 
     //Request the data however you want.
 
     let url = '/api/v1/data';
     let params = {
       params: {
-        page: state.page + 1,
-        pageSize: state.pageSize
+        value: btoa(JSON.stringify(queryParams))
       }
     }
 
@@ -95,7 +99,7 @@ class DataGrid extends React.Component {
           loading={loading} // Display the loading overlay when we need it
           onFetchData={this.fetchData} // Request new data when things change
           filterable
-          defaultPageSize={5}
+          defaultPageSize={10}
           pageSizeOptions={[5, 10, 20]}
           className="-striped -highlight"
         />

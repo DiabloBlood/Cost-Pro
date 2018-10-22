@@ -1,10 +1,7 @@
-import inspect
 import json
+import base64
 from collections import OrderedDict
-import datetime
 
-from costpro import db
-from costpro import model
 
 
 """
@@ -23,28 +20,9 @@ def read_json_list(json_file_path):
     return json_list
 
 
-def object_as_dict(obj):
-    row = {col.key: getattr(obj, col.key) for col in db.inspect(obj).mapper.column_attrs}
-    for key in row:
-        value = row[key]
-        if isinstance(value, datetime.date):
-            value = value.strftime("%m/%d/%Y")
-        row[key] = value
-    return row
-
-
-def orm_list_as_dict(obj_list):
-    return [object_as_dict(obj) for obj in obj_list]
-
-
-def get_model_columns(table_name):
-    columns = None
-    for name, obj_class in inspect.getmembers(model, inspect.isclass):
-        if name == table_name and issubclass(obj_class, db.Model):
-            # columns = io.get_model_columns()
-            columns = [{'Header': col.key, 'accessor': col.key} for col in \
-                db.inspect(obj_class).mapper.column_attrs]
-    return columns
+def b64_to_dict(b64_str):
+    ascii_str = base64.b64decode(b64_str).decode('utf-8')
+    return json.loads(ascii_str)
 
 
 ### convert args, form methods

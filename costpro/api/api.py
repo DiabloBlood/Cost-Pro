@@ -1,10 +1,6 @@
-import inspect
-from costpro import model
-
-
 from flask import request, Blueprint, jsonify, abort
-from costpro import db, TransHistory
-import costpro.utils.io as io
+import costpro.api.sa_helper as sa_helper
+from costpro.model import TransHistory
 
 
 
@@ -13,26 +9,19 @@ api = Blueprint('api', __name__, url_prefix='/api')
 
 @api.route('/v1/data', methods=['GET'])
 def v1_data():
-    page = request.args.get('page')
-    page_size = request.args.get('pageSize')
+    # TODO get a query params dict, then separate
+    # 1. base params, page, pageSize
+    value = request.args.get('value')
+    grid_helper = sa_helper.GridHelper(value, TransHistory)
 
-    page = io.convert_int(page)
-    page_size = io.convert_int(page_size)
+    rows, total_pages, total_size = grid_helper.process()
 
-    result = db.session.query(TransHistory) \
-        .order_by(TransHistory.id.asc()) \
-        .paginate(page=page, per_page=page_size)
-
-    total_pages = result.total / page_size
-
-    rows = io.orm_list_as_dict(result.items)
-
-    return jsonify(rows=rows, total_pages=total_pages, total_size=result.total)
+    return jsonify(rows=rows, total_pages=total_pages, total_size=total_size)
 
 
 @api.route('/v1/columns/<table_name>', methods=['GET'])
 def v1_columns(table_name):
-    columns = io.get_model_columns(table_name)
+    columns = sa_helper.get_model_columns(table_name)
     if not columns:
         abort(404, '404 NOT FOUND!!!')
 
