@@ -45,6 +45,8 @@ class GridHelper(object):
                 col_clause = db.column(sort['id'])
                 col_clause = col_clause.desc() if sort['desc'] else col_clause.asc()
                 query_obj = query_obj.order_by(col_clause)
+        else:
+            query_obj = query_obj.order_by(self.table.id.asc())
 
         if params['filtered']:
             for fil in params['filtered']:
@@ -58,7 +60,7 @@ class GridHelper(object):
 
     def process(self):
         query_result = self._build_query_result()
-        total_pages = query_result.total / self.params['pageSize']
+        total_pages = int(query_result.total / self.params['pageSize'])
         rows = [self._object_as_dict(obj) for obj in query_result.items]
         return rows, total_pages, query_result.total
 
