@@ -2,10 +2,13 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: __dirname + '/src/dashboard.jsx',
+    entry: {
+        dashboard: __dirname + '/src/dashboard.jsx',
+        test: __dirname + '/src/test.jsx'
+    },
     output: {
         path: path.resolve('../') + '/static/src',
-        filename: 'dashboard.bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -22,5 +25,10 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             }
         ]
+    },
+    resolve: {
+        alias: {
+            src: path.resolve(__dirname, 'src/')
+        }
     }
 }

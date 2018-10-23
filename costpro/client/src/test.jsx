@@ -1,36 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button'
+
+import Sidebar from 'src/components/Sidebar.jsx';
+//import image from './assets/img/sidebar-3.jpg';
+//import logo from './assets/img/reactlogo.png';
 
 
-
-class ShoppingList extends React.Component {
+class App extends React.component {
   render() {
     return (
-      <div className="shopping-list">
-        <h2>Shopping List for {this.props.name}</h2>
-        <ul>
-          <li>Instagram</li>
-          <li>WhatsApp</li>
-          <li>Oculus</li>
-        </ul>
-      </div>
-    );
+      <Sidebar
+        logoText={"Creative Tim"}
+        color="blue"
+      />
+    )
   }
 }
 
-const App = () => {
-    return (
-      <Button variant="contained" color="primary">Hello World</Button>
-    );
-};
+
 
 ReactDOM.render(
-    <ShoppingList name="test" />,
-    document.getElementById('test_field')
-);
-
-ReactDOM.render(
-    <App name="test_button" />,
+    <App name="test_app" />,
     document.getElementById('test_field')
 );

@@ -19,3 +19,7 @@ npm install react-table --save
 npm install css-loader style-loader --save-dev
 
 $ npm install axios --save
+
+$ npm install react-bootstrap --save
+$ npm install bootstrap@3 --save
+$ npm install react-router-dom --save
