@@ -15,18 +15,18 @@ import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import CustomInput from "src/components/CustomInput.jsx";
+import Button from "src/components/Button.jsx";
 
-import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
+import headerLinksStyle from "src/assets/jss/styles/components/headerLinksStyle.jsx";
 
 class HeaderLinks extends React.Component {
 
   constructor(props) {
     super(props);
-      state = {
-        open: false
-      };
+    this.state = {
+      open: false
+    };
   }
 
   handleToggle() {
