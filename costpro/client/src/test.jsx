@@ -11,6 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import Drawer from "@material-ui/core/Drawer";
 
 import Dashboard from "@material-ui/icons/Dashboard";
 
@@ -28,15 +29,17 @@ class App extends React.Component {
 
     return (
       <div>
-        <List className={classes.list}>
-          <ListItem button className={classes.itemLink}>
-            <ListItemIcon className={classes.itemIcon}>
-              <Dashboard />
-            </ListItemIcon>
-            <ListItemText primary={'Dashboard'} className={classes.itemText}>
-            </ListItemText>
-          </ListItem>
-        </List>
+        <Drawer open={true} variant="temporary" anchor="left">
+          <List className={classes.list}>
+            <ListItem button className={classes.itemLink}>
+              <ListItemIcon className={classes.itemIcon}>
+                <Dashboard />
+              </ListItemIcon>
+              <ListItemText primary={'Dashboard'} className={classes.itemText}>
+              </ListItemText>
+            </ListItem>
+          </List>
+        </Drawer>
       </div>
     )
   }
