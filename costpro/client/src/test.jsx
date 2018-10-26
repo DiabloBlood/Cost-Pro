@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 //import Sidebar from 'src/components/Sidebar.jsx';
 import image from 'src/assets/img/sidebar-3.jpg';
-//import logo from './assets/img/reactlogo.png';
+import logo from 'src/assets/img/reactlogo.png';
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import List from "@material-ui/core/List";
@@ -25,34 +25,42 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, image } = this.props;
+    const { classes, image, logo, logoText } = this.props;
+
+    const brand = (
+      <div className={classes.logo}>
+        <div className={classes.logoImage}>
+          <img src={logo} alt="logo" className={classes.img} />
+          <span>{logoText}</span>
+        </div>
+      </div>
+    );
 
     return (
-      <div>
-        <Drawer
-          anchor="left"
-          variant="permanent"
-          open
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <List className={classes.list}>
-            <ListItem button className={classes.itemLink}>
-              <ListItemIcon className={classes.itemIcon}>
-                <Dashboard />
-              </ListItemIcon>
-              <ListItemText primary={'Dashboard'} className={classes.itemText}>
-              </ListItemText>
-            </ListItem>
-          </List>
+      <Drawer
+        anchor="left"
+        variant="permanent"
+        open
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        {brand}
+        <List className={classes.list}>
+          <ListItem button className={classes.itemLink}>
+            <ListItemIcon className={classes.itemIcon}>
+              <Dashboard />
+            </ListItemIcon>
+            <ListItemText primary={'Dashboard'} className={classes.itemText}>
+            </ListItemText>
+          </ListItem>
+        </List>
 
-          <div
-            className={classes.background}
-            style={{ backgroundImage: `url(${image})` }}
-          />
-        </Drawer>
-      </div>
+        <div
+          className={classes.background}
+          style={{ backgroundImage: `url(${image})` }}
+        />
+      </Drawer>
     )
   }
 }
@@ -62,6 +70,6 @@ App = withStyles(sidebarStyle)(App)
 
 
 ReactDOM.render(
-    <App name="test_app" image={image} />,
+    <App name="test_app" image={image} logo={logo} logoText={'Cost Pro'} />,
     document.getElementById('test_field')
 );
