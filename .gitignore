@@ -5,7 +5,7 @@ env/
 *.json
 !costpro/client/package.json
 costpro/client/node_modules
-costpro/static/src
+costpro/static/emit
 costpro/migrations
 configs/
 migrations/

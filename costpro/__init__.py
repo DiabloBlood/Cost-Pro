@@ -17,10 +17,12 @@ def create_app():
 
     # register views
     from costpro.api.api import api
+    from costpro.api.assets import assets
     from costpro.views.index import index
     from costpro.views.dashboard import dashboard
     from costpro.views.test import test
     app.register_blueprint(api)
+    app.register_blueprint(assets)
     app.register_blueprint(index)
     app.register_blueprint(dashboard)
     app.register_blueprint(test)

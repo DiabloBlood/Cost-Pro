@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 //import Sidebar from 'src/components/Sidebar.jsx';
-//import image from './assets/img/sidebar-3.jpg';
+import image from 'src/assets/img/sidebar-3.jpg';
 //import logo from './assets/img/reactlogo.png';
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -25,11 +25,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, image } = this.props;
 
     return (
       <div>
-        <Drawer open={true} variant="temporary" anchor="left">
+        <Drawer
+          anchor="left"
+          variant="permanent"
+          open
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
           <List className={classes.list}>
             <ListItem button className={classes.itemLink}>
               <ListItemIcon className={classes.itemIcon}>
@@ -39,6 +46,11 @@ class App extends React.Component {
               </ListItemText>
             </ListItem>
           </List>
+
+          <div
+            className={classes.background}
+            style={{ backgroundImage: `url(${image})` }}
+          />
         </Drawer>
       </div>
     )
@@ -50,6 +62,6 @@ App = withStyles(sidebarStyle)(App)
 
 
 ReactDOM.render(
-    <App name="test_app" />,
+    <App name="test_app" image={image} />,
     document.getElementById('test_field')
 );

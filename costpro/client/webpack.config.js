@@ -1,14 +1,22 @@
 const path = require('path');
 
+const CLIENT_PATH = path.resolve(__dirname);
+const BUILD_PATH = path.join(path.resolve('../'), '/static/emit');
+const APP_PATH = path.join(CLIENT_PATH, '/src/dashboard.jsx');
+const TEST_PATH = path.join(CLIENT_PATH, '/src/test.jsx');
+
+
+
 module.exports = {
     mode: 'development',
     entry: {
-        dashboard: __dirname + '/src/dashboard.jsx',
-        test: __dirname + '/src/test.jsx'
+        dashboard: APP_PATH,
+        test: TEST_PATH
     },
     output: {
-        path: path.resolve('../') + '/static/src',
-        filename: '[name].bundle.js'
+        path: BUILD_PATH,
+        filename: '[name].bundle.js',
+        publicPath: '/assets/'
     },
     module: {
         rules: [
@@ -23,6 +31,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file-loader',
             }
         ]
     },

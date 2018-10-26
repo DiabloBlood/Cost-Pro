@@ -11,4 +11,4 @@ def get_index():
 
 @index.route('/favicon.ico', methods=['GET'])
 def favicon():
-    return send_from_directory('static/', 'favicon.ico')
+    return send_from_directory('static/assets', 'favicon.ico')
