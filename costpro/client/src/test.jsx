@@ -24,15 +24,18 @@ class App extends React.Component {
     super(props);
   }
 
+  /*
   render() {
     const { classes, image, logo, logoText } = this.props;
 
     const brand = (
       <div className={classes.logo}>
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-          <span>{logoText}</span>
-        </div>
+        <a href="https://www.google.com" className={classes.logoLink}>
+          <div className={classes.logoImage}>
+            <img src={logo} alt="logo" className={classes.img} />
+          </div>
+          {logoText}
+        </a>
       </div>
     );
 
@@ -63,6 +66,7 @@ class App extends React.Component {
       </Drawer>
     )
   }
+  */
 }
 
 App = withStyles(sidebarStyle)(App)

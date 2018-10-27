@@ -12,6 +12,7 @@ import {
 } from "src/assets/jss/majorStyle.jsx";
 
 const sidebarStyle = theme => ({
+  // use, check
   drawerPaper: {
     border: "none",
     position: "fixed",
@@ -22,6 +23,7 @@ const sidebarStyle = theme => ({
     ...boxShadow,
     width: drawerWidth,
   },
+  // use, check
   logo: {
     position: "relative",
     padding: "15px 15px",
@@ -37,6 +39,7 @@ const sidebarStyle = theme => ({
       backgroundColor: "rgba(180, 180, 180, 0.3)"
     }
   },
+  // use, check
   logoLink: {
     ...defaultFont,
     textTransform: "uppercase",
@@ -52,6 +55,7 @@ const sidebarStyle = theme => ({
       color: "#FFFFFF"
     }
   },
+  // use, check
   logoImage: {
     width: "30px",
     display: "inline-block",
@@ -59,6 +63,7 @@ const sidebarStyle = theme => ({
     marginLeft: "10px",
     marginRight: "15px"
   },
+  // use, check
   img: {
     width: "35px",
     top: "22px",
@@ -66,6 +71,7 @@ const sidebarStyle = theme => ({
     verticalAlign: "middle",
     border: "0"
   },
+  // use
   background: {
     position: "absolute",
     zIndex: "-100",
