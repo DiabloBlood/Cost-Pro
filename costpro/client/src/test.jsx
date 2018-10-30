@@ -5,17 +5,22 @@ import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 import MySidebar from "src/MySidebar.jsx";
 
+import withStyles from "@material-ui/core/styles/withStyles";
+
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 import image from 'src/assets/img/sidebar-3.jpg';
 import logo from 'src/assets/img/reactlogo.png';
 
+import appLayoutStyle from "src/assets/jss/appLayoutStyle.jsx";
+
+
 
 class Dashboard extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -28,7 +33,7 @@ class Dashboard extends React.Component {
 class Test extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -39,11 +44,25 @@ class Test extends React.Component {
 }
 
 
+class Temp extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <h1>Temp</h1>
+    )
+  }
+}
+
+
 //dashboard will show all conclusive data
-const dashboardRoutes = [
+const appRoutes = [
   {
     path: '/dashboard',
-    siderbarName: 'Home',
+    sidebarName: 'Dashboard',
     icon: DashboardIcon,
     component: Dashboard
   },
@@ -51,11 +70,11 @@ const dashboardRoutes = [
     path: '/table',
     sidebarName: 'Table',
     icon: DashboardIcon,
-    //component: 
+    component: Temp 
   },
   {
     path: '/test',
-    sidebarName: 'TEST'
+    sidebarName: 'TEST',
     icon: HomeIcon, 
     component: Test
   }
@@ -70,18 +89,44 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, image, logo, logoText, route } = this.props;
+    const { classes, image, logo, logoText, routes } = this.props;
+
+    const compRoutes = (
+      <div>
+        {
+          routes.map((route, index) => {
+            return (
+              <Route
+                path={route.path}
+                component={route.component}
+                key={index}
+              />
+            )
+          })
+        }
+      </div>
+    )
+
 
     return (
-      <MySidebar
-        image={image}
-        logo={logo}
-        logoText={logoText}
-        route={route}
-      />
+      <div className={classes.wrapper}>
+        <MySidebar
+          image={image}
+          logo={logo}
+          logoText={logoText}
+          routes={routes}
+        />
+        <div className={classes.mainPanel} ref="mainPanel">
+          <div className={classes.content}>
+            <div className={classes.container}>{compRoutes}</div>
+          </div>
+        </div>
+      </div>
     )
   }
 }
+
+App = withStyles(appLayoutStyle)(App)
 
 
 ReactDOM.render(
@@ -91,7 +136,7 @@ ReactDOM.render(
       image={image}
       logo={logo}
       logoText={'Cost Pro'}
-      route={route}
+      routes={appRoutes}
     />
   </BrowserRouter>,
   document.getElementById('test_field')

@@ -25,14 +25,11 @@ import sidebarStyle from "src/assets/jss/styles/components/sidebarStyle.jsx";
 class MySidebar extends React.Component {
 
   constructor(props) {
-    console.log(props)
-
     super(props);
   }
 
   render() {
-    const { classes, image, logo, logoText, route } = this.props;
-
+    const { classes, image, logo, logoText, routes } = this.props;
 
     const brand = (
       <div className={classes.logo}>
@@ -45,6 +42,34 @@ class MySidebar extends React.Component {
       </div>
     );
 
+    const links = (
+      <List className={classes.list}>
+        {
+          routes.map((route, index) => {
+            return (
+              <NavLink
+                to={route.path}
+                className={classes.item}
+                activeClassName="active"
+                key={index}
+              >
+                <ListItem button className={classes.itemLink}>
+                  <ListItemIcon className={classes.itemIcon}>
+                    <route.icon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={route.sidebarName}
+                    className={classes.itemText}
+                    disableTypography={true}
+                  />
+                </ListItem>
+              </NavLink>
+            )
+          })
+        }
+      </List>
+    );
+
     return (
       <Drawer
         anchor="left"
@@ -55,24 +80,7 @@ class MySidebar extends React.Component {
         }}
       >
         {brand}
-        <List className={classes.list}>
-          <NavLink
-            to={route.path}
-            className={classes.item}
-            activeClassName="active"
-          >
-            <ListItem button className={classes.itemLink}>
-              <ListItemIcon className={classes.itemIcon}>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={route.sidebarName}
-                className={classes.itemText}
-              />
-            </ListItem>
-          </NavLink>
-        </List>
-
+        <div className={classes.sidebarWrapper}>{links}</div>
         <div
           className={classes.background}
           style={{ backgroundImage: `url(${image})` }}
