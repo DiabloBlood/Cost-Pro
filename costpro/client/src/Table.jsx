@@ -8,7 +8,7 @@ import 'react-table/react-table.css';
 
 
 
-class DataGrid extends React.Component {
+class Table extends React.Component {
 
   constructor(props) {
     super(props);
@@ -46,10 +46,6 @@ class DataGrid extends React.Component {
     // this method gets called and passed the current table model.
     // You can set the `loading` prop of the table to true to use the built-in one
     // or show you're own loading bar if you want.
-    console.log(state.page);
-    console.log(state.pageSize);
-    console.log(state.sorted);
-    console.log(state.filtered);
 
     this.setState({
       loading: true
@@ -87,8 +83,6 @@ class DataGrid extends React.Component {
   render() {
     const {columns, data, page, pageSize, pages, loading} = this.state;
 
-    console.log({columns: columns, data: data, loading: loading});
-
     return (
       <div>
         <ReactTable
@@ -108,4 +102,6 @@ class DataGrid extends React.Component {
   }
 }
 
-ReactDOM.render(<DataGrid />, document.getElementById('dashboard'))
+
+export default Table
+//ReactDOM.render(<Table />, document.getElementById('dashboard'))

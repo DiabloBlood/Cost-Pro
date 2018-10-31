@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
-
-import MySidebar from "src/MySidebar.jsx";
-
+// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
-
+// core components
+import MySidebar from "src/MySidebar.jsx";
+import Table from "src/Table.jsx"
+// @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
+import TableChartIcon from "@material-ui/icons/TableChart";
+// image assets
 import image from 'src/assets/img/sidebar-3.jpg';
 import logo from 'src/assets/img/reactlogo.png';
-
+//jss assets
 import appLayoutStyle from "src/assets/jss/appLayoutStyle.jsx";
 
 
@@ -44,20 +45,6 @@ class Test extends React.Component {
 }
 
 
-class Temp extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <h1>Temp</h1>
-    )
-  }
-}
-
-
 //dashboard will show all conclusive data
 const appRoutes = [
   {
@@ -69,8 +56,8 @@ const appRoutes = [
   {
     path: '/table',
     sidebarName: 'Table',
-    icon: DashboardIcon,
-    component: Temp 
+    icon: TableChartIcon,
+    component: Table
   },
   {
     path: '/test',
