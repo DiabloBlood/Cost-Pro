@@ -105,4 +105,8 @@ https://github.com/emkay/material-ui-table-edit
 
 ### sqlalchemy
 http://nettee.github.io/posts/2016/SQLAlchemy-Architecture-Note/
+
+
+### Trailing URL
+https://webmasters.googleblog.com/2010/04/to-slash-or-not-to-slash.html
 '''

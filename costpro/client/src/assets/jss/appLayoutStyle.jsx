@@ -1,6 +1,6 @@
 import {
   drawerWidth,
-  transition,
+  //transition,
   container
 } from "src/assets/jss/majorStyle.jsx";
 
@@ -18,7 +18,7 @@ const appLayoutStyle = theme => ({
     position: "relative",
     float: "right",
     maxHeight: "100%",
-    overflowScrolling: "touch"
+    //overflowScrolling: "touch" //for mobile usage
   },
   content: {
     marginTop: "70px",
