@@ -78,6 +78,9 @@ https://github.com/dternyak/React-Redux-Flask
 ### shorthand object destructuring
 https://medium.com/walmartlabs/make-your-react-components-pretty-a1ae4ec0f56e
 
+### react router
+https://react-guide.github.io/react-router-cn/docs/guides/basics/RouteConfiguration.html
+
 ### ES6 coding style
 http://es6.ruanyifeng.com/#docs/style
 ### what is prototype

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, redirect, render_template, send_from_directory, url_for
 
 
 
@@ -12,3 +12,12 @@ def get_index():
 @index.route('/favicon.ico', methods=['GET'])
 def favicon():
     return send_from_directory('static/assets', 'favicon.ico')
+
+@index.route('/dashboard')
+def dashboard():
+    return render_template('index.html')
+
+
+@index.route('/table')
+def table():
+    return render_template('index.html')
