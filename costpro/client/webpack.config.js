@@ -2,16 +2,14 @@ const path = require('path');
 
 const CLIENT_PATH = path.resolve(__dirname);
 const BUILD_PATH = path.join(path.resolve('../'), '/static/emit');
-const APP_PATH = path.join(CLIENT_PATH, '/src/Table.jsx');
-const TEST_PATH = path.join(CLIENT_PATH, '/src/test.jsx');
+const APP_PATH = path.join(CLIENT_PATH, '/src/app.jsx');
 
 
 
 module.exports = {
     mode: 'development',
     entry: {
-        dashboard: APP_PATH,
-        test: TEST_PATH
+        app: APP_PATH
     },
     output: {
         path: BUILD_PATH,

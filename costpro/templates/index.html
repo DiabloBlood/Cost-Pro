@@ -2,11 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Flask React</title>
+    <title>Cost Pro</title>
 </head>
   <body>
-    <div class="container">
-        <h1>Flask + Webpack + Babel + React</h1>
-    </div>
+    <div id="app"></div>
+    <script src={{ url_for('static', filename = 'emit/app.bundle.js') }}></script>
     </body>
 </html>

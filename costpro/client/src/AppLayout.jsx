@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, NavLink } from "react-router-dom";
+import { Redirect, Route, NavLink } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -18,9 +18,13 @@ import appLayoutStyle from "src/assets/jss/appLayoutStyle.jsx";
 
 
 
+
+const LOGO_TEXT = 'Cost Pro';
+
 class Dashboard extends React.Component {
 
   constructor(props) {
+    console.log(props);
     super(props);
   }
 
@@ -30,6 +34,7 @@ class Dashboard extends React.Component {
     )
   }
 }
+
 
 class Test extends React.Component {
 
@@ -64,24 +69,34 @@ const appRoutes = [
     sidebarName: 'TEST',
     icon: HomeIcon, 
     component: Test
+  },
+  {
+    redirect: true,
+    path: '/',
+    to: '/dashboard'
   }
 ]
 
 
 
-class App extends React.Component {
+class AppLayout extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { classes, image, logo, logoText, routes } = this.props;
+    const classes = this.props.classes;
+
+    let routes = appRoutes;
 
     const compRoutes = (
       <div>
         {
           routes.map((route, index) => {
+            if(route.redirect) {
+              return <Redirect from={route.path} to={route.to} key={index} />;
+            }
             return (
               <Route
                 path={route.path}
@@ -100,7 +115,7 @@ class App extends React.Component {
         <MySidebar
           image={image}
           logo={logo}
-          logoText={logoText}
+          logoText={LOGO_TEXT}
           routes={routes}
         />
         <div className={classes.mainPanel} ref="mainPanel">
@@ -113,18 +128,4 @@ class App extends React.Component {
   }
 }
 
-App = withStyles(appLayoutStyle)(App)
-
-
-ReactDOM.render(
-  <BrowserRouter>
-    <App
-      name="test_app"
-      image={image}
-      logo={logo}
-      logoText={'Cost Pro'}
-      routes={appRoutes}
-    />
-  </BrowserRouter>,
-  document.getElementById('test_field')
-);
+export default withStyles(appLayoutStyle)(AppLayout)

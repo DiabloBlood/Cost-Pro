@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter, Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-//import Sidebar from 'src/components/Sidebar.jsx';
-import image from 'src/assets/img/sidebar-3.jpg';
-import logo from 'src/assets/img/reactlogo.png';
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import List from "@material-ui/core/List";
@@ -14,9 +11,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Drawer from "@material-ui/core/Drawer";
-
-import DashboardIcon from "@material-ui/icons/DashboardRounded";
-import HomeIcon from "@material-ui/icons/HomeRounded";
 
 import sidebarStyle from "src/assets/jss/styles/components/sidebarStyle.jsx";
 
@@ -46,6 +40,11 @@ class MySidebar extends React.Component {
       <List className={classes.list}>
         {
           routes.map((route, index) => {
+
+            if (route.redirect) {
+              return null;
+            }
+
             return (
               <NavLink
                 to={route.path}
