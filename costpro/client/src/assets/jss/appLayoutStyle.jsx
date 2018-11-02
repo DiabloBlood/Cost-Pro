@@ -1,8 +1,7 @@
 import {
   drawerWidth,
-  //transition,
   container
-} from "src/assets/jss/majorStyle.jsx";
+} from "src/assets/jss/globalStyle.jsx";
 
 
 

@@ -1,9 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import ReactTable from 'react-table';
 import axios from 'axios'
-
+// css
 import 'react-table/react-table.css';
 
 
@@ -102,6 +100,4 @@ class Table extends React.Component {
   }
 }
 
-
-export default Table
-//ReactDOM.render(<Table />, document.getElementById('dashboard'))
+export default Table;

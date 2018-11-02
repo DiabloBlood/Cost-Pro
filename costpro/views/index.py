@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, send_from_directory, url_for
+from flask import Blueprint, render_template, send_from_directory, abort
 
 
 
@@ -9,15 +9,14 @@ index = Blueprint('index', __name__, url_prefix='/')
 def get_index():
     return render_template('index.html')
 
+
 @index.route('/favicon.ico', methods=['GET'])
 def favicon():
     return send_from_directory('static/assets', 'favicon.ico')
 
-@index.route('/dashboard')
-def dashboard():
-    return render_template('index.html')
 
-
-@index.route('/table')
-def table():
+@index.route('/<path:path>')
+def catch_spa_urls(path):
+    if path not in ('dashboard', 'table', 'test'):
+        abort(404)
     return render_template('index.html')

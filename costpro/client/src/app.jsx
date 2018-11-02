@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 // app layout
-import AppLayout from "src/AppLayout.jsx";
+import AppLayout from "src/global/AppLayout.jsx";
 
 
 
-ReactDOM.render(
-  <BrowserRouter>
-      <Route
-        path='/'
-        component={AppLayout}
-      />
-  </BrowserRouter>,
-  document.getElementById('app')
-);
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' component={AppLayout} />
+        </Switch>
+      </BrowserRouter>
+    )
+  }
+}
+
+
+ReactDOM.render(<App />, document.getElementById('app'));

@@ -1,6 +1,5 @@
 import {
   drawerWidth,
-  transition,
   boxShadow,
   defaultFont,
   primaryColor,
@@ -9,7 +8,7 @@ import {
   successColor,
   warningColor,
   dangerColor
-} from "src/assets/jss/majorStyle.jsx";
+} from "src/assets/jss/globalStyle.jsx";
 
 const sidebarStyle = theme => ({
   // use, check
@@ -32,7 +31,6 @@ const sidebarStyle = theme => ({
       content: '""',
       position: "absolute",
       bottom: "0",
-
       height: "1px",
       right: "15px",
       width: "calc(100% - 30px)",
@@ -71,7 +69,7 @@ const sidebarStyle = theme => ({
     verticalAlign: "middle",
     border: "0"
   },
-  // use
+  // use check
   background: {
     position: "absolute",
     zIndex: "-100",
@@ -93,6 +91,7 @@ const sidebarStyle = theme => ({
       opacity: ".8"
     }
   },
+  // use check
   list: {
     marginTop: "20px",
     paddingLeft: "0",
@@ -102,6 +101,7 @@ const sidebarStyle = theme => ({
     listStyle: "none",
     position: "unset"
   },
+  // use check
   item: {
     position: "relative",
     display: "block",
@@ -110,17 +110,19 @@ const sidebarStyle = theme => ({
       color: "#FFFFFF"
     }
   },
+  // use check
   itemLink: {
     width: "auto",
     transition: "all 300ms linear",
-    margin: "10px 15px 0",
+    margin: "5px 15px 0",
     borderRadius: "3px",
     position: "relative",
     display: "block",
-    padding: "10px 15px",
+    padding: "5px 15px",
     backgroundColor: "transparent",
     ...defaultFont
   },
+  // use check
   itemIcon: {
     width: "24px",
     height: "30px",
@@ -132,13 +134,16 @@ const sidebarStyle = theme => ({
     verticalAlign: "middle",
     color: "rgba(255, 255, 255, 0.8)"
   },
+  // use check
   itemText: {
     ...defaultFont,
     margin: "0",
-    lineHeight: "30px",
-    fontSize: "14px",
+    lineHeight: "24px",
+    fontSize: "16px",
+    fontWeight: "600",
     color: "#FFFFFF"
   },
+  // use
   whiteFont: {
     color: "#FFFFFF"
   },
@@ -190,20 +195,14 @@ const sidebarStyle = theme => ({
         "0 12px 20px -10px rgba(244,67,54,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(244,67,54,.2)"
     }
   },
+  // use check
   sidebarWrapper: {
     position: "relative",
     height: "calc(100vh - 75px)",
     overflow: "auto",
-    width: "260px",
+    width: drawerWidth,
     zIndex: "4",
     overflowScrolling: "touch"
-  },
-  activePro: {
-    [theme.breakpoints.up("md")]: {
-      position: "absolute",
-      width: "100%",
-      bottom: "13px"
-    }
   }
 });
 
