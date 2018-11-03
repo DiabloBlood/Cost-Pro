@@ -17,6 +17,6 @@ def favicon():
 
 @index.route('/<path:path>')
 def catch_spa_urls(path):
-    if path not in ('dashboard', 'table', 'test'):
+    if path not in ('dashboard', 'table', 'category', 'test'):
         abort(404)
     return render_template('index.html')

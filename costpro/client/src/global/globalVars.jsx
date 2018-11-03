@@ -2,9 +2,11 @@
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 import TableChartIcon from "@material-ui/icons/TableChart";
+import CategoryIcon from "@material-ui/icons/Category";
 // views
 import Dashboard from "src/views/Dashboard.jsx"
 import Table from "src/views/Table.jsx"
+import Category from "src/views/Category.jsx"
 import Test from "src/views/Test.jsx"
 
 
@@ -24,6 +26,12 @@ const APP_ROUTES = [
     sidebarName: 'Table',
     icon: TableChartIcon,
     component: Table
+  },
+  {
+    path: '/category',
+    sidebarName: 'Category',
+    icon: CategoryIcon,
+    component: Category
   },
   {
     path: '/test',

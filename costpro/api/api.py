@@ -1,6 +1,6 @@
 from flask import request, Blueprint, jsonify, abort
 import costpro.api.sa_helper as sa_helper
-from costpro.model import TransHistory
+from costpro.model import TransHistory, Category1
 
 
 
@@ -26,3 +26,13 @@ def v1_columns(table_name):
         abort(404, '404 NOT FOUND!!!')
 
     return jsonify(columns=columns)
+
+
+@api.route('/v1/category', methods=['GET'])
+def v1_category():
+    value = request.args.get('value')
+    grid_helper = sa_helper.GridHelper(value, Category1)
+
+    rows, total_pages, total_size = grid_helper.process()
+
+    return jsonify(rows=rows, total_pages=total_pages, total_size=total_size)
