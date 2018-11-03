@@ -26,15 +26,30 @@ def object_as_dict(obj):
     return row
 
 
+def get_table_obj(table_name):
+    for name, obj_class in inspect.getmembers(model, inspect.isclass):
+        if issubclass(obj_class, db.Model) and obj_class.__tablename__ == table_name:
+            return obj_class
+    raise ValueError('Table name not exists!')
+
 
 class GridHelper(object):
 
     def __init__(self, b64_params, table):
         self.params = io.b64_to_dict(b64_params)
-        self.table = table
+
+        if isinstance(table, str):
+            self.table = self._get_table_obj(table)
+        elif issubclass(table, db.Model):
+            self.table = table
+        else:
+            raise TypeError('Param `table` must either be a string or a subclass of db.Model!')
 
     def _object_as_dict(self, obj):
         return object_as_dict(obj)
+
+    def _get_table_obj(self, table_name):
+        return get_table_obj(table_name)
 
     def _build_query_result(self):
         params = self.params
