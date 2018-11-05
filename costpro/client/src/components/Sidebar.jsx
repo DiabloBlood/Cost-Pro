@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
 
     const brand = (
       <div className={classes.logo}>
-        <a href="https://www.google.com" className={classes.logoLink}>
+        <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial" className={classes.logoLink}>
           <div className={classes.logoImage}>
             <img src={logo} alt="logo" className={classes.img} />
           </div>

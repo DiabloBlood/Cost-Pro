@@ -1,5 +1,8 @@
 import React from 'react';
 
+//test CardIcon
+import CardIcon from "src/components/Card/CardIcon.jsx";
+import Assignment from "@material-ui/icons/Assignment";
 
 
 class Test extends React.Component {
@@ -10,7 +13,12 @@ class Test extends React.Component {
 
   render() {
     return (
-      <h1>Testing</h1>
+      <div>
+        <h1>Testing</h1>
+        <CardIcon color="success">
+          <Assignment />
+        </CardIcon>
+      </div>
     )
   }
 }

@@ -1,3 +1,4 @@
+import traceback
 from flask import request, Blueprint, jsonify, abort
 import costpro.api.sa_helper as sa_helper
 from costpro.model import TransHistory, Category1
@@ -15,6 +16,7 @@ def v1_data(table_name):
         rows, total_pages, total_size = grid_helper.process()
         return jsonify(rows=rows, total_pages=total_pages, total_size=total_size)
     except:
+        traceback.print_exc()
         abort(404, '404 NOT FOUND!!!')
 
 
