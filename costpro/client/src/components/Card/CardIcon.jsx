@@ -11,7 +11,7 @@ import cardIconStyle from "src/assets/jss/components/cardIconStyle.jsx";
 class CardIcon extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
