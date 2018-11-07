@@ -17,8 +17,6 @@ class CardHeader extends React.Component {
   render() {
     let { classes, children, color, icon } = this.props;
 
-    console.log(classes);
-
     let cardHeaderClasses = classNames({
       [classes.cardHeader]: true,
       [classes[color + "CardHeader"]]: color,
