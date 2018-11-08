@@ -1,16 +1,29 @@
 import React from 'react';
 
+import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 //test CardIcon
+import GridContainer from "src/components/Grid/GridContainer.jsx";
+import GridItem from "src/components/Grid/GridItem.jsx";
 import Card from "src/components/Card/Card.jsx";
 import CardBody from "src/components/Card/CardBody.jsx";
 import CardHeader from "src/components/Card/CardHeader.jsx";
 import CardIcon from "src/components/Card/CardIcon.jsx";
+import CustomButton from "src/components/CustomButton.jsx";
+
+import Divider from '@material-ui/core/Divider';
+
 import Assignment from "@material-ui/icons/Assignment";
+
+
+import Add from "@material-ui/icons/Add";
+import Favorite from "@material-ui/icons/Favorite";
+//import Build from "@material-ui/icons/Build";
+
 import { cardTitle } from "src/assets/jss/globalStyle.jsx";
 
 import BaseTable from "src/components/BaseTable.jsx"
-import { DATA_BASE_URL, DATA_SUB_URL, TABLE_CONFIG_TRANS } from "src/global/globalVars.jsx"
+import { DATA_BASE_URL, DATA_SUB_URL, TABLE_CONFIG_CATEGORY } from "src/global/globalVars.jsx"
 
 
 
@@ -33,18 +46,31 @@ class Test extends React.Component {
 
     return (
       <div>
-        <h1>Testing</h1>
-        <Card>
-          <CardHeader color="primary" icon>
-            <CardIcon color="success">
-              <Assignment />
-            </CardIcon>
-            <h4 className={classes.cardIconTitle}>React Table</h4>
-          </CardHeader>
-          <CardBody>
-            <BaseTable url={DATA_BASE_URL + DATA_SUB_URL.Table} tableConfig={TABLE_CONFIG_TRANS} />
-          </CardBody>
-        </Card>
+        <GridContainer>
+          <GridItem xs={12}>
+            <Card>
+              <CardHeader icon>
+                <Grid container>
+                  <Grid item xs={3}>
+                    <CardIcon color="success">
+                      <Assignment />
+                    </CardIcon>
+                    <h3 className={classes.cardIconTitle}>Category 1</h3>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <CustomButton color="primary" round justIcon>
+                      <Favorite />
+                    </CustomButton>
+                  </Grid>
+                </Grid>
+                <Divider inset />
+              </CardHeader>
+              <CardBody>
+                <BaseTable url={DATA_BASE_URL + DATA_SUB_URL.Category1} tableConfig={TABLE_CONFIG_CATEGORY} />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer> 
       </div>
     )
   }

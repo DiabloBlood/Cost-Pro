@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // jss assets
-import cardBodyStyle from "src/assets/jss/components/cardHeaderStyle.jsx";
+import cardBodyStyle from "src/assets/jss/components/cardBodyStyle.jsx";
 
 
 

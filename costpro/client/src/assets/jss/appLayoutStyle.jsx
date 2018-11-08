@@ -5,11 +5,11 @@ import {
 
 
 
-const appLayoutStyle = theme => ({
+const appLayoutStyle = {
   wrapper: {
     position: "relative",
     top: "0",
-    height: "100vh"
+    height: "100%"
   },
   mainPanel: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -20,12 +20,12 @@ const appLayoutStyle = theme => ({
     //overflowScrolling: "touch" //for mobile usage
   },
   content: {
-    marginTop: "70px",
-    padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)"
+    marginTop: "20px",
+    padding: "5x 5px",
+    //minHeight: "calc(100vh - 123px)"
   },
   container
-});
+}
 
 
 export default appLayoutStyle;

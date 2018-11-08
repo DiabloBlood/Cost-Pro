@@ -62,20 +62,18 @@ class BaseTable extends React.Component {
 
 
     return (
-      <div>
-        <ReactTable
-          manual
-          columns={columns}
-          data={data}
-          pages={pages}
-          loading={loading}
-          onFetchData={this.fetchData}
-          filterable
-          defaultPageSize={defulatPageSize}
-          pageSizeOptions={pageSizeOptions}
-          className="-striped -highlight"
-        />
-      </div>
+      <ReactTable
+        manual
+        columns={columns}
+        data={data}
+        pages={pages}
+        loading={loading}
+        onFetchData={this.fetchData}
+        filterable
+        defaultPageSize={defulatPageSize}
+        pageSizeOptions={pageSizeOptions}
+        className="-striped -highlight"
+      />
     )
   }
 }
