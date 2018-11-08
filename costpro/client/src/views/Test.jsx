@@ -18,7 +18,7 @@ import Assignment from "@material-ui/icons/Assignment";
 
 import Add from "@material-ui/icons/Add";
 import Favorite from "@material-ui/icons/Favorite";
-//import Build from "@material-ui/icons/Build";
+import Build from "@material-ui/icons/Build";
 
 import { cardTitle } from "src/assets/jss/globalStyle.jsx";
 
@@ -32,6 +32,12 @@ const styles = {
     ...cardTitle,
     marginTop: "15px",
     marginBottom: "0px"
+  },
+  /*Avoid card header overide svg css*/
+  cardHeaderToolBar: {
+    "& svg": {
+      margin: "-5px 0px"
+    }
   }
 };
 
@@ -57,14 +63,15 @@ class Test extends React.Component {
                     </CardIcon>
                     <h3 className={classes.cardIconTitle}>Category 1</h3>
                   </Grid>
-                  <Grid item xs={9}>
-                    <CustomButton color="primary" round justIcon>
-                      <Favorite />
+                  <Grid item xs={8} className={classes.cardHeaderToolBar}>
+                    <CustomButton color="github" round>
+                      <Add />
+                      Add
                     </CustomButton>
                   </Grid>
                 </Grid>
-                <Divider inset />
               </CardHeader>
+              <Divider inset />
               <CardBody>
                 <BaseTable url={DATA_BASE_URL + DATA_SUB_URL.Category1} tableConfig={TABLE_CONFIG_CATEGORY} />
               </CardBody>
