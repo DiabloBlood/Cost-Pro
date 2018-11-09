@@ -20,13 +20,13 @@ class Sidebar extends React.Component {
   }
 
   isRouteActive(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    return this.props.location.pathname == routeName;
   }
 
   render() {
-    const { classes, logo, logoText, routes, color, image } = this.props;
+    let { classes, logo, logoText, routes, color, image } = this.props;
 
-    const brand = (
+    let brand = (
       <div className={classes.logo}>
         <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial" className={classes.logoLink}>
           <div className={classes.logoImage}>
@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
       </div>
     );
 
-    const links = (
+    let links = (
       <List className={classes.list}>
         {
           routes.map((route, index) => {

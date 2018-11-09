@@ -5,7 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Sidebar from "src/components/Sidebar.jsx";
 // global vars
-import { LOGO_TEXT, APP_ROUTES as appRoutes } from "src/global/globalVars.jsx";
+import { LOGO_TEXT, APP_ROUTES } from "src/global/globalVars.jsx";
 // image assets
 import image from 'src/assets/img/sidebar-3.jpg';
 import logo from 'src/assets/img/reactlogo.png';
@@ -26,7 +26,7 @@ class AppLayout extends React.Component {
     const switchRoutes = (
       <Switch>
         {
-          appRoutes.map((route, index) => {
+          APP_ROUTES.map((route, index) => {
             if(route.redirect) {
               return <Redirect from={route.path} to={route.to} key={index} />;
             }
@@ -44,7 +44,7 @@ class AppLayout extends React.Component {
           image={image}
           logo={logo}
           logoText={LOGO_TEXT}
-          routes={appRoutes}
+          routes={APP_ROUTES}
           color="blue"
           {...rest}
         />

@@ -63,7 +63,7 @@ class Test extends React.Component {
                     </CardIcon>
                     <h3 className={classes.cardIconTitle}>Category 1</h3>
                   </Grid>
-                  <Grid item xs={8} className={classes.cardHeaderToolBar}>
+                  <Grid item xs={9} className={classes.cardHeaderToolBar}>
                     <CustomButton color="github" round>
                       <Add />
                       Add

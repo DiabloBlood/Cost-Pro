@@ -8,6 +8,7 @@ import Dashboard from "src/views/Dashboard.jsx"
 import Table from "src/views/Table.jsx"
 import Category from "src/views/Category.jsx"
 import Test from "src/views/Test.jsx"
+import Test2 from "src/views/Test2.jsx"
 
 
 
@@ -44,8 +45,14 @@ const APP_ROUTES = [
   {
     path: '/test',
     sidebarName: 'Test',
-    icon: HomeIcon, 
+    icon: HomeIcon,
     component: Test
+  },
+  {
+    path: '/test2',
+    sidebarName: 'Test2',
+    icon: HomeIcon, 
+    component: Test2
   },
   {
     redirect: true,
