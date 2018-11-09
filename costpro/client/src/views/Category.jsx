@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseTable from "src/components/BaseTable.jsx"
+import BaseTable from "src/components/Table/BaseTable.jsx"
 import { DATA_BASE_URL, DATA_SUB_URL, TABLE_CONFIG_CATEGORY } from "src/global/globalVars.jsx"
 
 

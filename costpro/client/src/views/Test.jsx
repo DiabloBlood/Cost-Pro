@@ -10,10 +10,12 @@ import CardBody from "src/components/Card/CardBody.jsx";
 import CardHeader from "src/components/Card/CardHeader.jsx";
 import CardIcon from "src/components/Card/CardIcon.jsx";
 import CustomButton from "src/components/CustomButton.jsx";
+import TableToolbar from "src/components/Table/TableToolbar.jsx";
 
 import Divider from '@material-ui/core/Divider';
 
 import Assignment from "@material-ui/icons/Assignment";
+import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 
 
 import Add from "@material-ui/icons/Add";
@@ -22,24 +24,10 @@ import Build from "@material-ui/icons/Build";
 
 import { cardTitle } from "src/assets/jss/globalStyle.jsx";
 
-import BaseTable from "src/components/BaseTable.jsx"
+import BaseTable from "src/components/Table/BaseTable.jsx"
 import { DATA_BASE_URL, DATA_SUB_URL, TABLE_CONFIG_CATEGORY } from "src/global/globalVars.jsx"
 
 
-
-const styles = {
-  cardIconTitle: {
-    ...cardTitle,
-    marginTop: "15px",
-    marginBottom: "0px"
-  },
-  /*Avoid card header overide svg css*/
-  cardHeaderToolBar: {
-    "& svg": {
-      margin: "-5px 0px"
-    }
-  }
-};
 
 class Test extends React.Component {
 
@@ -51,36 +39,23 @@ class Test extends React.Component {
     let { classes } = this.props;
 
     return (
-      <div>
-        <GridContainer>
-          <GridItem xs={12}>
-            <Card>
-              <CardHeader icon>
-                <Grid container>
-                  <Grid item xs={3}>
-                    <CardIcon color="success">
-                      <Assignment />
-                    </CardIcon>
-                    <h3 className={classes.cardIconTitle}>Category 1</h3>
-                  </Grid>
-                  <Grid item xs={9} className={classes.cardHeaderToolBar}>
-                    <CustomButton color="github" round>
-                      <Add />
-                      Add
-                    </CustomButton>
-                  </Grid>
-                </Grid>
-              </CardHeader>
-              <Divider inset />
-              <CardBody>
-                <BaseTable url={DATA_BASE_URL + DATA_SUB_URL.Category1} tableConfig={TABLE_CONFIG_CATEGORY} />
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer> 
-      </div>
+      <GridContainer>
+        <GridItem xs={12}>
+          <Card>
+            <TableToolbar title="Category 1">
+              <CustomButton color="github" justIcon round>
+                <AddShoppingCart />
+              </CustomButton>
+            </TableToolbar>
+            <Divider inset />
+            <CardBody>
+              <BaseTable url={DATA_BASE_URL + DATA_SUB_URL.Category1} tableConfig={TABLE_CONFIG_CATEGORY} />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     )
   }
 }
 
-export default withStyles(styles)(Test);
+export default Test;
