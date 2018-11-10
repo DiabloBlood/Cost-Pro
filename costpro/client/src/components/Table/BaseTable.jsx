@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import axios from 'axios'
+import axios from 'axios';
 // css
 import 'react-table/react-table.css';
 

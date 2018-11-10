@@ -112,4 +112,7 @@ http://nettee.github.io/posts/2016/SQLAlchemy-Architecture-Note/
 
 ### Trailing URL
 https://webmasters.googleblog.com/2010/04/to-slash-or-not-to-slash.html
+
+### JavaScript bind
+https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/
 '''

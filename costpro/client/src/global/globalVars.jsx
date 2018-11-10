@@ -119,12 +119,19 @@ const TABLE_CONFIG_CATEGORY = {
   pageSizeOptions: [5, 10],
   columns: [
     {
+      Header: 'ID',
+      accessor: 'id',
+      width: 100
+    },
+    {
       Header: 'Category Name',
-      accessor: 'name'
+      accessor: 'name',
+      width: 200,
     },
     {
       Header: 'Category Description',
-      accessor: 'desc'
+      accessor: 'desc',
+      width: 500
     }
   ]
 }
