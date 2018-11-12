@@ -29,6 +29,8 @@ import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
+import TextField from '@material-ui/core/TextField';
+
 
 
 let tableConfig = {
@@ -46,12 +48,25 @@ let tableConfig = {
     {
       Header: 'ID',
       accessor: 'id',
-      width: 100
+      width: 100,
+      Cell: (cellInfo) => {
+        return cellInfo.value;
+      }
     },
     {
       Header: 'Category Name',
       accessor: 'name',
       width: 200,
+      Cell: (cellInfo) => {
+        console.log(cellInfo);
+        return (
+          <TextField
+            label="Dense"
+            margin="none"
+            variant="outlined"
+          />
+        )
+      }
     },
     {
       Header: 'Category Description',
@@ -80,6 +95,7 @@ class Test extends React.Component {
 
     this.onFetchData = this.onFetchData.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.renderEditable = this.renderEditable.bind(this);
   }
 
   onFetchData(state, instance) {
@@ -129,6 +145,17 @@ class Test extends React.Component {
       }
     });
   }
+
+  renderEditable(cellInfo) {
+    return (
+      <TextField
+        label="Dense"
+        margin="dense"
+        variant="outlined"
+      />
+    )
+  }
+
 
   /*
   getTbodyProps(state, rowInfo, column) {
