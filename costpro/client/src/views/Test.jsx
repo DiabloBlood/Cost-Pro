@@ -21,6 +21,7 @@ import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import Add from "@material-ui/icons/Add";
 import Favorite from "@material-ui/icons/Favorite";
 import Build from "@material-ui/icons/Build";
+import Edit from "@material-ui/icons/Edit";
 
 import { cardTitle } from "src/assets/jss/globalStyle.jsx";
 
@@ -33,56 +34,58 @@ import TextField from '@material-ui/core/TextField';
 
 
 
-let tableConfig = {
+const CELL_BINDS = {
+  action: 'action',
+  editable: 'editable'
+}
+
+const TABLE_CONFIG = {
   defulatPageSize: 5,
   pageSizeOptions: [5, 10],
   columns: [
     {
       Header: 'Action',
-      Cell: (props) => {
-        return (
-          <AddShoppingCart />
-        )
-      }
+      width: 200,
+      cellBind: CELL_BINDS.action
     },
     {
       Header: 'ID',
       accessor: 'id',
       width: 100,
-      Cell: (cellInfo) => {
-        return cellInfo.value;
-      }
     },
     {
       Header: 'Category Name',
       accessor: 'name',
       width: 200,
-      Cell: (cellInfo) => {
-        console.log(cellInfo);
-        return (
-          <TextField
-            label="Dense"
-            margin="none"
-            variant="outlined"
-          />
-        )
-      }
+      cellBind: CELL_BINDS.editable
     },
     {
       Header: 'Category Description',
       accessor: 'desc',
-      width: 500
+      width: 500,
+      cellBind: CELL_BINDS.editable
     }
   ]
 }
 
 
-class Test extends React.Component {
+class Table extends React.Component {
 
   constructor(props) {
     super(props);
 
-    let { columns, defulatPageSize } = tableConfig;
+    this.refs = React.createRef();
+
+    console.log(typeof this.refs);
+    console.log(this.refs);
+
+    this.onFetchData = this.onFetchData.bind(this);
+    this.onAdd = this.onAdd.bind(this);
+    this.onSave = this.onSave.bind(this);
+    this.renderEditableCell = this.renderEditableCell.bind(this);
+
+    this.buildCells();
+    let { columns, defulatPageSize } = this.props.tableConfig;
 
     this.state = {
       columns: columns,
@@ -90,13 +93,49 @@ class Test extends React.Component {
       page: 1,
       pageSize: defulatPageSize,
       pages: null,
-      loading: true
+      loading: true,
+      editingIndex: -1
     };
-
-    this.onFetchData = this.onFetchData.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
-    this.renderEditable = this.renderEditable.bind(this);
   }
+
+  buildCells() {
+    let columns = this.props.tableConfig.columns;
+    for(let i = 0; i < columns.length; i++) {
+      let col = columns[i];
+      if(col.cellBind == this.props.cellBinds.editable) {
+        col.Cell = this.renderEditableCell;
+      } else if(col.cellBind == this.props.cellBinds.action) {
+        col.Cell = this.renderActionCell;
+      }
+    }
+  }
+
+  renderActionCell(cellProps) {
+    return (
+      <CustomButton color='success' justIcon>
+        <Edit />
+      </CustomButton>
+    )
+  }
+
+  renderEditableCell(cellProps) {
+    let { editingIndex } = this.state;
+    if(editingIndex == cellProps.index) {
+      return (
+        <TextField
+          label={cellProps.column.Header}
+          margin="none"
+          variant="filled"
+          required
+          ref={cellProps.column.id}
+          style = {{ height: 50, width: '100%' }}
+        />
+      )
+    } else {
+      return cellProps.value;
+    }
+  }
+
 
   onFetchData(state, instance) {
     this.setState({
@@ -110,7 +149,7 @@ class Test extends React.Component {
       filtered: state.filtered
     }
 
-    let url = DATA_BASE_URL + DATA_SUB_URL.Category1;
+    let url = this.props.url;
     let params = {
       params: {
         value: btoa(JSON.stringify(queryParams))
@@ -130,7 +169,7 @@ class Test extends React.Component {
     });
   }
 
-  handleAdd(e) {
+  onAdd(e) {
     this.setState((state) => {
       let newData = state.data.map((value) => {
         return value;
@@ -141,39 +180,27 @@ class Test extends React.Component {
         desc: ''
       });
       return {
-        data: newData
+        data: newData,
+        editingIndex: 0
       }
     });
   }
 
-  renderEditable(cellInfo) {
-    return (
-      <TextField
-        label="Dense"
-        margin="dense"
-        variant="outlined"
-      />
-    )
+  onSave(e) {
+    console.log(this.refs.table.refs);
   }
 
-
-  /*
-  getTbodyProps(state, rowInfo, column) {
-    console.log(state);
-    console.log(rowInfo);
-    console.log(column);
-    //console.log(instance);
-    return {
-      style: {
-        background: this.state.cc
-      }
-    }
+  getProps(tableState, a, b, c) {
+    console.log(tableState);
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    return {}
   }
-  */
 
   render() {
     let { classes } = this.props;
-    let { columns, defulatPageSize, pageSizeOptions } = tableConfig;
+    let { columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
     let { data, pages, loading } = this.state;
 
     return (
@@ -181,7 +208,10 @@ class Test extends React.Component {
         <GridItem xs={12}>
           <Card>
             <TableToolbar title="Category 1">
-              <CustomButton color="github" justIcon round onClick={this.handleAdd}>
+              <CustomButton color="github" justIcon round onClick={this.onAdd}>
+                <AddShoppingCart />
+              </CustomButton>
+              <CustomButton color="github" round onClick={this.onSave}>
                 <AddShoppingCart />
               </CustomButton>
             </TableToolbar>
@@ -198,11 +228,30 @@ class Test extends React.Component {
                 defaultPageSize={defulatPageSize}
                 pageSizeOptions={pageSizeOptions}
                 className="-striped -highlight"
+                getProps={this.getProps}
+                ref="table"
               />
             </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
+    )
+  }
+}
+
+class Test extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Table
+        url={DATA_BASE_URL + DATA_SUB_URL.Category1}
+        tableConfig={TABLE_CONFIG}
+        cellBinds={CELL_BINDS}
+      />
     )
   }
 }
