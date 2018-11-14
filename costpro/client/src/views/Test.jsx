@@ -74,15 +74,11 @@ class Table extends React.Component {
   constructor(props) {
     super(props);
 
-    this.refs = React.createRef();
-
-    console.log(typeof this.refs);
-    console.log(this.refs);
-
     this.onFetchData = this.onFetchData.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onSave = this.onSave.bind(this);
     this.renderEditableCell = this.renderEditableCell.bind(this);
+    this.editableCellOnChange = this.editableCellOnChange.bind(this);
 
     this.buildCells();
     let { columns, defulatPageSize } = this.props.tableConfig;
@@ -127,8 +123,9 @@ class Table extends React.Component {
           margin="none"
           variant="filled"
           required
-          ref={cellProps.column.id}
-          style = {{ height: 50, width: '100%' }}
+          onChange={this.editableCellOnChange}
+          name={cellProps.column.id}
+          style={{ height: 50, width: '100%' }}
         />
       )
     } else {
@@ -136,6 +133,11 @@ class Table extends React.Component {
     }
   }
 
+  editableCellOnChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
   onFetchData(state, instance) {
     this.setState({
@@ -187,14 +189,17 @@ class Table extends React.Component {
   }
 
   onSave(e) {
-    console.log(this.refs.table.refs);
+    //console.log(this.refs.table.refs);
+    console.log(this.state);
   }
 
   getProps(tableState, a, b, c) {
+    /*
     console.log(tableState);
     console.log(a);
     console.log(b);
     console.log(c);
+    */
     return {}
   }
 
@@ -228,8 +233,6 @@ class Table extends React.Component {
                 defaultPageSize={defulatPageSize}
                 pageSizeOptions={pageSizeOptions}
                 className="-striped -highlight"
-                getProps={this.getProps}
-                ref="table"
               />
             </CardBody>
           </Card>
