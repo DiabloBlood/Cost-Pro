@@ -1,79 +1,76 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
+// @material-ui/core components
+import Divider from '@material-ui/core/Divider';
+// core components
+import GridContainer from "src/components/Grid/GridContainer.jsx";
+import GridItem from "src/components/Grid/GridItem.jsx";
+import Card from "src/components/Card/Card.jsx";
+import CardBody from "src/components/Card/CardBody.jsx";
+import TableToolbar from "src/components/Table/TableToolbar.jsx";
+// global vars
+import { CELL_BINDS } from "src/global/globalVars.jsx";
 // css
 import 'react-table/react-table.css';
 
 
 
+/***
+  1. BaseTable bundle all table layouts like TableToolBar, ReactTable, etc.
+  2. BaseTable render cells, binding cell functions base on tableConfig.
+***/
+
 class BaseTable extends React.Component {
 
   constructor(props) {
     super(props);
-
-    let { columns, defulatPageSize } = this.props.tableConfig;
-
-    this.state = {
-      columns: columns,
-      data: [],
-      page: 1,
-      pageSize: defulatPageSize,
-      pages: null,
-      loading: true
-    };
-    this.fetchData = this.fetchData.bind(this);
+    /*Build cells first, for bind cell render function*/
+    this.buildCells();
   }
 
-  fetchData(state, instance) {
-    this.setState({
-      loading: true
-    });
+  buildCells() {
+    let columns = this.props.tableConfig.columns;
+    let { renderEditableCell, renderActionCell } = this.props;
 
-    let queryParams = {
-      page: state.page + 1,
-      pageSize: state.pageSize,
-      sorted: state.sorted,
-      filtered: state.filtered
-    }
-
-    let url = this.props.url;
-    let params = {
-      params: {
-        value: btoa(JSON.stringify(queryParams))
+    for(let i = 0; i < columns.length; i++) {
+      let col = columns[i];
+      if(col.cellBind == CELL_BINDS.editable) {
+        col.Cell = renderEditableCell;
+      } else if(col.cellBind == CELL_BINDS.action) {
+        col.Cell = renderActionCell;
       }
     }
-
-    axios.get(url, params).then((res) => {
-      this.setState({
-        data: res.data.rows,
-        pages: res.data.total_pages,
-        page: state.page + 1,
-        pageSize: state.pageSize,
-        loading: false
-      });
-    }).catch((err) => {
-      throw "Load server-side data failed!"
-    });
   }
 
   render() {
-    let { data, pages, loading } = this.state;
-    let { columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
-
+    let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
+    let { data, pages, loading, onFetchData } = this.props;
 
     return (
-      <ReactTable
-        manual
-        columns={columns}
-        data={data}
-        pages={pages}
-        loading={loading}
-        onFetchData={this.fetchData}
-        filterable
-        defaultPageSize={defulatPageSize}
-        pageSizeOptions={pageSizeOptions}
-        className="-striped -highlight"
-      />
+      <GridContainer>
+        <GridItem xs={12}>
+          <Card>
+            <TableToolbar title={title}>
+            </TableToolbar>
+            <Divider inset />
+            <CardBody>
+              <ReactTable
+                manual
+                columns={columns}
+                data={data}
+                pages={pages}
+                loading={loading}
+                onFetchData={onFetchData}
+                filterable
+                defaultPageSize={defulatPageSize}
+                pageSizeOptions={pageSizeOptions}
+                className="-striped -highlight"
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     )
   }
 }

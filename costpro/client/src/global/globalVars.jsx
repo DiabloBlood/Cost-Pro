@@ -61,8 +61,14 @@ const APP_ROUTES = [
   }
 ]
 
+const CELL_BINDS = {
+  action: 'action',
+  editable: 'editable'
+}
+
 // trans Table
 const TABLE_CONFIG_TRANS = {
+  title: 'Trans Data',
   defulatPageSize: 10,
   pageSizeOptions: [5, 10, 20],
   columns: [
@@ -141,6 +147,7 @@ export {
   DATA_BASE_URL,
   DATA_SUB_URL,
   APP_ROUTES,
+  CELL_BINDS,
   TABLE_CONFIG_TRANS,
   TABLE_CONFIG_CATEGORY
 };
