@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
+// @material-ui/core components
+import TextField from '@material-ui/core/TextField';
 // core components
 import BaseTable from "src/components/Table/BaseTable.jsx";
+import CustomButton from "src/components/CustomButton.jsx";
+// @material-ui/icons
+import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
+import Save from "@material-ui/icons/Save";
+import Edit from "@material-ui/icons/Edit";
+import DeleteForever from "@material-ui/icons/DeleteForever";
 // global vars
 // css
 import 'react-table/react-table.css';
@@ -19,13 +27,15 @@ class EditTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.fetchData = this.fetchData.bind(this);
-    /*Build cells first, for bind cell render function*/
-    this.buildCells();
-    let { columns, defulatPageSize } = this.props.tableConfig;
+    this.onFetchData = this.onFetchData.bind(this);
+    this.renderActionCell = this.renderActionCell.bind(this);
+    this.renderEditableCell = this.renderEditableCell.bind(this);
+    this.editableCellOnChange = this.editableCellOnChange.bind(this);
+    this.onAdd = this.onAdd.bind(this);
+    this.onSave = this.onSave.bind(this);
 
     this.state = {
-      columns: columns,
+      columns: this.props.tableConfig.columns,
       loading: true
     };
   }
@@ -53,8 +63,6 @@ class EditTable extends React.Component {
       this.setState({
         data: res.data.rows,
         pages: res.data.total_pages,
-        page: state.page + 1,
-        pageSize: state.pageSize,
         loading: false
       });
     }).catch((err) => {
@@ -62,11 +70,23 @@ class EditTable extends React.Component {
     });
   }
 
+  onSave(e) {
+    console.log(this.state);
+  }
+
   renderActionCell(cellProps) {
     return (
-      <CustomButton color='success' justIcon>
-        <Edit />
-      </CustomButton>
+      <React.Fragment>
+        <CustomButton color='info' justIcon>
+          <Save />
+        </CustomButton>
+        <CustomButton color='success' justIcon onClick={this.onSave}>
+          <Edit />
+        </CustomButton>
+        <CustomButton color='danger' justIcon>
+          <DeleteForever />
+        </CustomButton>
+      </React.Fragment>
     )
   }
 
@@ -112,14 +132,15 @@ class EditTable extends React.Component {
     });
   }
 
-  onSave(e) {
-    //console.log(this.refs.table.refs);
-    console.log(this.state);
-  }
-
   render() {
     let { data, pages, loading } = this.state;
     let { tableConfig, onFetchData } = this.props;
+
+    let toolbarButtons = (
+      <CustomButton color="github" justIcon round onClick={this.onAdd}>
+        <AddShoppingCart />
+      </CustomButton>
+    );
 
 
     return (
@@ -128,7 +149,10 @@ class EditTable extends React.Component {
         data={data}
         pages={pages}
         loading={loading}
-        onFetchData={onFetchData}
+        onFetchData={this.onFetchData}
+        renderActionCell={this.renderActionCell}
+        renderEditableCell={this.renderEditableCell}
+        toolbarButtons={toolbarButtons}
       />
     )
   }

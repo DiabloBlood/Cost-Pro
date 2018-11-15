@@ -121,23 +121,31 @@ const TABLE_CONFIG_TRANS = {
 
 // Category table
 const TABLE_CONFIG_CATEGORY = {
+  title: 'Category 1',
   defulatPageSize: 5,
   pageSizeOptions: [5, 10],
   columns: [
     {
+      Header: 'Action',
+      width: 200,
+      cellBind: CELL_BINDS.action
+    },
+    {
       Header: 'ID',
       accessor: 'id',
-      width: 100
+      width: 100,
     },
     {
       Header: 'Category Name',
       accessor: 'name',
       width: 200,
+      cellBind: CELL_BINDS.editable
     },
     {
       Header: 'Category Description',
       accessor: 'desc',
-      width: 500
+      width: 500,
+      cellBind: CELL_BINDS.editable
     }
   ]
 }

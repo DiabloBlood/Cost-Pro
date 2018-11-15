@@ -45,13 +45,14 @@ class BaseTable extends React.Component {
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
-    let { data, pages, loading, onFetchData } = this.props;
+    let { data, pages, loading, onFetchData, toolbarButtons } = this.props;
 
     return (
       <GridContainer>
         <GridItem xs={12}>
           <Card>
             <TableToolbar title={title}>
+              {toolbarButtons}
             </TableToolbar>
             <Divider inset />
             <CardBody>

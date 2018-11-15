@@ -1,4 +1,7 @@
 import React from 'react';
+import EditTable from "src/components/Table/EditTable.jsx";
+
+import { DATA_BASE_URL, DATA_SUB_URL, TABLE_CONFIG_CATEGORY } from "src/global/globalVars.jsx"
 
 
 
@@ -10,7 +13,10 @@ class Test2 extends React.Component {
 
   render() {
     return (
-      <h1>Testing 2</h1>
+      <EditTable
+        url={DATA_BASE_URL + DATA_SUB_URL.Category1}
+        tableConfig={TABLE_CONFIG_CATEGORY}
+      />
     )
   }
 }
