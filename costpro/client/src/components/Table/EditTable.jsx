@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
 // @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 // core components
 import BaseTable from "src/components/Table/BaseTable.jsx";
@@ -11,7 +12,8 @@ import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import Save from "@material-ui/icons/Save";
 import Edit from "@material-ui/icons/Edit";
 import DeleteForever from "@material-ui/icons/DeleteForever";
-// global vars
+// jss assets
+import editTableStyle from "src/assets/jss/components/editTableStyle.jsx";
 // css
 import 'react-table/react-table.css';
 
@@ -75,16 +77,17 @@ class EditTable extends React.Component {
   }
 
   renderActionCell(cellProps) {
+    let classes = this.props.classes;
     return (
       <React.Fragment>
-        <CustomButton color='info' justIcon>
-          <Save />
+        <CustomButton color='info' className={classes.actionButton} onClick={this.onSave}>
+          <Save className={classes.icon} />
         </CustomButton>
-        <CustomButton color='success' justIcon onClick={this.onSave}>
-          <Edit />
+        <CustomButton color='success' className={classes.actionButton} onClick={this.onSave}>
+          <Edit className={classes.icon} />
         </CustomButton>
-        <CustomButton color='danger' justIcon>
-          <DeleteForever />
+        <CustomButton color='danger' className={classes.actionButton}>
+          <DeleteForever className={classes.icon} />
         </CustomButton>
       </React.Fragment>
     )
@@ -158,4 +161,4 @@ class EditTable extends React.Component {
   }
 }
 
-export default EditTable;
+export default withStyles(editTableStyle)(EditTable);

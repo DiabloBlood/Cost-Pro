@@ -16,7 +16,7 @@ class CustomButton extends React.Component {
   }
 
   render() {
-    let { classes, color, round, children, disabled, simple, size, justIcon, ...rest } = this.props;
+    let { classes, color, round, children, disabled, simple, size, justIcon, className, ...rest } = this.props;
 
     let btnClasses = classNames({
       [classes.button]: true,
@@ -26,6 +26,7 @@ class CustomButton extends React.Component {
       [classes.simple]: simple,
       [classes[size]]: size,
       [classes.justIcon]: justIcon,
+      [className]: className
     });
 
     return (
@@ -39,6 +40,7 @@ class CustomButton extends React.Component {
 
 CustomButton.propTypes = {
   classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
   color: PropTypes.oneOf([
     "primary",
     "info",
