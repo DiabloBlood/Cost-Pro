@@ -35,10 +35,13 @@ class EditTable extends React.Component {
     this.editableCellOnChange = this.editableCellOnChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.onEdit = this.onEdit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
 
     this.state = {
       columns: this.props.tableConfig.columns,
-      loading: true
+      loading: true,
+      editingIndex: -1
     };
   }
 
@@ -72,10 +75,6 @@ class EditTable extends React.Component {
     });
   }
 
-  onSave(e) {
-    console.log(this.state);
-  }
-
   renderActionCell(cellProps) {
     let classes = this.props.classes;
     return (
@@ -83,10 +82,10 @@ class EditTable extends React.Component {
         <CustomButton color='info' className={classes.actionButton} onClick={this.onSave}>
           <Save className={classes.icon} />
         </CustomButton>
-        <CustomButton color='success' className={classes.actionButton} onClick={this.onSave}>
+        <CustomButton color='success' className={classes.actionButton} onClick={this.onEdit}>
           <Edit className={classes.icon} />
         </CustomButton>
-        <CustomButton color='danger' className={classes.actionButton}>
+        <CustomButton color='danger' className={classes.actionButton} onClick={this.onDelete}>
           <DeleteForever className={classes.icon} />
         </CustomButton>
       </React.Fragment>
@@ -133,6 +132,19 @@ class EditTable extends React.Component {
         editingIndex: 0
       }
     });
+  }
+
+  onSave(e) {
+    console.log(this.state);
+  }
+
+  onEdit(e) {
+    console.log(this.state);
+  }
+
+  onDelete(e) {
+    console.log(e);
+    console.log(this.state);
   }
 
   render() {
