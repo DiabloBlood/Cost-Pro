@@ -34,9 +34,6 @@ class EditTable extends React.Component {
     this.renderEditableCell = this.renderEditableCell.bind(this);
     this.editableCellOnChange = this.editableCellOnChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.onEdit = this.onEdit.bind(this);
-    this.onDelete = this.onDelete.bind(this);
 
     this.state = {
       columns: this.props.tableConfig.columns,
@@ -79,13 +76,13 @@ class EditTable extends React.Component {
     let classes = this.props.classes;
     return (
       <React.Fragment>
-        <CustomButton color='info' className={classes.actionButton} onClick={this.onSave}>
+        <CustomButton color='info' className={classes.actionButton} onClick={this.onSave.bind(this, cellProps.index)}>
           <Save className={classes.icon} />
         </CustomButton>
-        <CustomButton color='success' className={classes.actionButton} onClick={this.onEdit}>
+        <CustomButton color='success' className={classes.actionButton} onClick={this.onEdit.bind(this, cellProps.index)}>
           <Edit className={classes.icon} />
         </CustomButton>
-        <CustomButton color='danger' className={classes.actionButton} onClick={this.onDelete}>
+        <CustomButton color='danger' className={classes.actionButton} onClick={this.onDelete.bind(this, cellProps.index)}>
           <DeleteForever className={classes.icon} />
         </CustomButton>
       </React.Fragment>
@@ -94,6 +91,8 @@ class EditTable extends React.Component {
 
   renderEditableCell(cellProps) {
     let { editingIndex } = this.state;
+    let defaultValue = cellProps.value === null ? '' : cellProps.value;
+
     if(editingIndex == cellProps.index) {
       return (
         <TextField
@@ -103,11 +102,12 @@ class EditTable extends React.Component {
           required
           onChange={this.editableCellOnChange}
           name={cellProps.column.id}
+          defaultValue={defaultValue}
           style={{ height: 50, width: '100%' }}
         />
       )
     } else {
-      return cellProps.value;
+      return defaultValue;
     }
   }
 
@@ -118,14 +118,18 @@ class EditTable extends React.Component {
   }
 
   onAdd(e) {
+    if(this.state.editingIndex > -1) {
+      //throw warning card
+      return;
+    }
     this.setState((state) => {
       let newData = state.data.map((value) => {
         return value;
       });
       newData.unshift({
-        id: '',
-        name: '',
-        desc: ''
+        id: null,
+        name: null,
+        desc: null
       });
       return {
         data: newData,
@@ -134,17 +138,45 @@ class EditTable extends React.Component {
     });
   }
 
-  onSave(e) {
-    console.log(this.state);
+  onSave(index, e) {
+    let editingIndex = this.state.editingIndex;
   }
 
-  onEdit(e) {
-    console.log(this.state);
+  onEdit(index, e) {
+    if(this.state.editingIndex > - 1) {
+      // throw warning card
+      return;
+    }
+    this.setState({
+      editingIndex: index
+    });
   }
 
-  onDelete(e) {
-    console.log(e);
-    console.log(this.state);
+  onDelete(rowIndex, e) {
+    let editingIndex = this.state.editingIndex;
+    if(rowIndex != editingIndex && editingIndex > -1) {
+      //throw warning card, should finish editing first
+      return;
+    }
+
+    if(rowIndex == editingIndex) {
+      this.setState((state) => {
+        let newData = [];
+        for(let i = 0; i < state.data.length; i++) {
+          if(i != rowIndex) {
+            newData.push(state.data[i]);
+          } 
+        }
+        return {
+          data: newData,
+          editingIndex: -1
+        }
+      });
+    }
+
+    if(rowIndex != editingIndex) {
+      // backend delete
+    }
   }
 
   render() {
