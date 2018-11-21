@@ -26,3 +26,5 @@ $ npm install react-router-dom --save
 
 ### jpg, png, gif loader
 # npm install file-loader --save-dev
+
+npm install react-bootstrap-sweetalert --save

@@ -4,6 +4,8 @@ import axios from 'axios';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
+// Third party components
+import SweetAlert from "react-bootstrap-sweetalert";
 // core components
 import BaseTable from "src/components/Table/BaseTable.jsx";
 import CustomButton from "src/components/CustomButton.jsx";
@@ -29,6 +31,8 @@ class EditTable extends React.Component {
   constructor(props) {
     super(props);
 
+    this.basicAlert = this.basicAlert.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
     this.onFetchData = this.onFetchData.bind(this);
     this.renderActionCell = this.renderActionCell.bind(this);
     this.renderEditableCell = this.renderEditableCell.bind(this);
@@ -36,6 +40,7 @@ class EditTable extends React.Component {
     this.onAdd = this.onAdd.bind(this);
 
     this.state = {
+      alert: null,
       columns: this.props.tableConfig.columns,
       loading: true,
       editingIndex: -1
@@ -69,6 +74,25 @@ class EditTable extends React.Component {
       });
     }).catch((err) => {
       throw "Load server-side data failed!"
+    });
+  }
+
+  basicAlert() {
+    this.setState({
+      alert: (
+        <SweetAlert
+          type="warning"
+          title="Please save the current editing row first!"
+          onConfirm={this.hideAlert}
+          confirmBtnBsStyle='warning'
+        />
+      )
+    });
+  }
+
+  hideAlert() {
+    this.setState({
+      alert: null
     });
   }
 
@@ -119,7 +143,7 @@ class EditTable extends React.Component {
 
   onAdd(e) {
     if(this.state.editingIndex > -1) {
-      //throw warning card
+      this.basicAlert();
       return;
     }
     this.setState((state) => {
@@ -191,16 +215,19 @@ class EditTable extends React.Component {
 
 
     return (
-      <BaseTable
-        tableConfig={tableConfig}
-        data={data}
-        pages={pages}
-        loading={loading}
-        onFetchData={this.onFetchData}
-        renderActionCell={this.renderActionCell}
-        renderEditableCell={this.renderEditableCell}
-        toolbarButtons={toolbarButtons}
-      />
+      <React.Fragment>
+        {this.state.alert}
+        <BaseTable
+          tableConfig={tableConfig}
+          data={data}
+          pages={pages}
+          loading={loading}
+          onFetchData={this.onFetchData}
+          renderActionCell={this.renderActionCell}
+          renderEditableCell={this.renderEditableCell}
+          toolbarButtons={toolbarButtons}
+        />
+      </React.Fragment>
     )
   }
 }
