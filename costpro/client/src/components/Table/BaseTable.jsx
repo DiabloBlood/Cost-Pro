@@ -9,6 +9,9 @@ import GridItem from "src/components/Grid/GridItem.jsx";
 import Card from "src/components/Card/Card.jsx";
 import CardBody from "src/components/Card/CardBody.jsx";
 import TableToolbar from "src/components/Table/TableToolbar.jsx";
+import CustomButton from "src/components/CustomButton.jsx";
+// @material-ui/icons
+import Refresh from "@material-ui/icons/Refresh";
 // global vars
 import { CELL_BINDS } from "src/global/globalVars.jsx";
 // css
@@ -27,6 +30,8 @@ class BaseTable extends React.Component {
     super(props);
     /*Build cells first, for bind cell render function*/
     this.buildCells();
+    this.tableRef = React.createRef();
+    this.reload = props.reload.bind(this);
   }
 
   buildCells() {
@@ -53,10 +58,14 @@ class BaseTable extends React.Component {
           <Card>
             <TableToolbar title={title}>
               {toolbarButtons}
+              <CustomButton color="github" justIcon round onClick={this.reload}>
+                <Refresh />
+              </CustomButton>
             </TableToolbar>
             <Divider inset />
             <CardBody>
               <ReactTable
+                ref={this.tableRef}
                 manual
                 columns={columns}
                 data={data}

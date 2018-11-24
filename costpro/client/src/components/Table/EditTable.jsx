@@ -70,7 +70,8 @@ class EditTable extends React.Component {
       this.setState({
         data: res.data.rows,
         pages: res.data.total_pages,
-        loading: false
+        loading: false,
+        editingIndex: -1
       });
     }).catch((err) => {
       throw "Load server-side data failed!"
@@ -84,7 +85,10 @@ class EditTable extends React.Component {
           type="warning"
           title="Please save the current editing row first!"
           onConfirm={this.hideAlert}
-          confirmBtnBsStyle='warning'
+          focusConfirmBtn={false}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.warning
+          }
         />
       )
     });
@@ -139,6 +143,12 @@ class EditTable extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  reload(e) {
+    let state = this.tableRef.current.state;
+    let instance = this.tableRef.current;
+    this.tableRef.current.props.onFetchData(state, instance);
   }
 
   onAdd(e) {
@@ -213,7 +223,6 @@ class EditTable extends React.Component {
       </CustomButton>
     );
 
-
     return (
       <React.Fragment>
         {this.state.alert}
@@ -226,6 +235,7 @@ class EditTable extends React.Component {
           renderActionCell={this.renderActionCell}
           renderEditableCell={this.renderEditableCell}
           toolbarButtons={toolbarButtons}
+          reload={this.reload}
         />
       </React.Fragment>
     )

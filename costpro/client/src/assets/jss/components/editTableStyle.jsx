@@ -1,4 +1,4 @@
-
+import customButtonStyle from "src/assets/jss/components/customButtonStyle.jsx";
 
 
 const editTableStyle = {
@@ -15,7 +15,8 @@ const editTableStyle = {
     height: "17px",
     top: "-1px",
     position: "relative"
-  }
+  },
+  ...customButtonStyle
 }
 
 export default editTableStyle;
