@@ -43,7 +43,8 @@ class EditTable extends React.Component {
       alert: null,
       columns: this.props.tableConfig.columns,
       loading: true,
-      editingIndex: -1
+      editingIndex: -1,
+      isNew: false
     };
   }
 
@@ -145,12 +146,6 @@ class EditTable extends React.Component {
     })
   }
 
-  reload(e) {
-    let state = this.tableRef.current.state;
-    let instance = this.tableRef.current;
-    this.tableRef.current.props.onFetchData(state, instance);
-  }
-
   onAdd(e) {
     if(this.state.editingIndex > -1) {
       this.basicAlert();
@@ -167,18 +162,41 @@ class EditTable extends React.Component {
       });
       return {
         data: newData,
-        editingIndex: 0
+        editingIndex: 0,
+        isNew: true
       }
     });
   }
 
   onSave(index, e) {
-    let editingIndex = this.state.editingIndex;
+    let {isNew, editingIndex, id} = this.state;
+
+    if(editingIndex == -1) {
+      return;
+    }
+
+    if(editingIndex > -1 && editingIndex != index) {
+      this.basicAlert();
+      return;
+    }
+
+    let url = this.props.url;
+    let params = {
+      isNew: isNew,
+      id: id
+    }
+
+    axios.post(url, params).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      throw "Load server-side data failed!"
+    });
   }
 
   onEdit(index, e) {
-    if(this.state.editingIndex > - 1) {
-      // throw warning card
+    let editingIndex = this.state.editingIndex;
+    if(editingIndex > -1 && editingIndex != index) {
+      this.basicAlert();
       return;
     }
     this.setState({
@@ -235,7 +253,6 @@ class EditTable extends React.Component {
           renderActionCell={this.renderActionCell}
           renderEditableCell={this.renderEditableCell}
           toolbarButtons={toolbarButtons}
-          reload={this.reload}
         />
       </React.Fragment>
     )

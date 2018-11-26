@@ -31,7 +31,7 @@ class BaseTable extends React.Component {
     /*Build cells first, for bind cell render function*/
     this.buildCells();
     this.tableRef = React.createRef();
-    this.reload = props.reload.bind(this);
+    this.reload = this.reload.bind(this);
   }
 
   buildCells() {
@@ -46,6 +46,12 @@ class BaseTable extends React.Component {
         col.Cell = renderActionCell;
       }
     }
+  }
+
+  reload(e) {
+    let state = this.tableRef.current.state;
+    let instance = this.tableRef.current;
+    this.tableRef.current.props.onFetchData(state, instance);
   }
 
   render() {
