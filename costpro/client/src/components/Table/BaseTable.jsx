@@ -56,7 +56,7 @@ class BaseTable extends React.Component {
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
-    let { data, pages, loading, onFetchData, toolbarButtons } = this.props;
+    let { data, pages, loading, onFetchData, toolbarButtons, getTrProps } = this.props;
 
     return (
       <GridContainer>
@@ -82,6 +82,7 @@ class BaseTable extends React.Component {
                 defaultPageSize={defulatPageSize}
                 pageSizeOptions={pageSizeOptions}
                 className="-striped -highlight"
+                getTrProps={this.getTrProps}
               />
             </CardBody>
           </Card>

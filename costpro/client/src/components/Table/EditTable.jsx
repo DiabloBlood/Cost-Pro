@@ -38,6 +38,7 @@ class EditTable extends React.Component {
     this.renderEditableCell = this.renderEditableCell.bind(this);
     this.editableCellOnChange = this.editableCellOnChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
+    this.getTrProps = this.getTrProps.bind(this);
 
     this.state = {
       alert: null,
@@ -118,6 +119,7 @@ class EditTable extends React.Component {
     )
   }
 
+  /*Render function cannot setState*/
   renderEditableCell(cellProps) {
     let { editingIndex } = this.state;
     let defaultValue = cellProps.value === null ? '' : cellProps.value;
@@ -169,6 +171,7 @@ class EditTable extends React.Component {
   }
 
   onSave(index, e) {
+
     let {isNew, editingIndex, id} = this.state;
 
     if(editingIndex == -1) {
@@ -231,6 +234,18 @@ class EditTable extends React.Component {
     }
   }
 
+  getTrProps(state, rowInfo, column, instance) {
+    /*
+    this.setState({
+      id: cellProps.row.id,
+      [cellProps.column.id]: defaultValue
+    });
+    */
+    console.log(rowInfo);
+    console.log(column);
+    return {}
+  }
+
   render() {
     let { data, pages, loading } = this.state;
     let { tableConfig, onFetchData } = this.props;
@@ -253,6 +268,7 @@ class EditTable extends React.Component {
           renderActionCell={this.renderActionCell}
           renderEditableCell={this.renderEditableCell}
           toolbarButtons={toolbarButtons}
+          getTrProps={this.getTrProps}
         />
       </React.Fragment>
     )

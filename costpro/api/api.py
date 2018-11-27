@@ -22,13 +22,8 @@ def v1_data(table_name):
 
 @api.route('/v1/data/<table_name>', methods=['POST'])
 def v1_data_insert(table_name):
-    is_new = request.form.get('isNew')
-    record_id = request.form.get('id')
-    print(is_new)
-    print(record_id)
-    print(request.form)
-    print(request.args)
-    print(request)
+    is_new = request.json.get('isNew')
+    record_id = request.json.get('id')
     return jsonify(haha='haha')
 
 
