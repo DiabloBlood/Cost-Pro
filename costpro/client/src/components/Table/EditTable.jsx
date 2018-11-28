@@ -14,6 +14,8 @@ import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import Save from "@material-ui/icons/Save";
 import Edit from "@material-ui/icons/Edit";
 import DeleteForever from "@material-ui/icons/DeleteForever";
+// global vars
+import { UTIL } from "src/global/globalVars.jsx";
 // jss assets
 import editTableStyle from "src/assets/jss/components/editTableStyle.jsx";
 // css
@@ -45,8 +47,11 @@ class EditTable extends React.Component {
       columns: this.props.tableConfig.columns,
       loading: true,
       editingIndex: -1,
-      isNew: false
+      isNew: false,
+      editingRow: null
     };
+
+    this.trackingKeys = UTIL.getTrackingKeys(this.props.tableConfig.columns);
   }
 
   onFetchData(state, instance) {
@@ -73,7 +78,9 @@ class EditTable extends React.Component {
         data: res.data.rows,
         pages: res.data.total_pages,
         loading: false,
-        editingIndex: -1
+        editingIndex: -1,
+        isNew: false,
+        editingRow: null
       });
     }).catch((err) => {
       throw "Load server-side data failed!"
@@ -146,6 +153,11 @@ class EditTable extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+    this.setState((state) => {
+      editingRow: {
+        ...state.editingRow,
+      }
+    });
   }
 
   onAdd(e) {
@@ -157,11 +169,13 @@ class EditTable extends React.Component {
       let newData = state.data.map((value) => {
         return value;
       });
-      newData.unshift({
-        id: null,
-        name: null,
-        desc: null
-      });
+
+      let emptyRow = {}
+      for(let i in this.trackingKeys) {
+        emptyRow[this.trackingKeys[i]] = null;
+      }
+
+      newData.unshift(emptyRow);
       return {
         data: newData,
         editingIndex: 0,
@@ -171,7 +185,6 @@ class EditTable extends React.Component {
   }
 
   onSave(index, e) {
-
     let {isNew, editingIndex, id} = this.state;
 
     if(editingIndex == -1) {
@@ -202,8 +215,19 @@ class EditTable extends React.Component {
       this.basicAlert();
       return;
     }
+
+    let editingRow = {};
+    let row = this.state.data[index];
+    for(let key in row) {
+      if(this.trackingKeys.indexOf(key) > -1) {
+        editingRow[key] = row[key];
+      }
+    }
+
     this.setState({
-      editingIndex: index
+      editingIndex: index,
+      isNew: false,
+      editingRow: editingRow
     });
   }
 
@@ -241,8 +265,6 @@ class EditTable extends React.Component {
       [cellProps.column.id]: defaultValue
     });
     */
-    console.log(rowInfo);
-    console.log(column);
     return {}
   }
 

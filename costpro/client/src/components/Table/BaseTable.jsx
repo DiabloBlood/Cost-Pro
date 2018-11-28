@@ -82,7 +82,7 @@ class BaseTable extends React.Component {
                 defaultPageSize={defulatPageSize}
                 pageSizeOptions={pageSizeOptions}
                 className="-striped -highlight"
-                getTrProps={this.getTrProps}
+                getTrProps={getTrProps}
               />
             </CardBody>
           </Card>
