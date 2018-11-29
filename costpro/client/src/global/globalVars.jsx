@@ -9,6 +9,7 @@ import Table from "src/views/Table.jsx"
 import Category from "src/views/Category.jsx"
 import Test from "src/views/Test.jsx"
 import Test2 from "src/views/Test2.jsx"
+import TestRedux from "src/views/TestRedux.jsx"
 
 
 
@@ -53,6 +54,12 @@ const APP_ROUTES = [
     sidebarName: 'Test2',
     icon: HomeIcon, 
     component: Test2
+  },
+  {
+    path: '/test_redux',
+    sidebarName: 'Test Redux',
+    icon: HomeIcon,
+    component: TestRedux
   },
   {
     redirect: true,

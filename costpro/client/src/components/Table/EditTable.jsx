@@ -152,11 +152,6 @@ class EditTable extends React.Component {
   editableCellOnChange(e) {
     this.setState({
       [e.target.name]: e.target.value
-    })
-    this.setState((state) => {
-      editingRow: {
-        ...state.editingRow,
-      }
     });
   }
 
@@ -216,6 +211,7 @@ class EditTable extends React.Component {
       return;
     }
 
+    /*Find editing row from data*/
     let editingRow = {};
     let row = this.state.data[index];
     for(let key in row) {
