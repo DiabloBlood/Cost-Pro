@@ -28,3 +28,6 @@ $ npm install react-router-dom --save
 # npm install file-loader --save-dev
 
 npm install react-bootstrap-sweetalert --save
+
+### enable static method compile
+npm install --save-dev @babel/plugin-proposal-class-properties

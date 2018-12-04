@@ -3,6 +3,20 @@ import { createStore } from 'redux';
 
 
 
+const defaultState = 0;
+const counter = (state = defaultState, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+//const StoreContext = React.createContext(null);
+
 class Counter extends React.Component {
 
   constructor(props) {
@@ -23,7 +37,6 @@ class Counter extends React.Component {
 
   render() {
     const { value, onIncrement, onDecrement } = this.props;
-    console.log(this.props);
     return (
       <p>
         Clicked: {value} times
@@ -48,34 +61,44 @@ class Counter extends React.Component {
   }
 }
 
-
-const defaultState = 0;
-const counter = (state = defaultState, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-}
-
-const store = createStore(counter);
-
-
 class TestRedux extends React.Component {
 
   constructor(props) {
     super(props);
+    this.store = createStore(counter);
+    this.state = {
+      storeState: this.store.getState()
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.subscribe();
+  }
+
+  handleChange() {
+    let newStoreState = this.store.getState();
+
+    this.setState(prevState => {
+      if(prevState.storeState === newStoreState) {
+        return null;
+      }
+
+      return { storeState: newStoreState }
+    });
+  }
+
+  subscribe() {
+    this.unsubscribe = this.store.subscribe(this.handleChange);
   }
 
   render() {
     return (
       <Counter
-        value={store.getState()}
-        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+        value={this.state.storeState}
+        onIncrement={() => this.store.dispatch({ type: 'INCREMENT' })}
+        onDecrement={() => this.store.dispatch({ type: 'DECREMENT' })}
       />
     )
   }

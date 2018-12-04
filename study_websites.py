@@ -115,4 +115,7 @@ https://webmasters.googleblog.com/2010/04/to-slash-or-not-to-slash.html
 
 ### JavaScript bind
 https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/
+
+### UUID scale up
+### https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f
 '''
