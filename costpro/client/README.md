@@ -31,3 +31,6 @@ npm install react-bootstrap-sweetalert --save
 
 ### enable static method compile
 npm install --save-dev @babel/plugin-proposal-class-properties
+
+### install redux-react
+npm install --save react-redux

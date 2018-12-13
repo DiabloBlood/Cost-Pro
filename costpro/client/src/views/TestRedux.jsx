@@ -15,8 +15,6 @@ const counter = (state = defaultState, action) => {
   }
 }
 
-//const StoreContext = React.createContext(null);
-
 class Counter extends React.Component {
 
   constructor(props) {
@@ -61,6 +59,46 @@ class Counter extends React.Component {
   }
 }
 
+const store = createStore(counter);
+
+class Provider extends React.Component {
+
+  constructor(props) {
+    super(props);
+    //this.store = createStore(counter);
+    //this.ref = React.createRef();
+    this.props.store.subscribe(this.render);
+    this.render = this.render.bind(this);
+  }
+
+  render() {
+    let store = this.props.store;
+    return (
+      <Counter
+        value={store.getState()}
+        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+      />
+    )
+  }
+}
+
+class TestRedux extends React.Component {
+
+  constructor(props) {
+    super(props);
+    //this.store = store;
+    //this.store.subscribe(this.render);
+  }
+
+  render() {
+    return (
+      <Provider store={store} />
+    )
+  }
+}
+
+/*
 class TestRedux extends React.Component {
 
   constructor(props) {
@@ -103,5 +141,6 @@ class TestRedux extends React.Component {
     )
   }
 }
+*/
 
 export default TestRedux;
