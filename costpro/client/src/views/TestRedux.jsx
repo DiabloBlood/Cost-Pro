@@ -1,19 +1,8 @@
 import React from 'react';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 
-
-const defaultState = 0;
-const counter = (state = defaultState, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-}
 
 class Counter extends React.Component {
 
@@ -59,41 +48,35 @@ class Counter extends React.Component {
   }
 }
 
-const store = createStore(counter);
-
-class Provider extends React.Component {
-
-  constructor(props) {
-    super(props);
-    //this.store = createStore(counter);
-    //this.ref = React.createRef();
-    this.props.store.subscribe(this.render);
-    this.render = this.render.bind(this);
-  }
-
-  render() {
-    let store = this.props.store;
-    return (
-      <Counter
-        value={store.getState()}
-        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-      />
-    )
+const defaultState = 0;
+const reducer = (state = defaultState, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
   }
 }
+
 
 class TestRedux extends React.Component {
 
   constructor(props) {
     super(props);
-    //this.store = store;
-    //this.store.subscribe(this.render);
+    this.store = createStore(reducer);
   }
 
   render() {
     return (
-      <Provider store={store} />
+      <Provider store={this.store}>
+        <Counter
+          value={this.state.getState()}
+          onIncrement={() => this.store.dispatch({ type: 'INCREMENT' })}
+          onDecrement={() => this.store.dispatch({ type: 'DECREMENT' })}
+        />
+      </Provider>
     )
   }
 }
