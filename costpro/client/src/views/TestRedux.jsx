@@ -60,6 +60,37 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
+/*
+      <Counter
+        value={store.getState()}
+        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+      />
+*/
+
+const mapStateToProps = state => {
+  return {
+    value: state
+  }
+}
+
+const mapDispatch
+
+class Container extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let store = this.props.store;
+    console.log(store);
+    return (
+        <h1>haha</h1>
+    )
+  }
+}
+
 
 class TestRedux extends React.Component {
 
@@ -71,11 +102,7 @@ class TestRedux extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <Counter
-          value={this.state.getState()}
-          onIncrement={() => this.store.dispatch({ type: 'INCREMENT' })}
-          onDecrement={() => this.store.dispatch({ type: 'DECREMENT' })}
-        />
+        <Container />
       </Provider>
     )
   }
