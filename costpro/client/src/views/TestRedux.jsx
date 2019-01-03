@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 
 
 
+// only show UI
 class Counter extends React.Component {
 
   constructor(props) {
@@ -60,35 +61,23 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-/*
-      <Counter
-        value={store.getState()}
-        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-      />
-*/
-
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     value: state
   }
 }
 
-
-class Container extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    let store = this.props.store;
-    console.log(store);
-    return (
-        <h1>haha</h1>
-    )
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onIncrement: () => dispatch({ type: 'INCREMENT' }),
+    onDecrement: () => dispatch({ type: 'DECREMENT' })
   }
 }
+
+const Container = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter);
 
 
 class TestRedux extends React.Component {
