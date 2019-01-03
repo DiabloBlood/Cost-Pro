@@ -56,7 +56,6 @@ class Counter extends React.Component {
 
   render() {
     const { value, onIncrement, onDecrement } = this.props;
-    console.log(this.props);
     return (
       <p>
         Clicked: {value} times
@@ -81,6 +80,7 @@ class Counter extends React.Component {
   }
 }
 
+/*
 const defaultState = 0;
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -88,6 +88,21 @@ const reducer = (state = defaultState, action) => {
       return state + 1;
     case 'DECREMENT':
       return state - 1;
+    default:
+      return state;
+  }
+}
+*/
+
+const defaultState = {value: 1};
+const reducer = (state = defaultState, action) => {
+  let value = state.value;
+  switch (action.type) {
+    case 'INCREMENT':
+      //console.log(state);
+      return {value: value + 1};
+    case 'DECREMENT':
+      return {value: value - 1};
     default:
       return state;
   }
@@ -101,14 +116,13 @@ const reducer = (state = defaultState, action) => {
       />
 */
 
-const mapStateToProps = state => {
-  console.log(state);
+const mapStateToProps = (state, ownProps) => {
   return {
-    value: state
+    value: state.value
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' })
@@ -119,6 +133,7 @@ const Container = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Counter);
+
 
 const store = createStore(reducer);
 
@@ -140,5 +155,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Container />
   </Provider>,
-document.getElementById('app')
+  document.getElementById('app')
 );
+
+console.log(store);

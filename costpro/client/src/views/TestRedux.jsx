@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 
 
@@ -24,7 +24,6 @@ class Counter extends React.Component {
 
   render() {
     const { value, onIncrement, onDecrement } = this.props;
-    console.log('render counter');
     return (
       <p>
         Clicked: {value} times
@@ -75,17 +74,21 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onIncrement: () => dispatch({ type: 'INCREMENT' }),
-    onDecrement: () => dispatch({ type: 'DECREMENT' })
+
+class Container extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let store = this.props.store;
+    console.log(store);
+    return (
+        <h1>haha</h1>
+    )
   }
 }
-
-const Container = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Counter);
 
 
 class TestRedux extends React.Component {
@@ -93,7 +96,6 @@ class TestRedux extends React.Component {
   constructor(props) {
     super(props);
     this.store = createStore(reducer);
-    console.log(this.store);
   }
 
   render() {
