@@ -80,7 +80,7 @@ const Container = connect(
 )(Counter);
 
 
-class TestRedux extends React.Component {
+class TestReduxApp1 extends React.Component {
 
   constructor(props) {
     super(props);
@@ -141,4 +141,4 @@ class TestRedux extends React.Component {
 }
 */
 
-export default TestRedux;
+export default TestReduxApp1;
