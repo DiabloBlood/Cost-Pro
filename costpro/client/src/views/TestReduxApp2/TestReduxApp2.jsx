@@ -12,8 +12,6 @@ import {
 
 
 
-const store = createStore(appReducer);
-
 class TestReduxApp2 extends React.Component {
 
   constructor(props) {
@@ -23,7 +21,7 @@ class TestReduxApp2 extends React.Component {
 
   render() {
     return (
-      <h1>haha</h1>
+      <AddTodo />
     )
   }
 }
