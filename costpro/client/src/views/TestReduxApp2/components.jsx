@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 
 
@@ -9,23 +9,23 @@ class AddTodo extends React.Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
-    this.addTodo = this.addTodo.bind(this);
+    this.addTodoWrapper = this.addTodoWrapper.bind(this);
   }
 
-  addTodo() {
+  addTodoWrapper() {
     let inputText = this.inputRef.current.value.trim();
     if(!inputText) {
       return;
     }
     this.props.addTodo(inputText);
-    //this.inputRef.current.value = '';
+    this.inputRef.current.value = '';
   }
 
   render() {
     return (
       <div>
         <input ref={this.inputRef} />
-        <button onClick={this.addTodo}>Add Todo</button>
+        <button onClick={this.addTodoWrapper}>Add Todo</button>
       </div>
     )
   }
@@ -69,11 +69,11 @@ class TodoList extends React.Component {
   render() {
     let { todos, onTodoClick } = this.props;
     let todoItems = todos.map((todo, index) => {
-      return <Todo key={index} {...todo} onClick={() => onTodoClick(index)} />
+      return <TodoItem key={index} {...todo} onClick={() => onTodoClick(index)} />
     });
 
     return (
-      <ul>todoItems</ul>
+      <ul>{todoItems}</ul>
     )
   }
 }
@@ -81,7 +81,6 @@ class TodoList extends React.Component {
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
       completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired
     }).isRequired
@@ -90,23 +89,32 @@ TodoList.propTypes = {
 }
 
 
-class TodoApp extends React.Component {
+class Link extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    let { addTodo } = this.props;
+    let { active, children, onClick } = this.props;
     return (
-      <AddTodo addTodo={addTodo} />
+      <button onClick={onClick} disabled={active} style={{ marginLeft: '4px' }}>
+        {children}
+      </button>
     )
   }
 }
+
+Link.propTypes = {
+  active: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired
+}
+
 
 export {
   AddTodo,
   TodoItem,
   TodoList,
-  TodoApp
+  Link
 };

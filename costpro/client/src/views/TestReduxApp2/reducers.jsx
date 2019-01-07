@@ -16,13 +16,13 @@ const defaultState = {
 */
 
 
-const todoReducer = (state = [], action) => {
+const todosReducer = (state = [], action) => {
   switch(action.type) {
     case ADD_TODO:
       return [
         ...state,
         {
-          test: action.text,
+          text: action.text,
           completed: false
         }
       ]
@@ -52,7 +52,7 @@ const visibilityReducer = (state = VisibilityFilters.SHOW_ALL, action) => {
 
 const appReducer = combineReducers({
   visibilityFilter: visibilityReducer,
-  todos: todoReducer
+  todos: todosReducer
 });
 
 export default appReducer;

@@ -1,14 +1,9 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 // reducer
-import appReducer from "src/views/TestReduxApp2/reducers.jsx"
-import {
-  addTodo,
-  toggleTodo,
-  setVisibilityFilter,
-  VisibilityFilters
-} from "src/views/TestReduxApp2/actions.jsx"
+import appReducer from "src/views/TestReduxApp2/reducers.jsx";
+import TodoApp from "src/views/TestReduxApp2/containers.jsx";
 
 
 
@@ -21,7 +16,9 @@ class TestReduxApp2 extends React.Component {
 
   render() {
     return (
-      <AddTodo />
+      <Provider store={this.store}>
+        <TodoApp />
+      </Provider>
     )
   }
 }
