@@ -90,6 +90,7 @@ class BaseTable extends React.Component {
     axios.get(url, params).then((res) => {
       this.props.onLoadSuccess(res);
     }).catch((err) => {
+      console.log(err);
       throw "Load server-side data failed!"
     });
   }

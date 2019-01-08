@@ -48,7 +48,7 @@ const onBeforeLoad = () => {
 }
 
 const onLoadSuccess = res => {
-  return { type: ON_AFTER_LOAD, res}
+  return { type: ON_LOAD_SUCCESS, res}
 }
 
 const loadReducer = (state = defaultTableDataState, action) => {
@@ -57,8 +57,8 @@ const loadReducer = (state = defaultTableDataState, action) => {
       return { ...state, loading: true };
     case ON_LOAD_SUCCESS:
       return {
-        data: res.data.rows,
-        pages: res.data.total_pages,
+        data: action.res.data.rows,
+        pages: action.res.data.total_pages,
         loading: false
       };
     default:
@@ -76,8 +76,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onBeforeLoad: () => dispatch(onBeforeLoad),
-    onLoadSuccess: res => dispatch(onLoadSuccess)
+    onBeforeLoad: () => dispatch(onBeforeLoad()),
+    onLoadSuccess: res => dispatch(onLoadSuccess(res))
   }
 }
 
