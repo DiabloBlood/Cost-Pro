@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactTable from 'react-table';
+// AJAX
 import axios from 'axios';
+// @material-ui/core methods
+import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/core components
 import Divider from '@material-ui/core/Divider';
 // core components
@@ -11,52 +14,39 @@ import CardBody from "src/components/Card/CardBody.jsx";
 import TableToolbar from "src/components/Table/TableToolbar.jsx";
 import CustomButton from "src/components/CustomButton.jsx";
 // @material-ui/icons
+import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import Refresh from "@material-ui/icons/Refresh";
+import Save from "@material-ui/icons/Save";
+import Edit from "@material-ui/icons/Edit";
+import DeleteForever from "@material-ui/icons/DeleteForever";
 // global vars
 import { CELL_BINDS } from "src/global/globalVars.jsx";
+// jss assets
+import editTableStyle from "src/assets/jss/components/editTableStyle.jsx";
 // css
 import 'react-table/react-table.css';
 
 
 
-/***
-  1. BaseTable bundle all table layouts like TableToolBar, ReactTable, etc.
-  2. BaseTable render cells, binding cell functions base on tableConfig.
-***/
 
-class BaseTable extends React.Component {
+class NewEditTable extends React.Component {
 
   constructor(props) {
     super(props);
-    /*Build cells first, for bind cell render function*/
-    //this.buildCells();
+
     this.tableRef = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
     this.reload = this.reload.bind(this);
-  }
+    this.renderActionCell = this.renderActionCell.bind(this);
 
-  /*
-  buildCells() {
-    let columns = this.props.tableConfig.columns;
-    let { renderEditableCell, renderActionCell } = this.props;
+    /*Build cells, for bind cell render function*/
+    this.buildCells();
 
-    for(let i = 0; i < columns.length; i++) {
-      let col = columns[i];
-      if(col.cellBind == CELL_BINDS.editable) {
-        col.Cell = renderEditableCell;
-      } else if(col.cellBind == CELL_BINDS.action) {
-        col.Cell = renderActionCell;
-      }
-    }
+    this.trackingKeys = UTIL.getTrackingKeys(this.props.tableConfig.columns);
   }
-  */
 
   onFetchData(state, instance) {
-    /*
-    this.setState({
-      loading: true
-    });
-    */
+
     this.props.onBeforeLoad();
 
     let queryParams = {
@@ -73,20 +63,6 @@ class BaseTable extends React.Component {
       }
     }
 
-    /*
-    axios.get(url, params).then((res) => {
-      this.setState({
-        data: res.data.rows,
-        pages: res.data.total_pages,
-        loading: false,
-        editingIndex: -1,
-        isNew: false,
-        editingRow: null
-      });
-    }).catch((err) => {
-      throw "Load server-side data failed!"
-    });
-    */
     axios.get(url, params).then((res) => {
       this.props.onLoadSuccess(res);
     }).catch((err) => {
@@ -100,6 +76,60 @@ class BaseTable extends React.Component {
     let instance = this.tableRef.current;
     this.tableRef.current.props.onFetchData(state, instance);
   }
+
+  buildCells() {
+    let columns = this.props.tableConfig.columns;
+    let { renderEditableCell, renderActionCell } = this.props;
+
+    for(let i = 0; i < columns.length; i++) {
+      let col = columns[i];
+      if(col.cellBind == CELL_BINDS.editable) {
+        col.Cell = renderEditableCell;
+      } else if(col.cellBind == CELL_BINDS.action) {
+        col.Cell = this.renderActionCell;
+      }
+    }
+  }
+
+  renderActionCell(cellProps) {
+    let classes = this.props.classes;
+    return (
+      <React.Fragment>
+        <CustomButton color='info' className={classes.actionButton}>
+          <Save className={classes.icon} />
+        </CustomButton>
+        <CustomButton color='success' className={classes.actionButton}>
+          <Edit className={classes.icon} />
+        </CustomButton>
+        <CustomButton color='danger' className={classes.actionButton}>
+          <DeleteForever className={classes.icon} />
+        </CustomButton>
+      </React.Fragment>
+    )
+  }
+
+  renderEditableCell(cellProps) {
+    let { editingIndex } = this.props;
+    let defaultValue = cellProps.value === null ? '' : cellProps.value;
+
+    if(editingIndex == cellProps.index) {
+      return (
+        <TextField
+          label={cellProps.column.Header}
+          margin="none"
+          variant="filled"
+          required
+          onChange={this.editableCellOnChange}
+          name={cellProps.column.id}
+          defaultValue={defaultValue}
+          style={{ height: 50, width: '100%' }}
+        />
+      )
+    } else {
+      return defaultValue;
+    }
+  }
+
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
@@ -137,4 +167,4 @@ class BaseTable extends React.Component {
   }
 }
 
-export default BaseTable;
+export default withStyles(editTableStyle)(NewEditTable);
