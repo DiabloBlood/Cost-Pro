@@ -39,6 +39,9 @@ class NewEditTable extends React.Component {
     this.reload = this.reload.bind(this);
     this.renderActionCell = this.renderActionCell.bind(this);
 
+    this.onAddRowWrapper = this.onAddRowWrapper.bind(this);
+    this.onCellChange = this.onCellChange.bind(this);
+
     /*Build cells, for bind cell render function*/
     this.buildCells();
 
@@ -119,7 +122,7 @@ class NewEditTable extends React.Component {
           margin="none"
           variant="filled"
           required
-          onChange={this.editableCellOnChange}
+          onChange={this.onCellChange}
           name={cellProps.column.id}
           defaultValue={defaultValue}
           style={{ height: 50, width: '100%' }}
@@ -128,6 +131,26 @@ class NewEditTable extends React.Component {
     } else {
       return defaultValue;
     }
+  }
+
+  onCellChangeWrapper(e) {
+    this.props.onCellChange(e.target.name, e.target.value);
+  }
+
+  onAddRowWrapper(e) {
+    let { editingIndex } = this.props;  
+
+    if(editingIndex > -1) {
+      // [TODO]: alert
+      return;
+    }
+
+    let editingRow = {};
+    for(let i in this.trackingKeys) {
+      editingRow[this.trackingKeys[i]] = '';
+    }
+
+    this.props.onAddRow(editingRow);
   }
 
 
