@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import NewEditTable from "src/components/Table/EditTable/NewEditTable.jsx";
+import EditTable from "src/components/Table/EditTable/EditTable.jsx";
 import {
   onBeforeLoad,
   onLoadSuccess,
   onAddRow,
-  onCellChange
+  onCellChange,
+  onEditRow
 } from "src/components/Table/EditTable/actions.jsx";
 
 
@@ -13,7 +14,7 @@ const mapStateToProps = state => {
   return {
     data: state.data,
     pages: state.pages,
-    loading: state.loading
+    loading: state.loading,
     editingIndex: state.editingIndex,
     isNew: state.isNew,
     editingRow: state.editingRow
@@ -23,14 +24,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onBeforeLoad: () => dispatch(onBeforeLoad()),
-
-    onLoadSuccess: res => dispatch(onLoadSuccess(res))
+    onLoadSuccess: res => dispatch(onLoadSuccess(res)),
+    onAddRow: editingRow => dispatch(onAddRow(editingRow)),
+    onCellChange: (name, value) => dispatch(onCellChange(name, value)),
+    onEditRow: (editingRow, index) => dispatch(onEditRow(editingRow, index))
   }
 }
 
-const NewBaseTableContainer = connect(
+const EditTableContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewEditTable);
+)(EditTable);
 
-export default NewEditTableContainer;
+export default EditTableContainer;

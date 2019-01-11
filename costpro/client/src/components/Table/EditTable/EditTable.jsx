@@ -6,6 +6,7 @@ import axios from 'axios';
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/core components
 import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
 // core components
 import GridContainer from "src/components/Grid/GridContainer.jsx";
 import GridItem from "src/components/Grid/GridItem.jsx";
@@ -21,6 +22,7 @@ import Edit from "@material-ui/icons/Edit";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 // global vars
 import { CELL_BINDS } from "src/global/globalVars.jsx";
+import { UTIL } from "src/global/globalVars.jsx";
 // jss assets
 import editTableStyle from "src/assets/jss/components/editTableStyle.jsx";
 // css
@@ -29,7 +31,7 @@ import 'react-table/react-table.css';
 
 
 
-class NewEditTable extends React.Component {
+class EditTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -37,10 +39,13 @@ class NewEditTable extends React.Component {
     this.tableRef = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
     this.reload = this.reload.bind(this);
+    // cell render functions
     this.renderActionCell = this.renderActionCell.bind(this);
+    this.renderEditableCell = this.renderEditableCell.bind(this);
 
     this.onAddRowWrapper = this.onAddRowWrapper.bind(this);
-    this.onCellChange = this.onCellChange.bind(this);
+    this.onCellChangeWrapper = this.onCellChangeWrapper.bind(this);
+    this.onEditRowWrapper = this.onEditRowWrapper.bind(this);
 
     /*Build cells, for bind cell render function*/
     this.buildCells();
@@ -87,7 +92,7 @@ class NewEditTable extends React.Component {
     for(let i = 0; i < columns.length; i++) {
       let col = columns[i];
       if(col.cellBind == CELL_BINDS.editable) {
-        col.Cell = renderEditableCell;
+        col.Cell = this.renderEditableCell;
       } else if(col.cellBind == CELL_BINDS.action) {
         col.Cell = this.renderActionCell;
       }
@@ -112,25 +117,23 @@ class NewEditTable extends React.Component {
   }
 
   renderEditableCell(cellProps) {
-    let { editingIndex } = this.props;
-    let defaultValue = cellProps.value === null ? '' : cellProps.value;
+    let value = cellProps.value;
 
-    if(editingIndex == cellProps.index) {
+    if(this.props.editingIndex == cellProps.index) {
       return (
         <TextField
           label={cellProps.column.Header}
           margin="none"
           variant="filled"
           required
-          onChange={this.onCellChange}
+          onChange={this.onCellChangeWrapper}
           name={cellProps.column.id}
-          defaultValue={defaultValue}
+          defaultValue={value}
           style={{ height: 50, width: '100%' }}
         />
       )
-    } else {
-      return defaultValue;
     }
+    return value;
   }
 
   onCellChangeWrapper(e) {
@@ -153,16 +156,38 @@ class NewEditTable extends React.Component {
     this.props.onAddRow(editingRow);
   }
 
+  onEditRowWrapper(index, e) {
+    let { editingIndex } = this.props;
+
+    if(editingIndex > -1) {
+      // [TODO]: alert
+      return;
+    }
+
+    let editingRow = {};
+    let row = this.state.data[index];
+    for(let i in this.trackingKeys) {
+      let key = this.trackingKeys[i];
+      editingRow[key] = row[key;]
+    }
+
+    this.props.onEditRow(editingRow, index);
+  }
+
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
     let { data, pages, loading } = this.props;
+
 
     return (
       <GridContainer>
         <GridItem xs={12}>
           <Card>
             <TableToolbar title={title}>
+              <CustomButton color="github" justIcon round onClick={this.onAddRowWrapper}>
+                <AddShoppingCart />
+              </CustomButton>
               <CustomButton color="github" justIcon round onClick={this.reload}>
                 <Refresh />
               </CustomButton>
@@ -190,4 +215,4 @@ class NewEditTable extends React.Component {
   }
 }
 
-export default withStyles(editTableStyle)(NewEditTable);
+export default withStyles(editTableStyle)(EditTable);

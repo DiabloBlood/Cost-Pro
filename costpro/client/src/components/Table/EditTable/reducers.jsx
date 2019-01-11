@@ -2,7 +2,8 @@ import {
   ON_BEFORE_LOAD,
   ON_LOAD_SUCCESS,
   ON_ADD_ROW,
-  ON_CELL_CHANGE
+  ON_CELL_CHANGE,
+  ON_EDIT_ROW
 } from "src/components/Table/EditTable/actions.jsx";
 
 
@@ -31,20 +32,28 @@ const editTableReducer = (state = defaultState, action) => {
         isNew: false,
         editingRow: null
       };
-    case ON_ADD:
+    case ON_ADD_ROW:
       return {
+        ...state,
         data: [ action.editingRow, ...state.data ],
         editingIndex: 0,
         isNew: true,
-        ...state
+        editingRow: action.editingRow
       };
     case ON_CELL_CHANGE:
       return {
+        ...state,
         editingRow: {
           ...state.editingRow,
           [action.name]: action.value
-        },
-        ...state
+        }
+      }
+    case ON_EDIT_ROW:
+      return {
+        ...state,
+        editingIndex: action.index,
+        isNew: false,
+        editingRow: action.editingRow 
       }
     default:
       return state;
