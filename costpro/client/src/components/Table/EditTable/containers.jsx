@@ -3,6 +3,7 @@ import EditTable from "src/components/Table/EditTable/EditTable.jsx";
 import {
   onBeforeLoad,
   onLoadSuccess,
+  setAlert,
   onAddRow,
   onCellChange,
   onEditRow,
@@ -16,6 +17,7 @@ const mapStateToProps = state => {
     data: state.data,
     pages: state.pages,
     loading: state.loading,
+    alert: state.alert,
     editingIndex: state.editingIndex,
     isNew: state.isNew,
     editingRow: state.editingRow
@@ -23,14 +25,14 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let { trackingKeys, data } = ownProps;
-  console.log(ownProps);
+  let { trackingKeys } = ownProps;
   return {
     onBeforeLoad: () => dispatch(onBeforeLoad()),
     onLoadSuccess: res => dispatch(onLoadSuccess(res)),
+    setAlert: alert => dispatch(setAlert(alert)),
     onAddRow: () => dispatch(onAddRow(trackingKeys)),
     onCellChange: (name, value) => dispatch(onCellChange(name, value)),
-    onEditRow: index => dispatch(onEditRow(trackingKeys, data, index)),
+    onEditRow: (data, index) => dispatch(onEditRow(trackingKeys, data, index)),
     onSaveRow: () => dispatch(onSaveRow())
   }
 }

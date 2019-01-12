@@ -1,6 +1,7 @@
 import {
   ON_BEFORE_LOAD,
   ON_LOAD_SUCCESS,
+  SET_ALERT,
   ON_ADD_ROW,
   ON_CELL_CHANGE,
   ON_EDIT_ROW,
@@ -12,8 +13,8 @@ import {
 const defaultState = {
   data: [],
   pages: 0,
-  alert: null,
   loading: true,
+  alert: false,
   editingIndex: -1,
   isNew: false,
   editingRow: {}
@@ -33,6 +34,11 @@ const editTableReducer = (state = defaultState, action) => {
         isNew: false,
         editingRow: null
       };
+    case SET_ALERT:
+      return {
+        ...state,
+        alert: action.alert
+      }
     case ON_ADD_ROW:
       return {
         ...state,

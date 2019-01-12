@@ -7,6 +7,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/core components
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
+// Third party components
+import SweetAlert from "react-bootstrap-sweetalert";
 // core components
 import GridContainer from "src/components/Grid/GridContainer.jsx";
 import GridItem from "src/components/Grid/GridItem.jsx";
@@ -41,6 +43,9 @@ class EditTable extends React.Component {
     // cell render functions
     this.renderActionCell = this.renderActionCell.bind(this);
     this.renderEditableCell = this.renderEditableCell.bind(this);
+    // alert
+    this.popAlert = this.popAlert.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
 
     this.onAddRowWrapper = this.onAddRowWrapper.bind(this);
     this.onCellChangeWrapper = this.onCellChangeWrapper.bind(this);
@@ -134,6 +139,28 @@ class EditTable extends React.Component {
     return value;
   }
 
+  getAlertCard() {
+    return (
+      <SweetAlert
+        type="warning"
+        title="Please save the current editing row first!"
+        onConfirm={this.hideAlert}
+        focusConfirmBtn={false}
+        confirmBtnCssClass={
+          this.props.classes.button + " " + this.props.classes.warning
+        }
+      />
+    )
+  }
+
+  popAlert() {
+    this.props.setAlert(true);
+  }
+
+  hideAlert() {
+    this.props.setAlert(false);
+  }
+
   onCellChangeWrapper(e) {
     this.props.onCellChange(e.target.name, e.target.value);
   }
@@ -142,7 +169,7 @@ class EditTable extends React.Component {
     let { editingIndex } = this.props;
 
     if(editingIndex > -1) {
-      // [TODO]: alert
+      this.popAlert();
       return;
     }
 
@@ -150,14 +177,14 @@ class EditTable extends React.Component {
   }
 
   onEditRowWrapper(index, e) {
-    let { editingIndex } = this.props;
+    let { editingIndex, data } = this.props;
 
     if(editingIndex > -1) {
-      // [TODO]: alert
+      this.popAlert();
       return;
     }
 
-    this.props.onEditRow(index);
+    this.props.onEditRow(data, index);
   }
 
   onSaveRowWrapper(index, e) {
@@ -189,40 +216,44 @@ class EditTable extends React.Component {
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
-    let { data, pages, loading } = this.props;
+    let { data, pages, alert, loading } = this.props;
 
+    let alertCard = alert ? this.getAlertCard() : null;
 
     return (
-      <GridContainer>
-        <GridItem xs={12}>
-          <Card>
-            <TableToolbar title={title}>
-              <CustomButton color="github" justIcon round onClick={this.onAddRowWrapper}>
-                <AddShoppingCart />
-              </CustomButton>
-              <CustomButton color="github" justIcon round onClick={this.reload}>
-                <Refresh />
-              </CustomButton>
-            </TableToolbar>
-            <Divider inset />
-            <CardBody>
-              <ReactTable
-                ref={this.tableRef}
-                manual
-                columns={columns}
-                data={data}
-                pages={pages}
-                loading={loading}
-                onFetchData={this.onFetchData}
-                filterable
-                defaultPageSize={defulatPageSize}
-                pageSizeOptions={pageSizeOptions}
-                className="-striped -highlight"
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      <React.Fragment>
+        { alertCard }
+        <GridContainer>
+          <GridItem xs={12}>
+            <Card>
+              <TableToolbar title={title}>
+                <CustomButton color="github" justIcon round onClick={this.onAddRowWrapper}>
+                  <AddShoppingCart />
+                </CustomButton>
+                <CustomButton color="github" justIcon round onClick={this.reload}>
+                  <Refresh />
+                </CustomButton>
+              </TableToolbar>
+              <Divider inset />
+              <CardBody>
+                <ReactTable
+                  ref={this.tableRef}
+                  manual
+                  columns={columns}
+                  data={data}
+                  pages={pages}
+                  loading={loading}
+                  onFetchData={this.onFetchData}
+                  filterable
+                  defaultPageSize={defulatPageSize}
+                  pageSizeOptions={pageSizeOptions}
+                  className="-striped -highlight"
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </React.Fragment>
     )
   }
 }
