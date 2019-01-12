@@ -105,10 +105,10 @@ class EditTable extends React.Component {
     let classes = this.props.classes;
     return (
       <React.Fragment>
-        <CustomButton color='info' className={classes.actionButton}>
+        <CustomButton color='info' className={classes.actionButton} onClick={(e) => this.onSaveRowWrapper(cellProps.index, e)}>
           <Save className={classes.icon} />
         </CustomButton>
-        <CustomButton color='success' className={classes.actionButton} index={cellProps.index} onClick={(e) => this.onEditRowWrapper(cellProps.index, e)}>
+        <CustomButton color='success' className={classes.actionButton} onClick={(e) => this.onEditRowWrapper(cellProps.index, e)}>
           <Edit className={classes.icon} />
         </CustomButton>
         <CustomButton color='danger' className={classes.actionButton}>
@@ -188,27 +188,25 @@ class EditTable extends React.Component {
   }
 
   onSaveRowWrapper(index, e) {
-    let {isNew, editingIndex, id} = this.state;
+    let { editingIndex, isNew, editingRow } = this.props;
 
-    /*
     if(editingIndex == -1) {
       return;
     }
 
     if(editingIndex > -1 && editingIndex != index) {
-      this.basicAlert();
+      this.popAlert();
       return;
     }
-    */
 
     let url = this.props.url;
     let params = {
       isNew: isNew,
-      id: id
+      editingRow: editingRow
     }
 
     axios.post(url, params).then((res) => {
-      console.log(res);
+      this.props.onSaveSuccess();
     }).catch((err) => {
       throw "Load server-side data failed!"
     });

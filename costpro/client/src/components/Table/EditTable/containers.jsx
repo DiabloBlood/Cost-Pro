@@ -7,7 +7,7 @@ import {
   onAddRow,
   onCellChange,
   onEditRow,
-  onSaveRow
+  onSaveSuccess
 } from "src/components/Table/EditTable/actions.jsx";
 
 
@@ -25,7 +25,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let { trackingKeys } = ownProps;
+  let { trackingKeys } = ownProps.tableConfig;
   return {
     onBeforeLoad: () => dispatch(onBeforeLoad()),
     onLoadSuccess: res => dispatch(onLoadSuccess(res)),
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onAddRow: () => dispatch(onAddRow(trackingKeys)),
     onCellChange: (name, value) => dispatch(onCellChange(name, value)),
     onEditRow: (data, index) => dispatch(onEditRow(trackingKeys, data, index)),
-    onSaveRow: () => dispatch(onSaveRow())
+    onSaveSuccess: () => dispatch(onSaveSuccess())
   }
 }
 

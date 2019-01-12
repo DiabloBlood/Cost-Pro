@@ -22,9 +22,12 @@ def v1_data(table_name):
 
 @api.route('/v1/data/<table_name>', methods=['POST'])
 def v1_data_insert(table_name):
-    is_new = request.json.get('isNew')
-    record_id = request.json.get('id')
-    return jsonify(haha='haha')
+    # is_new = request.json.get('isNew')
+    # record_id = request.json.get('id')
+    editing_row = request.json.get('editingRow')
+    editing_row.pop('id')
+    isError, msg, row = sa_helper.SAHelper.insert_record(editing_row, table_name)
+    return jsonify(isError=isError, msg=msg, row=row)
 
 
 

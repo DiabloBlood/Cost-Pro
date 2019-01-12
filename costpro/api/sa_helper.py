@@ -80,4 +80,33 @@ class GridHelper(object):
         return rows, total_pages, query_result.total
 
 
+class SAHelper(object):
+
+    @classmethod
+    def insert_record(cls, row, table_name):
+
+        model_class = get_table_obj(table_name)
+        
+        isError = False
+        msg = ''
+
+        try:
+            new_record = model_class(**row)
+            db.session.add(new_record)
+            db.session.commit()
+            db.session.refresh(new_record)
+            row['id'] = new_record.id
+        except Exception as e:
+            db.session.rollback()
+            isError = True
+            msg = str(e)
+
+        return isError, msg, row
+
+
+
+
+
+
+
 
