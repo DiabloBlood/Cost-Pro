@@ -3,7 +3,8 @@ import {
   ON_LOAD_SUCCESS,
   ON_ADD_ROW,
   ON_CELL_CHANGE,
-  ON_EDIT_ROW
+  ON_EDIT_ROW,
+  ON_SAVE_ROW
 } from "src/components/Table/EditTable/actions.jsx";
 
 
@@ -55,6 +56,8 @@ const editTableReducer = (state = defaultState, action) => {
         isNew: false,
         editingRow: action.editingRow 
       }
+    case ON_SAVE_ROW:
+      return {}
     default:
       return state;
   }

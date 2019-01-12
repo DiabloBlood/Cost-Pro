@@ -171,22 +171,7 @@ const TABLE_CONFIG_CATEGORY = {
   ]
 }
 
-class UTIL {
-
-  static getTrackingKeys(columns) {
-    let result = []
-    for(let i = 0; i < columns.length; i++) {
-      let col = columns[i];
-      if(col.accessor == 'id' || col.cellBind == CELL_BINDS.editable) {
-        result.push(col.accessor);
-      }
-    }
-    return result
-  }
-}
-
 export {
-  UTIL,
   LOGO_TEXT,
   DATA_BASE_URL,
   DATA_SUB_URL,

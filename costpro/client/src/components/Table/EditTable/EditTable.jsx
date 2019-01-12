@@ -22,7 +22,6 @@ import Edit from "@material-ui/icons/Edit";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 // global vars
 import { CELL_BINDS } from "src/global/globalVars.jsx";
-import { UTIL } from "src/global/globalVars.jsx";
 // jss assets
 import editTableStyle from "src/assets/jss/components/editTableStyle.jsx";
 // css
@@ -49,8 +48,6 @@ class EditTable extends React.Component {
 
     /*Build cells, for bind cell render function*/
     this.buildCells();
-
-    this.trackingKeys = UTIL.getTrackingKeys(this.props.tableConfig.columns);
   }
 
   onFetchData(state, instance) {
@@ -106,7 +103,7 @@ class EditTable extends React.Component {
         <CustomButton color='info' className={classes.actionButton}>
           <Save className={classes.icon} />
         </CustomButton>
-        <CustomButton color='success' className={classes.actionButton}>
+        <CustomButton color='success' className={classes.actionButton} index={cellProps.index} onClick={(e) => this.onEditRowWrapper(cellProps.index, e)}>
           <Edit className={classes.icon} />
         </CustomButton>
         <CustomButton color='danger' className={classes.actionButton}>
@@ -117,9 +114,10 @@ class EditTable extends React.Component {
   }
 
   renderEditableCell(cellProps) {
+    let { editingIndex } = this.props;
     let value = cellProps.value;
 
-    if(this.props.editingIndex == cellProps.index) {
+    if(editingIndex == cellProps.index) {
       return (
         <TextField
           label={cellProps.column.Header}
@@ -141,19 +139,14 @@ class EditTable extends React.Component {
   }
 
   onAddRowWrapper(e) {
-    let { editingIndex } = this.props;  
+    let { editingIndex } = this.props;
 
     if(editingIndex > -1) {
       // [TODO]: alert
       return;
     }
 
-    let editingRow = {};
-    for(let i in this.trackingKeys) {
-      editingRow[this.trackingKeys[i]] = '';
-    }
-
-    this.props.onAddRow(editingRow);
+    this.props.onAddRow();
   }
 
   onEditRowWrapper(index, e) {
@@ -164,16 +157,35 @@ class EditTable extends React.Component {
       return;
     }
 
-    let editingRow = {};
-    let row = this.state.data[index];
-    for(let i in this.trackingKeys) {
-      let key = this.trackingKeys[i];
-      editingRow[key] = row[key;]
-    }
-
-    this.props.onEditRow(editingRow, index);
+    this.props.onEditRow(index);
   }
 
+  onSaveRowWrapper(index, e) {
+    let {isNew, editingIndex, id} = this.state;
+
+    /*
+    if(editingIndex == -1) {
+      return;
+    }
+
+    if(editingIndex > -1 && editingIndex != index) {
+      this.basicAlert();
+      return;
+    }
+    */
+
+    let url = this.props.url;
+    let params = {
+      isNew: isNew,
+      id: id
+    }
+
+    axios.post(url, params).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      throw "Load server-side data failed!"
+    });
+  }
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
