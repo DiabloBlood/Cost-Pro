@@ -30,6 +30,12 @@ def v1_data_insert(table_name):
     return jsonify(isError=isError, msg=msg, row=row)
 
 
+@api.route('/v1/data/<table_name>', methods=['DELETE'])
+def v1_data_delete(table_name):
+    record_id = request.json.get('id')
+    isError, msg = sa_helper.SAHelper.delete_record(record_id, table_name)
+    return jsonify(isError=isError, msg=msg)
+
 
 @api.route('/v1/columns/<table_name>', methods=['GET'])
 def v1_columns(table_name):

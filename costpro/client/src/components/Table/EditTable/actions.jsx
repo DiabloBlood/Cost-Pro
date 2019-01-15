@@ -12,6 +12,7 @@ const ON_CELL_CHANGE = 'ON_CELL_CHANGE';
 const ON_EDIT_ROW = 'ON_EDIT_ROW';
 const ON_CANCEL_ROW = 'ON_CANCEL_ROW';
 const ON_SAVE_SUCCESS = 'ON_SAVE_SUCCESS';
+const ON_DELETE_SUCCESS = 'ON_DELETE_SUCCESS';
 
 
 /*
@@ -60,6 +61,10 @@ const onSaveSuccess = () => {
   return { type: ON_SAVE_SUCCESS };
 }
 
+const onDeleteSuccess = (index) => {
+  return { type: ON_DELETE_SUCCESS, index}
+}
+
 
 export {
   ON_BEFORE_LOAD,
@@ -70,6 +75,7 @@ export {
   ON_EDIT_ROW,
   ON_CANCEL_ROW,
   ON_SAVE_SUCCESS,
+  ON_DELETE_SUCCESS,
   onBeforeLoad,
   onLoadSuccess,
   setAlert,
@@ -77,5 +83,6 @@ export {
   onCellChange,
   onEditRow,
   onCancelRow,
-  onSaveSuccess
+  onSaveSuccess,
+  onDeleteSuccess
 };

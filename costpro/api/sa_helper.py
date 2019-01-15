@@ -103,6 +103,23 @@ class SAHelper(object):
 
         return isError, msg, row
 
+    @classmethod
+    def delete_record(cls, record_id, table_name):
+
+        model_class = get_table_obj(table_name)
+
+        isError = False
+        msg = ''
+
+        try:
+            db.session.query(model_class).filter(model_class.id == record_id).delete()
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            isError = True
+            msg = str(e)
+
+        return isError, msg
 
 
 
