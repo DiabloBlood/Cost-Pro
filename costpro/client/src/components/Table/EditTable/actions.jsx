@@ -57,8 +57,8 @@ const onCancelRow = () => {
   return { type: ON_CANCEL_ROW };
 }
 
-const onSaveSuccess = () => {
-  return { type: ON_SAVE_SUCCESS };
+const onSaveSuccess = res => {
+  return { type: ON_SAVE_SUCCESS, res };
 }
 
 const onDeleteSuccess = (index) => {

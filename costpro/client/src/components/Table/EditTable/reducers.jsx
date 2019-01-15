@@ -65,29 +65,29 @@ const editTableReducer = (state = defaultState, action) => {
         editingRow: action.editingRow
       }
     case ON_CANCEL_ROW:
-      let data = state.editingIndex == 0 && state.isNew ? state.data.slice(1) : state.data;
       return {
         ...state,
-        data: data,
+        data: state.editingIndex == 0 && state.isNew ? state.data.slice(1) : state.data,
         editingIndex: -1,
         isNew: false,
         editingRow: {}
-      }
+      };
     case ON_SAVE_SUCCESS:
       return {
         ...state,
+        data: state.isNew ? [ action.res.data.row, ...state.data.slice(1)] : state.data,
         editingIndex: -1,
         isNew: false,
         editingRow: {}
-      }
+      };
     case ON_DELETE_SUCCESS:
       return {
         ...state,
-        data: state.data.slice(0, action.index).concat(state.data.slice(action.index + 1))
+        data: state.data.slice(0, action.index).concat(state.data.slice(action.index + 1)),
         editingIndex: -1,
-        isNew: false
+        isNew: false,
         editingRow: {}
-      }
+      };
     default:
       return state;
   }

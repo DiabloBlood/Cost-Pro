@@ -52,6 +52,8 @@ class EditTable extends React.Component {
     this.onCellChangeWrapper = this.onCellChangeWrapper.bind(this);
     this.onEditRowWrapper = this.onEditRowWrapper.bind(this);
     this.onCancelRowWrapper = this.onCancelRowWrapper.bind(this);
+    this.onSaveRowWrapper = this.onSaveRowWrapper.bind(this);
+    this.onDeleteRowWrapper = this.onDeleteRowWrapper.bind(this);
 
     /*Build cells, for bind cell render function*/
     this.buildCells();
@@ -116,7 +118,7 @@ class EditTable extends React.Component {
         <CustomButton color='warning' className={classes.actionButton} onClick={(e) => this.onCancelRowWrapper(cellProps.index, e)}>
           <Cancel className={classes.icon} />
         </CustomButton>
-        <CustomButton color='danger' className={classes.actionButton}>
+        <CustomButton color='danger' className={classes.actionButton} onClick={(e) => this.onDeleteRowWrapper(cellProps.index, e)}>
           <DeleteForever className={classes.icon} />
         </CustomButton>
       </React.Fragment>
@@ -216,7 +218,29 @@ class EditTable extends React.Component {
     }
 
     axios.post(url, params).then((res) => {
-      this.props.onSaveSuccess();
+      this.props.onSaveSuccess(res);
+    }).catch((err) => {
+      throw "Load server-side data failed!"
+    });
+  }
+
+  onDeleteRowWrapper(index, e) {
+    let { editingIndex, data } = this.props;
+
+    if(editingIndex > -1) {
+      this.popAlert();
+      return;
+    }
+
+    let url = this.props.url;
+    let params = {
+      data: {
+        id: data[index].id
+      }
+    }
+
+    axios.delete(url, params).then((res) => {
+      this.props.onDeleteSuccess(index);
     }).catch((err) => {
       throw "Load server-side data failed!"
     });
