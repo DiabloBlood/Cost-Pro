@@ -5,6 +5,7 @@ import {
   ON_ADD_ROW,
   ON_CELL_CHANGE,
   ON_EDIT_ROW,
+  ON_CANCEL_ROW,
   ON_SAVE_SUCCESS
 } from "src/components/Table/EditTable/actions.jsx";
 
@@ -61,6 +62,15 @@ const editTableReducer = (state = defaultState, action) => {
         editingIndex: action.index,
         isNew: false,
         editingRow: action.editingRow
+      }
+    case ON_CANCEL_ROW:
+      let data = state.editingIndex == 0 && state.isNew ? state.data.slice(1) : state.data;
+      return {
+        ...state,
+        data: data,
+        editingIndex: -1,
+        isNew: false,
+        editingRow: {}
       }
     case ON_SAVE_SUCCESS:
       return {

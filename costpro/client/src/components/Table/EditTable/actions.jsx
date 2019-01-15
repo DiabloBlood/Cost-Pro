@@ -10,6 +10,7 @@ const SET_ALERT = 'SET_ALERT';
 const ON_ADD_ROW = 'ON_ADD_ROW';
 const ON_CELL_CHANGE = 'ON_CELL_CHANGE';
 const ON_EDIT_ROW = 'ON_EDIT_ROW';
+const ON_CANCEL_ROW = 'ON_CANCEL_ROW';
 const ON_SAVE_SUCCESS = 'ON_SAVE_SUCCESS';
 
 
@@ -51,6 +52,10 @@ const onEditRow = (trackingKeys, data, index) => {
   return { type: ON_EDIT_ROW, editingRow, index };
 }
 
+const onCancelRow = () => {
+  return { type: ON_CANCEL_ROW };
+}
+
 const onSaveSuccess = () => {
   return { type: ON_SAVE_SUCCESS };
 }
@@ -63,6 +68,7 @@ export {
   ON_ADD_ROW,
   ON_CELL_CHANGE,
   ON_EDIT_ROW,
+  ON_CANCEL_ROW,
   ON_SAVE_SUCCESS,
   onBeforeLoad,
   onLoadSuccess,
@@ -70,5 +76,6 @@ export {
   onAddRow,
   onCellChange,
   onEditRow,
+  onCancelRow,
   onSaveSuccess
 };

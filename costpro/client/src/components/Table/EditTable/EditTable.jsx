@@ -21,6 +21,7 @@ import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import Refresh from "@material-ui/icons/Refresh";
 import Save from "@material-ui/icons/Save";
 import Edit from "@material-ui/icons/Edit";
+import Cancel from "@material-ui/icons/Cancel";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 // global vars
 import { CELL_BINDS } from "src/global/globalVars.jsx";
@@ -50,6 +51,7 @@ class EditTable extends React.Component {
     this.onAddRowWrapper = this.onAddRowWrapper.bind(this);
     this.onCellChangeWrapper = this.onCellChangeWrapper.bind(this);
     this.onEditRowWrapper = this.onEditRowWrapper.bind(this);
+    this.onCancelRowWrapper = this.onCancelRowWrapper.bind(this);
 
     /*Build cells, for bind cell render function*/
     this.buildCells();
@@ -110,6 +112,9 @@ class EditTable extends React.Component {
         </CustomButton>
         <CustomButton color='success' className={classes.actionButton} onClick={(e) => this.onEditRowWrapper(cellProps.index, e)}>
           <Edit className={classes.icon} />
+        </CustomButton>
+        <CustomButton color='warning' className={classes.actionButton} onClick={(e) => this.onCancelRowWrapper(cellProps.index, e)}>
+          <Cancel className={classes.icon} />
         </CustomButton>
         <CustomButton color='danger' className={classes.actionButton}>
           <DeleteForever className={classes.icon} />
@@ -179,7 +184,7 @@ class EditTable extends React.Component {
   onEditRowWrapper(index, e) {
     let { editingIndex, data } = this.props;
 
-    if(editingIndex > -1) {
+    if(editingIndex > -1 && editingIndex != index) {
       this.popAlert();
       return;
     }
@@ -187,15 +192,20 @@ class EditTable extends React.Component {
     this.props.onEditRow(data, index);
   }
 
-  onSaveRowWrapper(index, e) {
-    let { editingIndex, isNew, editingRow } = this.props;
+  onCancelRowWrapper(index, e) {
+    let { editingIndex } = this.props;
 
-    if(editingIndex == -1) {
+    if(editingIndex == -1 || editingIndex != index) {
       return;
     }
 
-    if(editingIndex > -1 && editingIndex != index) {
-      this.popAlert();
+    this.props.onCancelRow();
+  }
+
+  onSaveRowWrapper(index, e) {
+    let { editingIndex, isNew, editingRow } = this.props;
+
+    if(editingIndex == -1 || editingIndex != index) {
       return;
     }
 
