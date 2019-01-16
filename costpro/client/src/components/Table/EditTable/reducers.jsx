@@ -73,9 +73,13 @@ const editTableReducer = (state = defaultState, action) => {
         editingRow: {}
       };
     case ON_SAVE_SUCCESS:
+      let newData = state.data.map((row, index) => {
+        return index == state.editingIndex ? action.res.data.row : row;
+      });
       return {
         ...state,
-        data: state.isNew ? [ action.res.data.row, ...state.data.slice(1)] : state.data,
+        //data: state.isNew ? [ action.res.data.row, ...state.data.slice(1)] : state.data,
+        data: newData,
         editingIndex: -1,
         isNew: false,
         editingRow: {}

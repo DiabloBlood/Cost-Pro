@@ -89,6 +89,7 @@ class SAHelper(object):
         
         isError = False
         msg = ''
+        row.pop('id')
         row = {k: v if v else None for (k, v) in row.items()}
 
         try:
@@ -115,9 +116,11 @@ class SAHelper(object):
         record_id = row.pop('id')
 
         try:
-            db.session.query(model_class).get(record_id).update(row)
+            new_record = db.session.query(model_class).get(record_id)
+            for key in row:
+                setattr(new_record, key, row[key])
             db.session.commit()
-            row['id'] = record_id
+            row = object_as_dict(new_record)
         except Exception as e:
             db.session.rollback()
             isError = True
