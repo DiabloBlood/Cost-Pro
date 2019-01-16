@@ -89,6 +89,7 @@ class SAHelper(object):
         
         isError = False
         msg = ''
+        row = {k: v if v else None for (k, v) in row.items()}
 
         try:
             new_record = model_class(**row)
@@ -96,6 +97,27 @@ class SAHelper(object):
             db.session.commit()
             db.session.refresh(new_record)
             row['id'] = new_record.id
+        except Exception as e:
+            db.session.rollback()
+            isError = True
+            msg = str(e)
+
+        return isError, msg, row
+
+    @classmethod
+    def update_record(cls, row, table_name):
+
+        model_class = get_table_obj(table_name)
+        
+        isError = False
+        msg = ''
+        row = {k: v if v else None for (k, v) in row.items()}
+        record_id = row.pop('id')
+
+        try:
+            db.session.query(model_class).get(record_id).update(row)
+            db.session.commit()
+            row['id'] = record_id
         except Exception as e:
             db.session.rollback()
             isError = True

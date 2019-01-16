@@ -213,15 +213,22 @@ class EditTable extends React.Component {
 
     let url = this.props.url;
     let params = {
-      isNew: isNew,
       editingRow: editingRow
     }
 
-    axios.post(url, params).then((res) => {
-      this.props.onSaveSuccess(res);
-    }).catch((err) => {
-      throw "Load server-side data failed!"
-    });
+    if(isNew) {
+      axios.post(url, params).then((res) => {
+        this.props.onSaveSuccess(res);
+      }).catch((err) => {
+        throw "Load server-side data failed!"
+      });
+    } else {
+      axios.put(url, params).then((res) => {
+        this.props.onSaveSuccess(res);
+      }).catch((err) => {
+        throw "Load server-side data failed!"
+      });
+    }
   }
 
   onDeleteRowWrapper(index, e) {
