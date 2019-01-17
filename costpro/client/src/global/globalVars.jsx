@@ -11,7 +11,7 @@ import Test from "src/views/Test.jsx"
 import Test2 from "src/views/Test2.jsx"
 import TestReduxApp1 from "src/views/TestReduxApp1.jsx"
 import TestReduxApp2 from "src/views/TestReduxApp2/TestReduxApp2.jsx"
-import TestEditTable from "src/views/TestEditTable/TestEditTable.jsx"
+import TestEditTable from "src/views/TestEditTable.jsx"
 
 
 
