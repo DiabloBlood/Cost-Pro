@@ -38,9 +38,13 @@ class EditTable extends React.Component {
   constructor(props) {
     super(props);
 
+    this.DEFAULT_ALERT_MSG = "Please save the current editing row first!";
+
     this.tableRef = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
     this.reload = this.reload.bind(this);
+    this.handleHTTPResponse = this.handleHTTPResponse.bind(this);
+    this.handleHTTPError = this.handleHTTPError.bind(this);
     // cell render functions
     this.renderActionCell = this.renderActionCell.bind(this);
     this.renderEditableCell = this.renderEditableCell.bind(this);
@@ -80,8 +84,7 @@ class EditTable extends React.Component {
     axios.get(url, params).then((res) => {
       this.props.onLoadSuccess(res);
     }).catch((err) => {
-      console.log(err);
-      throw "Load server-side data failed!"
+      this.handleHTTPError(err);
     });
   }
 
@@ -89,6 +92,20 @@ class EditTable extends React.Component {
     let state = this.tableRef.current.state;
     let instance = this.tableRef.current;
     this.tableRef.current.props.onFetchData(state, instance);
+  }
+
+  handleHTTPResponse(res) {
+    if(res.data.isError) {
+      this.popAlert(res.data.msg);
+    } else {
+      this.props.onSaveSuccess(res);
+    }
+  }
+
+  handleHTTPError(err) {
+    //console.log(err.response.data);
+    let msg = `${err.response.status}, ${err.response.statusText}`;
+    this.popAlert(msg);
   }
 
   buildCells() {
@@ -146,11 +163,11 @@ class EditTable extends React.Component {
     return value;
   }
 
-  getAlertCard() {
+  getAlertCard(msg) {
     return (
       <SweetAlert
         type="warning"
-        title="Please save the current editing row first!"
+        title={msg}
         onConfirm={this.hideAlert}
         focusConfirmBtn={false}
         confirmBtnCssClass={
@@ -160,12 +177,12 @@ class EditTable extends React.Component {
     )
   }
 
-  popAlert() {
-    this.props.setAlert(true);
+  popAlert(msg = this.DEFAULT_ALERT_MSG) {
+    this.props.setAlert(true, msg);
   }
 
   hideAlert() {
-    this.props.setAlert(false);
+    this.props.setAlert(false, null);
   }
 
   onCellChangeWrapper(e) {
@@ -185,6 +202,10 @@ class EditTable extends React.Component {
 
   onEditRowWrapper(index, e) {
     let { editingIndex, data } = this.props;
+
+    if(editingIndex > -1 && editingIndex == index) {
+      return;
+    }
 
     if(editingIndex > -1 && editingIndex != index) {
       this.popAlert();
@@ -218,21 +239,26 @@ class EditTable extends React.Component {
 
     if(isNew) {
       axios.post(url, params).then((res) => {
-        this.props.onSaveSuccess(res);
+        this.handleHTTPResponse(res);
       }).catch((err) => {
-        throw "Load server-side data failed!"
+        this.handleHTTPError(err);
       });
     } else {
       axios.put(url, params).then((res) => {
-        this.props.onSaveSuccess(res);
+        this.handleHTTPResponse(res);
       }).catch((err) => {
-        throw "Load server-side data failed!"
+        this.handleHTTPError(err);
       });
     }
   }
 
   onDeleteRowWrapper(index, e) {
-    let { editingIndex, data } = this.props;
+    let { editingIndex, isNew, data } = this.props;
+
+    if(isNew) {
+      this.props.onDeleteSuccess(index);
+      return;
+    }
 
     if(editingIndex > -1) {
       this.popAlert();
@@ -249,15 +275,15 @@ class EditTable extends React.Component {
     axios.delete(url, params).then((res) => {
       this.props.onDeleteSuccess(index);
     }).catch((err) => {
-      throw "Load server-side data failed!"
+      this.handleHTTPError(err);
     });
   }
 
   render() {
     let { title, columns, defulatPageSize, pageSizeOptions } = this.props.tableConfig;
-    let { data, pages, alert, loading } = this.props;
+    let { data, pages, alert, alertMsg, loading } = this.props;
 
-    let alertCard = alert ? this.getAlertCard() : null;
+    let alertCard = alert ? this.getAlertCard(alertMsg) : null;
 
     return (
       <React.Fragment>

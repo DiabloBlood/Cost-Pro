@@ -17,6 +17,7 @@ const defaultState = {
   pages: 0,
   loading: true,
   alert: false,
+  alertMsg: null,
   editingIndex: -1,
   isNew: false,
   editingRow: {}
@@ -39,7 +40,8 @@ const editTableReducer = (state = defaultState, action) => {
     case SET_ALERT:
       return {
         ...state,
-        alert: action.alert
+        alert: action.alert,
+        alertMsg: action.msg
       }
     case ON_ADD_ROW:
       return {
@@ -78,7 +80,6 @@ const editTableReducer = (state = defaultState, action) => {
       });
       return {
         ...state,
-        //data: state.isNew ? [ action.res.data.row, ...state.data.slice(1)] : state.data,
         data: newData,
         editingIndex: -1,
         isNew: false,

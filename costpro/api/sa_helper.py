@@ -83,16 +83,29 @@ class GridHelper(object):
 class SAHelper(object):
 
     @classmethod
+    def validate_empty_field(cls, row, table_name):
+        model_class = get_table_obj(table_name)
+        for col in db.inspect(model_class).mapper.columns:
+            if col.key == 'id':
+                continue
+            if not col.nullable and not row[col.key]:
+                raise ValueError("Field [{}] cannot been empty!".format(col.key))
+
+        return row
+
+
+    @classmethod
     def insert_record(cls, row, table_name):
 
         model_class = get_table_obj(table_name)
         
         isError = False
         msg = ''
-        row.pop('id')
         row = {k: v if v else None for (k, v) in row.items()}
+        row.pop('id')
 
         try:
+            cls.validate_empty_field(row, table_name)
             new_record = model_class(**row)
             db.session.add(new_record)
             db.session.commit()
@@ -116,6 +129,7 @@ class SAHelper(object):
         record_id = row.pop('id')
 
         try:
+            cls.validate_empty_field(row, table_name)
             new_record = db.session.query(model_class).get(record_id)
             for key in row:
                 setattr(new_record, key, row[key])

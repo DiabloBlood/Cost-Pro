@@ -20,6 +20,7 @@ const mapStateToProps = state => {
     pages: state.pages,
     loading: state.loading,
     alert: state.alert,
+    alertMsg: state.alertMsg,
     editingIndex: state.editingIndex,
     isNew: state.isNew,
     editingRow: state.editingRow
@@ -31,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onBeforeLoad: () => dispatch(onBeforeLoad()),
     onLoadSuccess: res => dispatch(onLoadSuccess(res)),
-    setAlert: alert => dispatch(setAlert(alert)),
+    setAlert: (alert, msg) => dispatch(setAlert(alert, msg)),
     onAddRow: () => dispatch(onAddRow(trackingKeys)),
     onCellChange: (name, value) => dispatch(onCellChange(name, value)),
     onEditRow: (data, index) => dispatch(onEditRow(trackingKeys, data, index)),

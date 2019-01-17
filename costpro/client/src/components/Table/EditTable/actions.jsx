@@ -26,8 +26,8 @@ const onLoadSuccess = res => {
   return { type: ON_LOAD_SUCCESS, res };
 }
 
-const setAlert = alert => {
-  return { type: SET_ALERT, alert };
+const setAlert = (alert, msg) => {
+  return { type: SET_ALERT, alert, msg };
 }
 
 const onAddRow = trackingKeys => {
